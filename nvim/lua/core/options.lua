@@ -14,13 +14,14 @@ vim.o.tabstop=2
 vim.o.shiftwidth=2
 vim.o.softtabstop=2
 vim.o.cmdheight = 2
+vim.o.pumblend = 20
 vim.o.history = 100
 vim.o.showtabline=0
 vim.o.expandtab = true
 vim.o.updatetime = 100
 
 vim.o.mouse = 'a'
-vim.o.listchars = "trail:~"
+vim.o.listchars = "tab:| ,trail:~"
 vim.o.clipboard = 'unnamedplus'
 vim.o.path = vim.o.path .. '**'
 vim.o.shortmess = vim.o.shortmess .. 'c'

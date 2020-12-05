@@ -13,6 +13,7 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 defaults write -g NSToolbarFullScreenAnimationDuration -float 0.001
 defaults write com.apple.CrashReporter UseUNC 1
 defaults write com.apple.finder DisableAllAnimations -bool true
+defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Hide MenuBar
 defaults write -g _HIHideMenuBar -int 1

@@ -4,3 +4,8 @@ com.apple.*
 spicetify_data
 spotifyd
 spotify-tui
+coc
+QuickTime Preferences
+auto-save-list/
+elpa/
+viminfo

@@ -1,28 +1,32 @@
 # vim: set foldmethod=marker foldlevel=0 nomodeline:
 # ============================================================================
-# ZPLUG BLOCK {{{
+# ZINIT BLOCK {{{
 # ============================================================================
-export ZPLUG_HOME="/usr/local/opt/zplug"
-source "$ZPLUG_HOME/init.zsh"
+source $ZINIT[HOME_DIR]/zinit.zsh
 #-----------------------------------------------------------------------------
-# Theme
+# CommandLine Editing
 #-----------------------------------------------------------------------------
-zplug "zdharma/fast-syntax-highlighting", defer:2
-#-----------------------------------------------------------------------------
-# Completion
-#-----------------------------------------------------------------------------
-zplug "Aloxaf/fzf-tab", defer:3
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search"
+zinit ice wait'!0'
+zinit light Aloxaf/fzf-tab
+
+zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
+    zsh-users/zsh-completions
+
+zinit wait'!1' lucid for \
+ atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma/fast-syntax-highlighting \
+ blockf \
+    zsh-users/zsh-completions \
+ atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
+
+zinit ice wait'!0'
+zinit light zsh-users/zsh-history-substring-search
 #-----------------------------------------------------------------------------
 # KEYBINDINGS
 #-----------------------------------------------------------------------------
-zplug "softmoth/zsh-vim-mode"
-#-----------------------------------------------------------------------------
-# Installation
-#-----------------------------------------------------------------------------
-zplug load
+zinit ice wait'!0'
+zinit light softmoth/zsh-vim-mode
 # }}}
 # ============================================================================
 # ZSH OPTIONS {{{
@@ -88,27 +92,6 @@ zstyle ':vcs_info:*' enable git
 # ============================================================================
 # ZSH HOOKS {{{
 # ============================================================================
-function v(){
-    if [ -d ./venv -o -d ./venv.nosync ] &&  (( ! ${+VIRTUAL_ENV} )); then
-        export VIRTUAL_ENV_DISABLE_PROMPT=1
-        source ./venv/bin/activate 2> /dev/null || source ./venv.nosync/bin/activate
-        RPROMPT="(${VIRTUAL_ENV##*/}) $RPROMPT"
-    fi
-
-    if ((  ${+VIRTUAL_ENV} )); then
-        current_dir=$(pwd)
-        venv=$(dirname $VIRTUAL_ENV)
-        venv="$venv/.*" 
-
-        if [[ ! "$current_dir/.*" == "$venv" ]] && [[ ! $current_dir =~ $venv ]] then
-          deactivate
-          unset VIRTUAL_ENV_DISABLE_PROMPT
-          prompts
-        fi
-    fi
-}
-
-chpwd_functions=(${chpwd_functions[@]} "v")
 # }}}
 # ============================================================================
 # ZSH ALIASES {{{
@@ -126,6 +109,8 @@ alias la="ls -A"
 alias lk="ls -A | grep '@'"
 alias ll="ls -alh"
 
+# Aliases For Changing Directories
+alias u="cd /usr/local"
 
 # Aliases for Grepping
 alias grep="grep --color=auto"
@@ -138,6 +123,8 @@ alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source ~/.zshenv && source $ZDOTDIR/.zshrc"
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
+alias d="kitty +kitten diff"
+alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
 # }}}
 # ============================================================================
 # ZSH FUNCTIONS {{{
@@ -151,7 +138,7 @@ function del(){
   mv "$@" ~/.Trash
 }
 
-function spt(){
+function st(){
   if [[ "$1" == "--kill" ]];
   then
     pkill spotifyd && pkill spotifyd
@@ -160,12 +147,12 @@ function spt(){
 
   if pgrep "spotifyd" &> /dev/null;
   then
-    /usr/local/bin/spt
+    /Users/saadparwaiz/Library/Application\ Support/cargo/bin/spt
     return
   fi
 
   spotifyd --no-daemon &> /usr/local/var/log/spotifyd/log.log &
-  /usr/local/bin/spt
+  /Users/saadparwaiz/Library/Application\ Support/cargo/bin/spt
 }
 
 function dir(){
@@ -178,16 +165,12 @@ function dir(){
 
 function prompts(){
   for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
-	  eval $COLOR='%{$fg[${(L)COLOR}]%}'
+    eval $COLOR='%{$fg[${(L)COLOR}]%}'
   done
   eval RESET='%{$reset_color%}'
 
   export PS1='%B${RED}[${YELLOW}sp${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
   export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
-}
-
-function d(){
-  git diff "$@" | diff-so-fancy
 }
 
 function budget(){
@@ -211,6 +194,7 @@ function budget(){
   fi
 }
 
+
 function h(){
   (( # == 0 )) && cd ~ && return
 
@@ -221,7 +205,6 @@ function h(){
     cd "$dest"
   fi
 }
-
 # }}}
 # ============================================================================
 # ZSH HISTORY {{{
@@ -242,20 +225,20 @@ bindkey -v
 
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
-	 [[ $1 = 'block' ]]; then
-	echo -ne '\e[1 q'
+   [[ $1 = 'block' ]]; then
+  echo -ne '\e[1 q'
   elif [[ ${KEYMAP} == main ]] ||
-	   [[ ${KEYMAP} == viins ]] ||
-	   [[ ${KEYMAP} = '' ]] ||
-	   [[ $1 = 'beam' ]]; then
-	echo -ne '\e[5 q'
+     [[ ${KEYMAP} == viins ]] ||
+     [[ ${KEYMAP} = '' ]] ||
+     [[ $1 = 'beam' ]]; then
+  echo -ne '\e[5 q'
   fi
 }
 
 zle -N zle-keymap-select
 zle-line-init() {
-	zle -K viins 
-	echo -ne "\e[5 q"
+  zle -K viins 
+  echo -ne "\e[5 q"
 }
 
 zle -N zle-line-init
@@ -274,32 +257,43 @@ bindkey jj vi-cmd-mode
 # ZSH PLUGINS {{{
 # ============================================================================
 #-----------------------------------------------------------------------------
+# VIM MODE
+#-----------------------------------------------------------------------------
+export MODE_INDICATOR=""
+
+#-----------------------------------------------------------------------------
 #FZF
 #-----------------------------------------------------------------------------
 
 if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
-	export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+  export PATH="${PATH:+${PATH}:}/opt/intel/homebrew/opt/fzf/bin"
 fi
 
 [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
 
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"
 
 if which bat &> /dev/null; then
-	export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {} | head -500'"
+  export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {} | head -500'"
 else
-	export FZF_CTRL_T_OPTS="--preview 'cat {}'"
+  export FZF_CTRL_T_OPTS="--preview 'cat {}'"
 fi
 
 if which fd &> /dev/null; then
-	export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -E ".git" -E "node_modules" -E "venv*" -E "*.app" -E "*.localized" -E ".DS_Store" -E "*.png" -E "*.*db*" -E "*.sqlite*" -E "*.scm*" -E "*-shm" -E "*-wal" -E "com.*" -E "*.dat" -E "*Logs*" -E "*Cache*" -E "*Font*" -E "*zoom.us*" -E "*Containers*" -E "*.plist*" -E "*Safari*"'
-	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -E ".git" -E "node_modules" -E "venv*" -E "*.app" -E "*.localized" -E ".DS_Store" -E "*.png" -E "*.*db*" -E "*.sqlite*" -E "*.scm*" -E "*-shm" -E "*-wal" -E "com.*" -E "*.dat" -E "*Logs*" -E "*Cache*" -E "*Font*" -E "*zoom.us*" -E "*Containers*" -E "*.plist*" -E "*Safari*"'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 #----------------------------------------------------------------------------
 # Auto Suggestions
 # ---------------------------------------------------------------------------
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+# }}}
+# ============================================================================
+# Set PATH Variable {{{
+# ============================================================================
+export PATH="/opt/intel/homebrew/bin:$PATH"
+fpath+=/opt/intel/homebrew/share/zsh/site-functions
 # }}}
 # ============================================================================
