@@ -1,0 +1,54 @@
+# General
+.DS_Store
+.localized
+.AppleDouble
+.LSOverride
+*.app
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Compiled Python files
+*.pyc
+
+# Compiled C/C++ files
+*.o
+*.out
+
+# Java Class Files
+*.class
+
+# Latex Cache
+*.log
+*.aux
+*.fls
+*.fdb_latexmk
+
+# Application specific files
+venv
+venv.nosync
+node_modules
+.sass-cache
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Editor Cache
+.vscode
+.vim

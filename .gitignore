@@ -1,0 +1,6 @@
+*.plist
+com.apple.*
+!local.enviroment.plist
+spicetify_data
+spotifyd
+spotify-tui

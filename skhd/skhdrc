@@ -1,0 +1,30 @@
+#/usr/bin/env bash
+
+# Run Scripts
+ctrl + cmd + alt - n: /Users/saadparwaiz/Library/Mobile\ Documents/com~apple~CloudDocs/src/scripts/vDesktop
+
+# Navigation
+cmd - left : yabai -m window --focus west
+cmd - down : yabai -m window --focus south
+cmd - up : yabai -m window --focus north
+cmd - right : yabai -m window --focus east
+
+# Moving windows
+cmd + ctrl - left : yabai -m window --swap west
+cmd + ctrl - down : yabai -m window --swap south
+cmd + ctrl - up : yabai -m window --swap north
+cmd + ctrl - right : yabai -m window --swap east
+
+# Equalize size of windows
+alt - e : yabai -m space --balance
+
+# Rotate windows clockwise and anticlockwise
+alt - r         : yabai -m space --rotate 90
+
+# Toggle FLoat Property
+shift + alt - space : yabai -m window --toggle float
+
+# Make window native fullscreen
+ctrl + cmd + alt - m : yabai -m window --toggle zoom-fullscreen
+
+shift - up: skhd --key "ctrl - f2"

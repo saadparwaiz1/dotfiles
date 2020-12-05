@@ -1,0 +1,305 @@
+# vim: set foldmethod=marker foldlevel=0 nomodeline:
+# ============================================================================
+# ZPLUG BLOCK {{{
+# ============================================================================
+export ZPLUG_HOME="/usr/local/opt/zplug"
+source "$ZPLUG_HOME/init.zsh"
+#-----------------------------------------------------------------------------
+# Theme
+#-----------------------------------------------------------------------------
+zplug "zdharma/fast-syntax-highlighting", defer:2
+#-----------------------------------------------------------------------------
+# Completion
+#-----------------------------------------------------------------------------
+zplug "Aloxaf/fzf-tab", defer:3
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search"
+#-----------------------------------------------------------------------------
+# KEYBINDINGS
+#-----------------------------------------------------------------------------
+zplug "softmoth/zsh-vim-mode"
+#-----------------------------------------------------------------------------
+# Installation
+#-----------------------------------------------------------------------------
+zplug load
+# }}}
+# ============================================================================
+# ZSH OPTIONS {{{
+# ============================================================================
+setopt autocd
+setopt correct
+setopt BANG_HIST
+setopt HIST_BEEP
+setopt HIST_VERIFY
+setopt prompt_subst
+setopt SHARE_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+# }}}
+# ============================================================================
+# ZSH MODULES {{{
+# ============================================================================
+# ----------------------------------------------------------------------------
+# Colors Module
+# ----------------------------------------------------------------------------
+autoload -U colors && colors
+# ----------------------------------------------------------------------------
+# Tab Completion Module
+# ----------------------------------------------------------------------------
+autoload -U compinit
+zmodload zsh/complist
+
+# customise tab completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' rehash true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' verbose yes
+zstyle ':completion::*:vi:*:*' file-patterns 'Makefile|*(rc|log)|*.(php|tex|bib|sql|zsh|ini|sh|vim|rb|sh|js|tpl|csv|rdf|txt|phtml|tex|py|n3):vi-files:vim\ likes\ these\ files *~(Makefile|*(rc|log)|*.(log|rc|php|tex|bib|sql|zsh|ini|sh|vim|rb|sh|js|tpl|csv|rdf|txt|phtml|tex|py|n3)):all-files:other\ files'
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+zstyle ':completion::*:kill:*:*' command 'ps xf -U $USER -o pid,%cpu,cmd'
+zstyle ':completion::*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
+zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ":completion:*" matcher-list 'm:{A-Zöäüa-zÖÄÜ}={a-zÖÄÜA-Zöäü}'
+
+# Generate Cache
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
+_comp_options+=(globdots)
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+
+# Generate Custom Completions
+compdef _gnu_generic fd
+# ----------------------------------------------------------------------------
+# Git Module For Prompt
+# ----------------------------------------------------------------------------
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+zstyle ':vcs_info:git:*' formats ' %F{240}(%b)%r%f'
+zstyle ':vcs_info:*' enable git
+# }}}
+# ============================================================================
+# ZSH HOOKS {{{
+# ============================================================================
+function v(){
+    if [ -d ./venv -o -d ./venv.nosync ] &&  (( ! ${+VIRTUAL_ENV} )); then
+        export VIRTUAL_ENV_DISABLE_PROMPT=1
+        source ./venv/bin/activate 2> /dev/null || source ./venv.nosync/bin/activate
+        RPROMPT="(${VIRTUAL_ENV##*/}) $RPROMPT"
+    fi
+
+    if ((  ${+VIRTUAL_ENV} )); then
+        current_dir=$(pwd)
+        venv=$(dirname $VIRTUAL_ENV)
+        venv="$venv/.*" 
+
+        if [[ ! "$current_dir/.*" == "$venv" ]] && [[ ! $current_dir =~ $venv ]] then
+          deactivate
+          unset VIRTUAL_ENV_DISABLE_PROMPT
+          prompts
+        fi
+    fi
+}
+
+chpwd_functions=(${chpwd_functions[@]} "v")
+# }}}
+# ============================================================================
+# ZSH ALIASES {{{
+# ============================================================================
+# Better Options For System Commands
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias less="less -R"
+alias sudo="nocorrect sudo "
+
+# Various Aliases to list files
+alias ls="ls -GF"
+alias la="ls -A"
+alias lk="ls -A | grep '@'"
+alias ll="ls -alh"
+
+
+# Aliases for Grepping
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
+
+# Aliases for custom commands
+alias purge="sudo --stdin purge"
+alias keys="pbcopy < ~/.ssh/id_rsa.pub"
+alias reload="source ~/.zshenv && source $ZDOTDIR/.zshrc"
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
+# }}}
+# ============================================================================
+# ZSH FUNCTIONS {{{
+# ============================================================================
+# Utils
+function github(){
+  echo "$1" | sed s/github/raw\.githubusercontent/ | sed s/blob.//g | xargs curl -O
+}
+
+function del(){
+  mv "$@" ~/.Trash
+}
+
+function spt(){
+  if [[ "$1" == "--kill" ]];
+  then
+    pkill spotifyd && pkill spotifyd
+    return
+  fi
+
+  if pgrep "spotifyd" &> /dev/null;
+  then
+    /usr/local/bin/spt
+    return
+  fi
+
+  spotifyd --no-daemon &> /usr/local/var/log/spotifyd/log.log &
+  /usr/local/bin/spt
+}
+
+function dir(){
+  for i in $(/bin/ls -d */); do
+    cd "$i"
+    eval $1
+    cd ".."
+  done
+}
+
+function prompts(){
+  for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
+	  eval $COLOR='%{$fg[${(L)COLOR}]%}'
+  done
+  eval RESET='%{$reset_color%}'
+
+  export PS1='%B${RED}[${YELLOW}sp${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
+  export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
+}
+
+function d(){
+  git diff "$@" | diff-so-fancy
+}
+
+function budget(){
+  [ "$1" = "" ] && perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt && return
+  [ "$1" = "--add" ] && echo "$2" >> ~/Documents/budget.txt && return
+  [ "$1" = "--remove" ] && sed -i '' -e '$ d' ~/Documents/budget.txt && return
+  [ "$1" = "--sum" ] && perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt && return
+  [ "$1" = "--cat" ] && tail -n 1 ~/Documents/budget.txt && return
+  if [ "$1" = "--average" ]; then
+    old_data=$(date -jf '%Y-%m-%d' '2020-10-10' +%s)
+    new_data=$(date +'%s')
+    days=$(( ($new_data - $old_data)/(60*60*24) ))
+    sums=$(perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt)
+    echo $(( $sums/$days ))
+    return
+  fi
+  if [ "$1" = "--days" ]; then
+    old_data=$(date -jf '%Y-%m-%d' '2020-10-10' +%s)
+    new_data=$(date +'%s')
+    echo $(( ($new_data - $old_data)/(60*60*24) ))
+  fi
+}
+
+function h(){
+  (( # == 0 )) && cd ~ && return
+
+  dest=$(fd --type d -E "venv" -E "venv.nosync" -E "Containers" -E "Group\ Containers" -E "node_modules"  --absolute-path --hidden "$1" ~)
+
+  if ! cd "$dest" &> /dev/null; then
+    dest=$(echo "$dest" | fzf)
+    cd "$dest"
+  fi
+}
+
+# }}}
+# ============================================================================
+# ZSH HISTORY {{{
+# ============================================================================
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE="$XDG_DATA_HOME/History/zsh-history"
+# }}}
+# ============================================================================
+# ZSH PROMPT {{{
+# ============================================================================
+prompts
+# }}}
+# ============================================================================
+# ZSH KEYBINDINGS {{{
+# ============================================================================
+bindkey -v
+
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+	 [[ $1 = 'block' ]]; then
+	echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+	   [[ ${KEYMAP} == viins ]] ||
+	   [[ ${KEYMAP} = '' ]] ||
+	   [[ $1 = 'beam' ]]; then
+	echo -ne '\e[5 q'
+  fi
+}
+
+zle -N zle-keymap-select
+zle-line-init() {
+	zle -K viins 
+	echo -ne "\e[5 q"
+}
+
+zle -N zle-line-init
+echo -ne '\e[5 q'
+preexec() {
+    echo -ne '\e[5 q' ;
+}
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^[[1;3C' forward-word
+
+bindkey jj vi-cmd-mode
+# }}}
+# ============================================================================
+# ZSH PLUGINS {{{
+# ============================================================================
+#-----------------------------------------------------------------------------
+#FZF
+#-----------------------------------------------------------------------------
+
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+	export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
+if which bat &> /dev/null; then
+	export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {} | head -500'"
+else
+	export FZF_CTRL_T_OPTS="--preview 'cat {}'"
+fi
+
+if which fd &> /dev/null; then
+	export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow -E ".git" -E "node_modules" -E "venv*" -E "*.app" -E "*.localized" -E ".DS_Store" -E "*.png" -E "*.*db*" -E "*.sqlite*" -E "*.scm*" -E "*-shm" -E "*-wal" -E "com.*" -E "*.dat" -E "*Logs*" -E "*Cache*" -E "*Font*" -E "*zoom.us*" -E "*Containers*" -E "*.plist*" -E "*Safari*"'
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+#----------------------------------------------------------------------------
+# Auto Suggestions
+# ---------------------------------------------------------------------------
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+# }}}
+# ============================================================================
