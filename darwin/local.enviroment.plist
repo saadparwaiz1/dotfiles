@@ -9,8 +9,7 @@
  <key>ProgramArguments</key>
  <array>
  <string>sh</string>
- <string>-c</string>
- <string>launchctl setenv XDG_CONFIG_HOME /Users/saadparwaiz/Library/Preferences;launchctl setenv XDG_CACHE_HOME /Users/saadparwaiz/Library/Caches; launchctl setenv XDG_DATA_HOME "/Users/saadparwaiz/Library/Application Support"</string>
+ <string>/Users/saadparwaiz/Library/Preferences/darwin/launch.sh</string>
  </array>
  <key>RunAtLoad</key>
  <true/>

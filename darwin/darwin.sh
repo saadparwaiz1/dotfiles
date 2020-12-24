@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # macOS Preferences
 defaults write com.apple.screencapture type JPG
@@ -34,7 +34,6 @@ killall Dock
 defaults write com.apple.dock show-recents -bool FALSE
 killall Dock
 
-
 # Dock Size
 defaults write com.apple.dock tilesize -int 24
 killall Dock
@@ -44,12 +43,15 @@ defaults write com.apple.dock autohide -int 1
 defaults write com.apple.dock orientation -string left
 killall Dock
 
-if command -v brew &> /dev/null; then
-    echo 'Homebrew is installed'
+if command -v brew &>/dev/null; then
+	echo 'Homebrew is installed'
 else
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 brew bundle install
-ln -s $(pwd)/local.enviroment.plist ~/Library/LaunchAgents/local.enviroment.plist
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null  && pwd)"
+ln -s "$DIR"/local.enviroment.plist ~/Library/LaunchAgents/local.enviroment.plist
 launchctl load ~/Library/LaunchAgents/local.enviroment.plist
+echo 'Installed Latest Version of zsh'
+echo "append $(brew --prefix)/zsh to /etc/shells to use"

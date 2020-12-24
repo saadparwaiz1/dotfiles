@@ -2,6 +2,7 @@
 -- ============================================================================
 -- Global Options {{{
 -- ============================================================================
+vim.o.hidden = true
 vim.o.backup = false
 vim.o.showmode = false
 vim.o.lazyredraw = true
@@ -16,8 +17,7 @@ vim.o.softtabstop=2
 vim.o.cmdheight = 2
 vim.o.pumblend = 20
 vim.o.history = 100
-vim.o.showtabline=0
-vim.o.expandtab = true
+vim.o.showtabline=2
 vim.o.updatetime = 100
 
 vim.o.mouse = 'a'
@@ -27,6 +27,7 @@ vim.o.path = vim.o.path .. '**'
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.wildignore = '*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,**/node_modules'
+vim.o.isfname  = vim.o.isfname .. ',32'
 -- }}}
 -- ============================================================================
 -- buffer options {{{
@@ -35,7 +36,6 @@ vim.o.wildignore = '*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,**/node_m
 vim.bo.tabstop=2
 vim.bo.shiftwidth=2
 vim.bo.softtabstop=2
-vim.bo.expandtab = true
 
 -- }}}
 -- ============================================================================

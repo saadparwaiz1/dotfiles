@@ -119,43 +119,43 @@ hi TermCursorNC guifg=#3c3836 guibg=#ebdbb2 guisp=NONE gui=NONE
 
 highlight! link TSVariableBuiltin Type
 
-" Status Line
-
-" Links
-hi link SubStatusLine Visual
-
-
-" Color Groups
-hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
-hi SubSeperator guifg=#504945 guibg=#665c54 guisp=NONE gui=reverse
+if !$PLUGINS
+  " Links
+  hi link SubStatusLine Visual
 
 
-" Functions
-function! s:HighLight(c)
-  execute 'highlight Seperator guifg=#665c54' 'guibg='a:c 'guisp=NONE gui=reverse'
-  execute 'highlight Mode guifg=#282828' 'guibg='a:c 'guisp=NONE gui=BOLD'
-  execute 'highlight InfoMode guifg='a:c 'guibg=#282828' 'guisp=NONE gui=reverse'
-endfunction
+  " Color Groups
+  hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
+  hi SubSeperator guifg=#504945 guibg=#665c54 guisp=NONE gui=reverse
 
-function! GetMode()
-    let l:mode = mode()
-    if l:mode ==# 'n'
-        call s:HighLight('#a89984')
-        return 'NORMAL'
-    elseif l:mode ==# 'i'
-        call s:HighLight('#83a598')
-        return 'INSERT'
-    elseif l:mode ==# 'R'
-        call s:HighLight('#8ec07c')
-        return 'REPLACE'
-    elseif l:mode ==# 'c'
-        call s:HighLight('#d3869b')
-        return 'COMMAND'
-    elseif l:mode ==# 't'
-        call s:HighLight('#8ec07c')
-        return 'TERMINAL'
-    else
-        call s:HighLight('#fe8019')
-        return 'VISUAL'
-    endif
-endfunction
+
+  " Functions
+  function! s:HighLight(c)
+    execute 'highlight Seperator guifg=#665c54' 'guibg='a:c 'guisp=NONE gui=reverse'
+    execute 'highlight Mode guifg=#282828' 'guibg='a:c 'guisp=NONE gui=BOLD'
+    execute 'highlight InfoMode guifg='a:c 'guibg=#282828' 'guisp=NONE gui=reverse'
+  endfunction
+
+  function! GetMode()
+      let l:mode = mode()
+      if l:mode ==# 'n'
+          call s:HighLight('#a89984')
+          return 'NORMAL'
+      elseif l:mode ==# 'i'
+          call s:HighLight('#83a598')
+          return 'INSERT'
+      elseif l:mode ==# 'R'
+          call s:HighLight('#8ec07c')
+          return 'REPLACE'
+      elseif l:mode ==# 'c'
+          call s:HighLight('#d3869b')
+          return 'COMMAND'
+      elseif l:mode ==# 't'
+          call s:HighLight('#8ec07c')
+          return 'TERMINAL'
+      else
+          call s:HighLight('#fe8019')
+          return 'VISUAL'
+      endif
+  endfunction
+end

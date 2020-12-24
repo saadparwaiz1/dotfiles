@@ -1,5 +1,18 @@
 local indent = require('snippets').u.match_indentation
 
+local function complete_arg_list(string)
+   local rest_completion = string .. '):\n    '
+
+   for str in string.gmatch(string, "([^"..','.."]+)") do
+     rest_completion = rest_completion .. "self." .. str:gsub(" ", "") .. ' = ' .. str:gsub(" ", "") .. '\n    '
+   end
+
+   return rest_completion
+end
+
+_G.complete_arg_list = complete_arg_list
+
+
 local python = {
   pr = "print($1)",
   imp = "import $1",

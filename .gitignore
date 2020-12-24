@@ -1,5 +1,6 @@
 *.plist
 com.apple.*
+com.google.*
 !local.enviroment.plist
 spicetify_data
 spotifyd
@@ -9,3 +10,5 @@ QuickTime Preferences
 auto-save-list/
 elpa/
 viminfo
+straight
+spt-cli

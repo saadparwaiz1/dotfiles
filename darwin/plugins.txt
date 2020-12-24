@@ -1,0 +1,9 @@
+https://github.com/jiangmiao/auto-pairs.git
+https://github.com/datwaft/bubbly.nvim.git
+https://github.com/nvim-lua/completion-nvim.git
+https://github.com/junegunn/fzf.vim.git
+https://github.com/neovim/nvim-lspconfig.git
+https://github.com/nvim-treesitter/nvim-treesitter.git
+https://github.com/norcalli/snippets.nvim.git
+https://github.com/tpope/vim-commentary.git
+https://github.com/tpope/vim-surround

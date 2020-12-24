@@ -9,7 +9,7 @@
 [color]
 	ui = true
 [help]
-	autocorrect = 10
+	autocorrect = 3
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	excludesfile = /Users/saadparwaiz/Library/Preferences/git/gitignore
