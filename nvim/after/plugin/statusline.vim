@@ -1,0 +1,13 @@
+hi SubStatusLine guifg=NONE guibg=NONE guisp=NONE gui=NONE
+hi Seperator guifg=#a0c980 guibg=#34343c guisp=NONE gui=NONE
+hi Mode guifg=#282828 guibg=#a0c980 guisp=NONE gui=bold
+hi FileSeperator guifg=#c5cdd9 guibg=#34343c guisp=NONE gui=NONE
+hi File guifg=#282828 guibg=#c5cdd9 guisp=NONE gui=NONE
+hi GitSeperator guifg=#d38aea guibg=#34343c guisp=NONE gui=NONE
+hi Git guifg=#282828 guibg=#d38aea guisp=NONE gui=NONE
+hi GitSeperator guifg=#d38aea guibg=#34343c guisp=NONE gui=NONE
+hi Git guifg=#282828 guibg=#d38aea guisp=NONE gui=NONE
+hi LineSeperator guifg=#57595e guibg=#34343c guisp=NONE gui=NONE
+hi Line guifg=#c5cdd9 guibg=#57595e guisp=NONE gui=NONE
+hi ExtSeperator guifg=#6cb6eb guibg=#34343c guisp=NONE gui=NONE
+hi Ext guifg=#3e4249 guibg=#6cb6eb guisp=NONE gui=NONE

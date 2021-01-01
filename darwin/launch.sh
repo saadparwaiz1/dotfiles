@@ -17,4 +17,4 @@ launchctl setenv CARGO_HOME "/Users/saadparwaiz/Library/Application Support/carg
 launchctl setenv PSQL_HISTORY "/Users/saadparwaiz/Library/Application Support/History/psql_history"
 launchctl setenv SQLITE_HISTORY "/Users/saadparwaiz/Library/Application Support/History/sqlite_history"
 launchctl setenv NODE_REPL_HISTORY "/Users/saadparwaiz/Library/Application Support/History/node_repl_history"
-launchctl setenv VSCODE_PORTABLE  "/Users/saadparwaiz/Library/Application Support/VSCodePortable"
+launchctl setenv VSCODE_PORTABLE "/Users/saadparwaiz/Library/Application Support/VSCodePortable"

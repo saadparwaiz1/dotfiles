@@ -1,7 +1,7 @@
 #/usr/bin/env bash
 
 # Run Scripts
-ctrl + cmd + alt - n: /Users/saadparwaiz/Library/Mobile\ Documents/com~apple~CloudDocs/src/scripts/vDesktop
+ctrl + cmd + alt - n: /Users/saadparwaiz/Library/Mobile\ Documents/com~apple~CloudDocs/scripts/vDesktop
 
 # Navigation
 cmd - left : yabai -m window --focus west

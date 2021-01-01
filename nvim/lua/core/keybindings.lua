@@ -1,6 +1,6 @@
 -- vim: set foldmethod=marker foldlevel=1 nomodeline:
 -- ============================================================================
---	Utilities {{{
+-- Utilities {{{
 -- ============================================================================
 local all = {noremap = true, silent = true, expr = true}
 local partial = {noremap = true, silent = true}
@@ -13,14 +13,19 @@ local function map(mappings)
 		vim.api.nvim_set_keymap(v[3], k, v[1], v[2])
 	end
 end
--- }}} ============================================================================
---	Mappings {{{
+-- }}}
+-- ============================================================================
+-- Mappings {{{
 -- ============================================================================
 local mappings = {
 	-- terminal interface mappings
 	['\\n'] = { '<cmd>bn<CR>', partial, 'n'},
 	['\\p'] = { '<cmd>bp<CR>', partial, 'n'},
 	['\\q'] = { '<cmd>bd<CR>', partial, 'n'},
+
+	-- tab mappings
+	['<tab>'] = { [[pumvisible() ? "\<C-n>" : "\<Tab>"]], all, 'i'},
+	['<S-tab>'] = { [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], all, 'i'},
 
 	-- Ctrl Key Mappings
 	['<C-h>'] = { '<C-w>h', partial, 'n'},
@@ -45,7 +50,10 @@ map(mappings)
 if os.getenv("PLUGINS") then
 	local plugins = {
 		['\\f'] = { '<cmd>Files<CR>', partial, 'n'},
-		['\\l'] = { '<cmd>Ag<CR>', partial, 'n'},
+		['\\l'] = { '<cmd>Rg<CR>', partial, 'n'},
+		['\\t'] = { '<cmd>lua Term()<CR>', partial, 'n' },
+		['<c-x><c-f>'] = {"fzf#vim#complete#path('fd')", {expr=true}, 'i'},
+		['<c-x><c-d>'] = {"fzf#vim#complete('cat /usr/share/dict/words')", {expr=true}, 'i'},
 		['<tab>'] = { tab, all, 'i'},
 		['<s-tab>'] = { stab, all, 'i'},
 	}

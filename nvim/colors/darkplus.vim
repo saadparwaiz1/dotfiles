@@ -1,12 +1,9 @@
-" Maintainer: Christian Chiarulli <chrisatmachine@gmail.com>
-
 set background=dark
 highlight clear
 if exists('syntax_on')
   syntax reset
 endif
-let g:colors_name='nvcode'
-
+let g:colors_name='darkplus'
 highlight Normal guifg=#abb2bf guibg=#1e1e1e gui=NONE 
 highlight Comment guifg=#608b4e guibg=NONE gui=italic 
 highlight Constant guifg=#dcdcaa guibg=NONE gui=NONE 
@@ -83,43 +80,3 @@ highlight VisualNOS guifg=#3e4452 guibg=NONE gui=NONE
 highlight WarningMsg guifg=#dcdcaa guibg=NONE gui=NONE 
 highlight WildMenu guifg=#1e1e1e guibg=#569cd6 gui=NONE 
 highlight EndOfBuffer guifg=#1e1e1e guibg=NONE gui=NONE 
-
-
-" Status Line Configuration
-
-" Links
-highlight link SubStatusLine Visual
-
-" Colors
-highlight StatusLine guifg=#abb2bf guibg=#2c323c gui=NONE 
-highlight SubSeperator guifg=#2c323c  guibg=#3e4452 guisp=NONE gui=reverse
-
-" Functions
-function! s:HighLight(c)
-  execute 'highlight Seperator guifg=#3e4452' 'guibg='a:c 'guisp=NONE gui=reverse'
-  execute 'highlight Mode guifg=#282828' 'guibg='a:c 'guisp=NONE gui=BOLD'
-  execute 'highlight InfoMode guifg='a:c 'guibg=#282828' 'guisp=NONE gui=reverse'
-endfunction
-
-function! GetMode()
-    let l:mode = mode()
-    if l:mode ==# 'n'
-        call s:HighLight('#569CD6')
-        return 'NORMAL'
-    elseif l:mode ==# 'i'
-        call s:HighLight('#D7BA7D')
-        return 'INSERT'
-    elseif l:mode ==# 'R'
-        call s:HighLight('#4EC9B0')
-        return 'REPLACE'
-    elseif l:mode ==# 'c'
-        call s:HighLight('#C586C0')
-        return 'COMMAND'
-    elseif l:mode ==# 't'
-        call s:HighLight('#B5CEA8')
-        return 'TERMINAL'
-    else
-        call s:HighLight('#D16969')
-        return 'VISUAL'
-    endif
-endfunction

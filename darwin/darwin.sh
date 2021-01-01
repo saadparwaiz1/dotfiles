@@ -46,12 +46,18 @@ killall Dock
 if command -v brew &>/dev/null; then
 	echo 'Homebrew is installed'
 else
+	read -p "Install Homebrew?" -n 1 -r
+
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+		echo
+		echo 'Please Install Homebrew Yourself and Run The Script Again'
+		exit 1
+	fi
+
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 brew bundle install
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null  && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 ln -s "$DIR"/local.enviroment.plist ~/Library/LaunchAgents/local.enviroment.plist
 launchctl load ~/Library/LaunchAgents/local.enviroment.plist
-echo 'Installed Latest Version of zsh'
-echo "append $(brew --prefix)/zsh to /etc/shells to use"

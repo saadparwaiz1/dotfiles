@@ -1,0 +1,3 @@
+--italic-text=always
+--theme="gruvbox"
+--map-syntax='zshrc:Bourne Again Shell (bash)'

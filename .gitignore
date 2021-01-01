@@ -12,3 +12,5 @@ elpa/
 viminfo
 straight
 spt-cli
+hub
+configstore

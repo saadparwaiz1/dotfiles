@@ -2,6 +2,8 @@
 # ============================================================================
 # Set Up ZINIT {{{
 # ============================================================================
+fpath+=/opt/intel/homebrew/share/zsh/site-functions
+
 typeset -gA ZINIT
 export ZINIT[BIN_DIR]=/opt/intel/homebrew/opt/zinit
 export ZINIT[HOME_DIR]=/opt/intel/homebrew/opt/zinit
@@ -19,18 +21,21 @@ zinit ice wait'!0'
 zinit light Aloxaf/fzf-tab
 
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
-		zsh-users/zsh-completions
+	zsh-users/zsh-completions
 
 zinit wait'!1' lucid for \
- atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-		zdharma/fast-syntax-highlighting \
- blockf \
-		zsh-users/zsh-completions \
- atload"!_zsh_autosuggest_start" \
-		zsh-users/zsh-autosuggestions
+	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+	zdharma/fast-syntax-highlighting \
+	blockf \
+	zsh-users/zsh-completions \
+	atload"!_zsh_autosuggest_start" \
+	zsh-users/zsh-autosuggestions
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-history-substring-search
+
+zinit ice wait'!0'
+zinit light hlissner/zsh-autopair
 #-----------------------------------------------------------------------------
 # KEYBINDINGS
 #-----------------------------------------------------------------------------
@@ -65,7 +70,6 @@ autoload -U colors && colors
 # ----------------------------------------------------------------------------
 # Tab Completion Module
 # ----------------------------------------------------------------------------
-fpath+=/opt/intel/homebrew/share/zsh/site-functions
 autoload -U compinit
 zmodload zsh/complist
 
@@ -123,12 +127,12 @@ alias ll="ls -alh"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
+alias budget="~/Documents/budget.py"
 
 # Aliases for custom commands
 alias purge="sudo --stdin purge"
 alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source $ZDOTDIR/.zshrc"
-alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
 alias d="kitty +kitten diff"
 alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
@@ -140,55 +144,21 @@ alias nvimbrew="$XDG_CONFIG_HOME/darwin/nvimbrew.sh"
 # ZSH FUNCTIONS {{{
 # ============================================================================
 # Utils
-github(){
+github() {
 	echo "$1" | sed s/github/raw\.githubusercontent/ | sed s/blob.//g | xargs curl -O
 }
 
-del(){
+del() {
 	mv "$@" ~/.Trash
 }
 
-dir(){
-	for i in */
-	do
+dir() {
+	for i in */; do
 		cd "$i"
 		eval $1
 		cd ".."
 	done
 }
-
-prompts(){
-	for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE
-	do
-		eval $COLOR='%{$fg[${(L)COLOR}]%}'
-	done
-	eval RESET='%{$reset_color%}'
-
-	export PS1='%B${RED}[${YELLOW}sp${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
-	export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
-}
-
-budget(){
-	[ "$1" = "" ] && perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt && return
-	[ "$1" = "--add" ] && echo "$2" >> ~/Documents/budget.txt && return
-	[ "$1" = "--remove" ] && sed -i '' -e '$ d' ~/Documents/budget.txt && return
-	[ "$1" = "--sum" ] && perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt && return
-	[ "$1" = "--cat" ] && tail -n 1 ~/Documents/budget.txt && return
-	if [ "$1" = "--average" ]; then
-		old_data=$(date -jf '%Y-%m-%d' '2020-10-10' +%s)
-		new_data=$(date +'%s')
-		days=$(( ($new_data - $old_data)/(60*60*24) ))
-		sums=$(perl -nle '$sum += $_ } END { print $sum' < ~/Documents/budget.txt)
-		echo $(( $sums/$days ))
-		return
-	fi
-	if [ "$1" = "--days" ]; then
-		old_data=$(date -jf '%Y-%m-%d' '2020-10-10' +%s)
-		new_data=$(date +'%s')
-		echo $(( ($new_data - $old_data)/(60*60*24) ))
-	fi
-}
-
 
 h(){
 	(( # == 0 )) && cd ~ && return
@@ -211,6 +181,16 @@ HISTFILE="$XDG_DATA_HOME/History/zsh-history"
 # ============================================================================
 # ZSH PROMPT {{{
 # ============================================================================
+prompts() {
+	for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
+		eval $COLOR='%{$fg[${(L)COLOR}]%}'
+	done
+	eval RESET='%{$reset_color%}'
+
+	export PS1='%B${RED}[${YELLOW}sp${CYAN}@${MAGENTA}home${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
+	export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
+}
+
 prompts
 # }}}
 # ============================================================================
@@ -219,39 +199,39 @@ prompts
 bindkey -v
 
 function zle-keymap-select {
-	if [[ ${KEYMAP} == vicmd ]] ||
-	 [[ $1 = 'block' ]]; then
-	echo -ne '\e[1 q'
+	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]
+	then
+		echo -ne '\e[1 q'
 	elif [[ ${KEYMAP} == main ]] ||
-		 [[ ${KEYMAP} == viins ]] ||
-		 [[ ${KEYMAP} = '' ]] ||
-		 [[ $1 = 'beam' ]]; then
-	echo -ne '\e[5 q'
+		[[ ${KEYMAP} == viins ]] ||
+		[[ ${KEYMAP} = '' ]] ||
+		[[ $1 = 'beam' ]]; then
+		echo -ne '\e[5 q'
 	fi
 }
 
 zle -N zle-keymap-select
+
 zle-line-init() {
-	zle -K viins 
-	echo -ne "\e[5 q"
+	zle -K viins
+	echo -ne '\e[5 q'
 }
 
 zle -N zle-line-init
 echo -ne '\e[5 q'
 preexec() {
-	echo -ne '\e[5 q' ;
+	echo -ne '\e[5 q'
 }
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey '^[[1;3C' forward-word
-
 bindkey jj vi-cmd-mode
 # }}}
 # ============================================================================
 # Set PATH Variable {{{
 # ============================================================================
-export PATH="/opt/intel/homebrew/bin:$PATH"
+export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin"
 # }}}
 # ============================================================================
 # ZSH PLUGINS {{{
@@ -264,23 +244,23 @@ export MODE_INDICATOR=""
 #FZF
 #-----------------------------------------------------------------------------
 
-if [[ ! "$PATH" == */opt/intel/homebrew/opt/fzf/bin* ]]; then
-	export PATH="${PATH:+${PATH}:}/opt/intel/homebrew/opt/fzf/bin"
-fi
-
-[[ $- == *i* ]] && source "/opt/intel/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "/opt/intel/homebrew/opt/fzf/shell/completion.zsh"
 
 source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"
 
-if which bat &> /dev/null; then
-	export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always {} | head -500'"
-	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-else
-	export FZF_CTRL_T_OPTS="--preview 'cat {}'"
+if command -v bat &>/dev/null
+then
+	alias cat='bat'
 fi
 
-if which fd &> /dev/null; then
-	export FZF_DEFAULT_COMMAND="fd --type f --follow -E node_modules -E Pictures	-E '*[Cc]ache*'  -E '*.png' -E '*.dat' -E 'com.*' -E '*.jpeg' -E '*.jpg' -E Firefox -E '*.sqlite*' -E zoom.us -E '*.plist' -E 'db' -E '*.db*' -E 'Spotify' -E '*.JPG' -E 'Safari' -E '*.archive' -E 'org.*' -E 'Metadata' -E 'Font*' -E '*.qdat' -E '*.bf2-*' -E '*.pb' -E '*.ttf' -E '*.otf' -E '*-wal' -E '*-shm' -E '*.keychain*' -E 'Containers' -E '*.data' -E '*.woff' -E '*.svg' -E '*.eot' -E '*.strings' -E 'Keychains' -E '*.cdt' -E '*.pluginPayloadAttachment' -E '*.crash' -E '*.ics*' -E '*.tmp' -E '*.app' -E 'Google' -E 'user-data' -E 'Alfred' -E 'AddressBook' -E 'CallHistory*' -E 'IsolatedStorage'"
+if command -v fd &>/dev/null
+then
+	alias find='fd'
+	export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden"
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+else
+	export FZF_DEFAULT_COMMAND="find . -type f -name '*'"
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 fi

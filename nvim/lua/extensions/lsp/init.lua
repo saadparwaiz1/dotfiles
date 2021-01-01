@@ -15,51 +15,63 @@ local options = {
 	silent = true,
 }
 
+local rnm = "<cmd>lua vim.lsp.buf.rename()<CR>"
 local hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
 local fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
+local acn = "<cmd>lua vim.lsp.buf.code_action()<CR>"
 local defi = "<cmd>lua vim.lsp.buf.definition()<CR>"
+local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local refe = "<cmd>lua vim.lsp.buf.references()<CR>"
 local sign = "<cmd>lua vim.lsp.buf.signature_help()<CR>"
 local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
 local wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"
+local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 local node_modules = "/Users/saadparwaiz/Library/Application Support/nvim/bin/node_modules/.bin/"
-
-local function get_root_dir()
-	local root_dirs = {}
-	local info = false
-	for _, client in pairs(vim.lsp.buf_get_clients()) do
-		local root_dir = client.config.root_dir
-		if client.resolved_capabilities.document_formatting then
-			info = true
-		end
-		if root_dir then
-			table.insert(root_dirs, root_dir)
-		end
-	end
-	return 'lcd ' .. root_dirs[1], info
-end
 
 local on_attach=function(client, bufnr)
 	completion.on_attach(client, bufnr)
 
-	local cmd, info = get_root_dir()
-
-	vim.cmd(cmd)
-
-	if info then
+	if client.resolved_capabilities.document_formatting then
+		vim.api.nvim_set_keymap("n", "gq", fmt, options)
+	elseif client.resolved_capabilities.document_range_formatting then
 		vim.api.nvim_set_keymap("n", "gq", fmt, options)
 	end
 
-	vim.api.nvim_set_keymap('n', 'S', sign, options)
-	vim.api.nvim_set_keymap("n", "gd", defi, options)
-	vim.api.nvim_set_keymap("n", "gr", refe, options)
-	vim.api.nvim_set_keymap("n", "K", hover, options)
-	vim.api.nvim_set_keymap('n', 'gD', impli, options)
-	vim.api.nvim_set_keymap('n', 'gW', wrkspc, options)
-	vim.api.nvim_set_keymap("n", "<Left>", pdiag, options)
-	vim.api.nvim_set_keymap("n", "<Right>", ndiag, options)
+	local dir = client.config.root_dir
+
+	if dir then
+		vim.cmd('lcd ' .. dir)
+	end
+
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', acn, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'S', sign, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr", refe, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "K", hover, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', diag, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', impli, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD", declr, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', wrkspc, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Left>", pdiag, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Right>", ndiag, options)
+	vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
+
+	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+	if client.resolved_capabilities.document_highlight then
+		lspconfig.util.nvim_multiline_command [[
+			:hi link LspReferenceRead  MatchParen
+			:hi link LspReferenceText  MatchParen
+			:hi link LspReferenceWrite MatchParen
+			augroup lsp_document_highlight
+				autocmd!
+				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+			augroup END
+		]]
+	end
 end
 
 
@@ -77,6 +89,19 @@ lspconfig.bashls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities
 }
+
+lspconfig.clangd.setup {
+	cmd = {"xcrun", "clangd", "--background-index", "--suggest-missing-includes"},
+	on_attach = on_attach,
+	capabilities = capabilities,
+	init_options = {
+		fallbackFlags = {
+			'-Wall',
+			'-Wextra',
+		}
+	}
+}
+
 
 lspconfig.sumneko_lua.setup{
 	cmd = {"lua-language-server"},

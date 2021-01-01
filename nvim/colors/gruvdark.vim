@@ -1,21 +1,8 @@
 highlight clear
-
 if exists("syntax_on")
   syntax reset
 endif
-
 let g:colors_name = 'gruvdark'
-
-hi! link CursorColumn CursorLine
-hi! link QuickFixLine Search
-hi! link StatusLineTerm StatusLine
-hi! link StatusLineTermNC StatusLineNC
-hi! link VisualNOS Visual
-hi! link Tag Special
-hi! link lCursor Cursor
-hi! link iCursor Cursor
-hi! link vCursor Cursor
-
 let g:terminal_color_0 = '#282828'
 let g:terminal_color_1 = '#cc241d'
 let g:terminal_color_2 = '#98971a'
@@ -32,7 +19,11 @@ let g:terminal_color_12 = '#83a598'
 let g:terminal_color_13 = '#d3869b'
 let g:terminal_color_14 = '#8ec07c'
 let g:terminal_color_15 = '#ebdbb2'
-
+hi! link CursorColumn CursorLine
+hi! link QuickFixLine Search
+hi! link VisualNOS Visual
+hi! link Tag Special
+hi! link TSVariableBuiltin Type
 hi Normal guifg=#ebdbb2 guibg=#282828 guisp=NONE gui=NONE
 hi CursorLineNr guifg=#fabd2f guibg=#3c3836 guisp=NONE gui=NONE
 hi FoldColumn guifg=#928374 guibg=#3c3836 guisp=NONE gui=NONE
@@ -52,10 +43,6 @@ hi PmenuSbar guifg=NONE guibg=#504945 guisp=NONE gui=NONE
 hi PmenuSel guifg=#504945 guibg=#83a598 guisp=NONE gui=bold
 hi PmenuThumb guifg=NONE guibg=#7c6f64 guisp=NONE gui=NONE
 hi SpecialKey guifg=#928374 guibg=NONE guisp=NONE gui=NONE
-hi StatusLineNC guifg=#3c3836 guibg=#a89984 guisp=NONE gui=reverse
-hi TabLine guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
-hi TabLineFill guifg=#7c6f64 guibg=#3c3836 guisp=NONE gui=NONE
-hi TabLineSel guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE
 hi ToolbarButton guifg=#fbf1c7 guibg=#665c54 guisp=NONE gui=bold
 hi ToolbarLine guifg=NONE guibg=#665c54 guisp=NONE gui=NONE
 hi Visual guifg=NONE guibg=#665c54 guisp=NONE gui=NONE
@@ -67,10 +54,7 @@ hi DiffChange guifg=#8ec07c guibg=#282828 guisp=NONE gui=reverse
 hi DiffDelete guifg=#fb4934 guibg=#282828 guisp=NONE gui=reverse
 hi DiffText guifg=#fabd2f guibg=#282828 guisp=NONE gui=reverse
 hi Directory guifg=#b8bb26 guibg=NONE guisp=NONE gui=bold
-hi EndOfBuffer guifg=#282828 guibg=NONE guisp=NONE gui=NONE
 hi IncSearch guifg=#fe8019 guibg=#282828 guisp=NONE gui=reverse
-hi ModeMsg guifg=#fabd2f guibg=NONE guisp=NONE gui=bold
-hi MoreMsg guifg=#fabd2f guibg=NONE guisp=NONE gui=bold
 hi Question guifg=#fe8019 guibg=NONE guisp=NONE gui=bold
 hi Search guifg=#fabd2f guibg=#282828 guisp=NONE gui=reverse
 hi SpellBad guifg=#fb4934 guibg=NONE guisp=#fb4934 gui=italic,undercurl
@@ -112,50 +96,4 @@ hi Todo guifg=fg guibg=#282828 guisp=NONE gui=bold,italic
 hi Type guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
 hi Typedef guifg=#fabd2f guibg=NONE guisp=NONE gui=NONE
 hi Underlined guifg=#83a598 guibg=NONE guisp=NONE gui=underline
-hi CursorIM guifg=NONE guibg=NONE guisp=NONE gui=reverse
 hi Warnings guifg=#fe8019 guibg=#282828 guisp=NONE gui=reverse
-hi! link TermCursor Cursor
-hi TermCursorNC guifg=#3c3836 guibg=#ebdbb2 guisp=NONE gui=NONE
-
-highlight! link TSVariableBuiltin Type
-
-if !$PLUGINS
-  " Links
-  hi link SubStatusLine Visual
-
-
-  " Color Groups
-  hi StatusLine guifg=#504945 guibg=#ebdbb2 guisp=NONE gui=reverse
-  hi SubSeperator guifg=#504945 guibg=#665c54 guisp=NONE gui=reverse
-
-
-  " Functions
-  function! s:HighLight(c)
-    execute 'highlight Seperator guifg=#665c54' 'guibg='a:c 'guisp=NONE gui=reverse'
-    execute 'highlight Mode guifg=#282828' 'guibg='a:c 'guisp=NONE gui=BOLD'
-    execute 'highlight InfoMode guifg='a:c 'guibg=#282828' 'guisp=NONE gui=reverse'
-  endfunction
-
-  function! GetMode()
-      let l:mode = mode()
-      if l:mode ==# 'n'
-          call s:HighLight('#a89984')
-          return 'NORMAL'
-      elseif l:mode ==# 'i'
-          call s:HighLight('#83a598')
-          return 'INSERT'
-      elseif l:mode ==# 'R'
-          call s:HighLight('#8ec07c')
-          return 'REPLACE'
-      elseif l:mode ==# 'c'
-          call s:HighLight('#d3869b')
-          return 'COMMAND'
-      elseif l:mode ==# 't'
-          call s:HighLight('#8ec07c')
-          return 'TERMINAL'
-      else
-          call s:HighLight('#fe8019')
-          return 'VISUAL'
-      endif
-  endfunction
-end

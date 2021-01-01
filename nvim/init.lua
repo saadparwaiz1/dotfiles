@@ -5,13 +5,12 @@
 require('core/options')
 require('core/globals')
 require('core/autocmd')
+require('core/statusline')
+require('core/bufferline')
 require('core/keybindings')
 
 if os.getenv("PLUGINS") then
-	require('extensions/plugins')
-	require('extensions/statusline')
-else
-	require('core/statusline')
+	require('extensions')
 end
 -- }}}
 -- ============================================================================
