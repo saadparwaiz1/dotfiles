@@ -5,4 +5,4 @@ https://github.com/neovim/nvim-lspconfig.git
 https://github.com/nvim-treesitter/nvim-treesitter.git
 https://github.com/norcalli/snippets.nvim.git
 https://github.com/tpope/vim-commentary.git
-https://github.com/tpope/vim-surround
+git@github.com:saadparwaiz1/vim-surround.git

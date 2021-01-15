@@ -45,8 +45,10 @@ cask "kitty"
 # ============================================================================
 brew "fd"
 brew "fzf"
+brew "exa"
 brew "bat"
 brew "shfmt"
+brew "ripgrep"
 brew "shellcheck"
 brew "diff-so-fancy"
 brew "the_silver_searcher"
@@ -88,6 +90,7 @@ brew "saadparwaiz1/core/lua-language-server"
 # ============================================================================
 brew "node"
 brew "luajit", args: ["HEAD"]
+brew "python@3.9"
 # }}}
 # ============================================================================
 # Language Servers {{{

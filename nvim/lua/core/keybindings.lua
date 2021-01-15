@@ -1,27 +1,23 @@
 -- vim: set foldmethod=marker foldlevel=1 nomodeline:
 -- ============================================================================
--- Utilities {{{
+-- Mappings {{{
 -- ============================================================================
-local all = {noremap = true, silent = true, expr = true}
-local partial = {noremap = true, silent = true}
-
-local tab = [[pumvisible() ? "\<C-n>" : g:snippets_nvim_win ? "<cmd>lua return require'snippets'.expand_or_advance(1)<CR>" : "\<Tab>"]]
-local stab = [[pumvisible() ? "\<C-p>" : g:snippets_nvim_win ? "<cmd>lua return require'snippets'.advance_snippet(-1)<CR>" : "\<S-Tab>"]]
-
 local function map(mappings)
 	for k,v in pairs(mappings) do
 		vim.api.nvim_set_keymap(v[3], k, v[1], v[2])
 	end
 end
--- }}}
--- ============================================================================
--- Mappings {{{
--- ============================================================================
+
+local all = {noremap = true, silent = true, expr = true}
+local wiki = '<cmd>lcd ~/Library/Projects/notes | edit ~/Library/Projects/notes/index.md<CR>'
+local partial = {noremap = true, silent = true}
+
 local mappings = {
 	-- terminal interface mappings
 	['\\n'] = { '<cmd>bn<CR>', partial, 'n'},
 	['\\p'] = { '<cmd>bp<CR>', partial, 'n'},
 	['\\q'] = { '<cmd>bd<CR>', partial, 'n'},
+	['\\w'] = {wiki, partial, 'n'},
 
 	-- tab mappings
 	['<tab>'] = { [[pumvisible() ? "\<C-n>" : "\<Tab>"]], all, 'i'},
@@ -34,30 +30,19 @@ local mappings = {
 	['<C-l>'] = { '<C-w>l', partial, 'n'},
 
 	-- Arrow Key Mappings
-	['<Down>'] = { 'gj', partial, 'n'},
 	['<Up>'] = { 'gk', partial, 'n'},
+	['<Down>'] = { 'gj', partial, 'n'},
+
+	-- Leader Key Mappings
+	['<leader>gf'] = {'0f(<cmd>e <cfile><cr>', partial, 'n'},
 
 	-- Random Key Mappings
-	['jj'] = { '<Esc>', partial, 'i'},
 	['Q'] = { '<nop>', partial, 'n'},
-	['<CR>'] = { '<cmd>nohlsearch<CR><CR>', partial, 'n'},
+	['vv'] = {'^v$', partial, 'n'},
+	['jj'] = { '<Esc>', partial, 'i'},
 	['jk'] = {'<cmd>wq<CR>', partial, 'i'},
-	['vv'] = {'^v$', partial, 'n'}
 }
 
 map(mappings)
-
-if os.getenv("PLUGINS") then
-	local plugins = {
-		['\\f'] = { '<cmd>Files<CR>', partial, 'n'},
-		['\\l'] = { '<cmd>Rg<CR>', partial, 'n'},
-		['\\t'] = { '<cmd>lua Term()<CR>', partial, 'n' },
-		['<c-x><c-f>'] = {"fzf#vim#complete#path('fd')", {expr=true}, 'i'},
-		['<c-x><c-d>'] = {"fzf#vim#complete('cat /usr/share/dict/words')", {expr=true}, 'i'},
-		['<tab>'] = { tab, all, 'i'},
-		['<s-tab>'] = { stab, all, 'i'},
-	}
-	map(plugins)
-end
 -- }}}
 -- ============================================================================

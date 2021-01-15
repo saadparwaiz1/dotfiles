@@ -9,10 +9,12 @@ vim.g.completion_chain_complete_list = {
 	}
 }
 
-vim.g.completion_matching_strategy_list = {
-	'exact',
-	'substring',
+vim.g.completion_auto_change_source = 1
+
+local autocmds_completion = {
+		plugins = {
+			{"BufEnter", "*", "lua require('completion').on_attach()"},
+		}
 }
 
-vim.g.completion_auto_change_source = 1
-vim.g.completion_enable_snippet = 'snippets.nvim'
+nvim_create_augroups(autocmds_completion)

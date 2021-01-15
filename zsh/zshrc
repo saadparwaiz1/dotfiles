@@ -1,5 +1,13 @@
 # vim: set foldmethod=marker foldlevel=0 nomodeline:
 # ============================================================================
+# Set Env Variable {{{
+# ============================================================================
+export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
+export MANPATH="/opt/intel/homebrew/share/man${MANPATH+:$MANPATH}:";
+export INFOPATH="/opt/intel/homebrew/share/info:${INFOPATH:-}";
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+# }}}
+# ============================================================================
 # Set Up ZINIT {{{
 # ============================================================================
 fpath+=/opt/intel/homebrew/share/zsh/site-functions
@@ -34,7 +42,7 @@ zinit wait'!1' lucid for \
 zinit ice wait'!0'
 zinit light zsh-users/zsh-history-substring-search
 
-zinit ice wait'!0'
+zinit ice wait'!2'
 zinit light hlissner/zsh-autopair
 #-----------------------------------------------------------------------------
 # KEYBINDINGS
@@ -117,27 +125,33 @@ alias rm="rm -iv"
 alias less="less -R"
 alias sudo="nocorrect sudo "
 
-# Various Aliases to list files
-alias ls="ls -GF"
-alias la="ls -A"
-alias lk="ls -A | grep '@'"
-alias ll="ls -alh"
 
-# Aliases for Grepping
-alias grep="grep --color=auto"
-alias egrep="egrep --color=auto"
-alias fgrep="fgrep --color=auto"
-alias budget="~/Documents/budget.py"
+# Core Util Replacements
+if command -v bat &>/dev/null
+then
+	alias cat='bat'
+fi
+
+if command -v exa &>/dev/null
+then
+	alias ls="exa --icons"
+	alias la="exa -a --icons"
+	alias ll="exa --icons -alh"
+else
+	alias ls="ls -GF"
+	alias la="ls -A"
+	alias ll="ls -alh"
+fi
 
 # Aliases for custom commands
 alias purge="sudo --stdin purge"
 alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source $ZDOTDIR/.zshrc"
+alias nightly-nvim="brew uninstall neovim && brew install --HEAD neovim && brew autoremove && rm -rf $(/opt/intel/homebrew/bin/brew --prefix)/etc/luarocks"
+alias bu="brew update && brew upgrade --greedy"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
 alias d="kitty +kitten diff"
 alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
-alias vim="/opt/intel/homebrew/bin/nvim"
-alias nvim="PLUGINS=1 nvim"
 alias nvimbrew="$XDG_CONFIG_HOME/darwin/nvimbrew.sh"
 # }}}
 # ============================================================================
@@ -229,11 +243,6 @@ bindkey '^[[1;3C' forward-word
 bindkey jj vi-cmd-mode
 # }}}
 # ============================================================================
-# Set PATH Variable {{{
-# ============================================================================
-export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin"
-# }}}
-# ============================================================================
 # ZSH PLUGINS {{{
 # ============================================================================
 #-----------------------------------------------------------------------------
@@ -248,10 +257,6 @@ export MODE_INDICATOR=""
 
 source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"
 
-if command -v bat &>/dev/null
-then
-	alias cat='bat'
-fi
 
 if command -v fd &>/dev/null
 then

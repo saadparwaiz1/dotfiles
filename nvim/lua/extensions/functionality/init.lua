@@ -2,22 +2,13 @@ vim.cmd('packadd! vim-surround')
 vim.cmd('packadd! vim-commentary')
 vim.cmd('packadd! nvim-autopairs')
 
-require('nvim-autopairs').setup{
-	pairs_map = {
-		["'"] = "'",
-		['"'] = '"',
-		['('] = ')',
-		['['] = ']',
-		['{'] = '}',
-		['`'] = '`',
-		['<'] = '>'
-	}
-}
+require('nvim-autopairs').setup()
 
 local opt = vim.o
 local api = vim.api
 local cmd = vim.cmd
 local fn = vim.fn
+
 local function float_term(args)
 	local height = math.floor((opt.lines - 2) * 0.6)
 	local row = math.floor((opt.lines - height) / 2)
@@ -75,7 +66,9 @@ local function float_term(args)
 		float_term_border_win)
 	)
 end
-local function term()
-	float_term(os.getenv('SHELL'))
-end
-_G.Term = term
+
+api.nvim_set_keymap('n', '\\t', '<cmd>lua require("extensions/functionality").FloatTerm("/bin/zsh")<CR>', {})
+
+return {
+	FloatTerm = float_term
+}

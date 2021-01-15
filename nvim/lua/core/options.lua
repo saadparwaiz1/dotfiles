@@ -4,6 +4,7 @@
 -- ============================================================================
 vim.o.hidden = true
 vim.o.backup = false
+vim.o.undofile = true
 vim.o.showmode = false
 vim.o.lazyredraw = true
 vim.o.splitbelow = true
@@ -44,5 +45,6 @@ vim.bo.softtabstop=2
 vim.wo.list = true
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.wo.conceallevel = 1
 -- }}}
 -- ============================================================================

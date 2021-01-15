@@ -18,6 +18,8 @@ local function nvim_create_augroups(definitions)
 		cmd('augroup END')
 	end
 end
+
+_G.nvim_create_augroups = nvim_create_augroups
 -- }}}
 -- ============================================================================
 -- Autocmds {{{
@@ -28,16 +30,6 @@ local autocmds_core = {
 		{"TextYankPost", "*", "silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200}"}
 	},
 }
-
-
-if os.getenv("PLUGINS") then
-	local autocmds_plugins = {
-		plugins = {
-			{"BufEnter", "*", "lua require('completion').on_attach()"},
-		}
-	}
-	nvim_create_augroups(autocmds_plugins)
-end
 
 nvim_create_augroups(autocmds_core)
 -- }}}

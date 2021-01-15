@@ -61,7 +61,7 @@ local on_attach=function(client, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 	if client.resolved_capabilities.document_highlight then
-		lspconfig.util.nvim_multiline_command [[
+		vim.api.nvim_exec([[
 			:hi link LspReferenceRead  MatchParen
 			:hi link LspReferenceText  MatchParen
 			:hi link LspReferenceWrite MatchParen
@@ -70,7 +70,7 @@ local on_attach=function(client, bufnr)
 				autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
 				autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 			augroup END
-		]]
+		]], false)
 	end
 end
 
@@ -91,7 +91,7 @@ lspconfig.bashls.setup {
 }
 
 lspconfig.clangd.setup {
-	cmd = {"xcrun", "clangd", "--background-index", "--suggest-missing-includes"},
+	cmd = {"clangd", "--background-index", "--suggest-missing-includes", "--header-insertion=iwyu", "--clang-tidy"},
 	on_attach = on_attach,
 	capabilities = capabilities,
 	init_options = {
