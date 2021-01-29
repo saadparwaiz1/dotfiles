@@ -3,8 +3,8 @@
 # Set Env Variable {{{
 # ============================================================================
 export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
-export MANPATH="/opt/intel/homebrew/share/man${MANPATH+:$MANPATH}:";
-export INFOPATH="/opt/intel/homebrew/share/info:${INFOPATH:-}";
+export MANPATH="/opt/intel/homebrew/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="/opt/intel/homebrew/share/info:${INFOPATH:-}"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 # }}}
 # ============================================================================
@@ -125,18 +125,15 @@ alias rm="rm -iv"
 alias less="less -R"
 alias sudo="nocorrect sudo "
 
-
 # Core Util Replacements
-if command -v bat &>/dev/null
-then
+if command -v bat &>/dev/null; then
 	alias cat='bat'
 fi
 
-if command -v exa &>/dev/null
-then
+if command -v exa &>/dev/null; then
 	alias ls="exa --icons"
-	alias la="exa -a --icons"
-	alias ll="exa --icons -alh"
+	alias la="exa -lah --icons"
+	alias ll="exa --icons -alh  --git-ignore"
 else
 	alias ls="ls -GF"
 	alias la="ls -A"
@@ -174,12 +171,12 @@ dir() {
 	done
 }
 
-h(){
+h() {
 	(( # == 0 )) && cd ~ && return
 
 	dest=$(fd --type d -E "venv" -E "venv.nosync" -E "Containers" -E "Group\ Containers" -E "node_modules" -E 'site-packages' -E '[Cc]ache*' --absolute-path --hidden "$1" ~)
 
-	if ! cd "$dest" &> /dev/null; then
+	if ! cd "$dest" &>/dev/null; then
 		dest=$(echo "$dest" | fzf)
 		cd "$dest"
 	fi
@@ -212,9 +209,8 @@ prompts
 # ============================================================================
 bindkey -v
 
-function zle-keymap-select {
-	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]
-	then
+zle-keymap-select() {
+	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
 		echo -ne '\e[1 q'
 	elif [[ ${KEYMAP} == main ]] ||
 		[[ ${KEYMAP} == viins ]] ||
@@ -257,9 +253,7 @@ export MODE_INDICATOR=""
 
 source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"
 
-
-if command -v fd &>/dev/null
-then
+if command -v fd &>/dev/null; then
 	alias find='fd'
 	export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden"
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

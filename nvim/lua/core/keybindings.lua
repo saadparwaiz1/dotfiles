@@ -18,6 +18,7 @@ local mappings = {
 	['\\p'] = { '<cmd>bp<CR>', partial, 'n'},
 	['\\q'] = { '<cmd>bd<CR>', partial, 'n'},
 	['\\w'] = {wiki, partial, 'n'},
+	['\\s'] = {'<cmd>w<CR>', partial, 'n'},
 
 	-- tab mappings
 	['<tab>'] = { [[pumvisible() ? "\<C-n>" : "\<Tab>"]], all, 'i'},

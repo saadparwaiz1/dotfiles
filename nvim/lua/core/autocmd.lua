@@ -18,8 +18,6 @@ local function nvim_create_augroups(definitions)
 		cmd('augroup END')
 	end
 end
-
-_G.nvim_create_augroups = nvim_create_augroups
 -- }}}
 -- ============================================================================
 -- Autocmds {{{

@@ -2,17 +2,6 @@
 -- ============================================================================
 -- Utilities {{{
 -- ============================================================================
-vim.cmd('packadd! nvim-web-devicons')
-local devicons = require('nvim-web-devicons')
-
-local function file_extension()
-	local filename = vim.fn.expand('%:t')
-	local extension = vim.bo.filetype
-	if extension == '' then extension = 'text' end
-
-	return extension .. ' ' .. devicons.get_icon(filename,extension, {default=true})
-end
-
 local function line(fmt)
 	vim.o.statusline = vim.o.statusline .. fmt
 end
@@ -45,10 +34,10 @@ local function git_branch()
 		return git_info
 	end
 
-	local branch = vim.fn.system('cd ' .. cwd .. ' &> /dev/null && git rev-parse --abbrev-ref HEAD 2> /dev/null | tr -d "\n"')
+	local branch = vim.fn.system('cd ' .. cwd .. ' &> /dev/null && git branch --show-current 2> /dev/null | tr -d "\n"')
 
 	if branch == '' or not branch then
-		branch = vim.bo.readonly and '' or ''
+		branch = 'darwin'
 	else
 		branch = ' ' .. branch
 	end
@@ -103,7 +92,6 @@ end
 _G.vimline_bufferline = bufferline
 _G.vimline_current_mode = current_mode
 _G.vimline_git_branch = git_branch
-_G.vimline_file_ext = file_extension
 -- }}}
 -- ============================================================================
 -- Vim Line {{{
@@ -115,7 +103,8 @@ line([[%#Seperator#%#Mode#%{v:lua.vimline_current_mode()}%#Seperator#%#Sub
 line("%#FileSeperator#%#File#%t%#FileSeperator#%#SubStatusLine# ")
 line([[%#GitSeperator#%#Git#%{v:lua.vimline_git_branch()}%#GitSeperator#%#SubStatusLine#  ]])
 line("%#SubStatusLine#%=")
-line([[%#ExtSeperator#%#Ext#%{v:lua.vimline_file_ext()}%#ExtSeperator#%#SubStatusLine# ]])
+-- TODO: replace with builtin lsp status/errors
+-- line([[%#ExtSeperator#%#Ext#%{v:lua.vimline_file_ext()}%#ExtSeperator#%#SubStatusLine# ]])
 line("%#LineSeperator#%#Line#%l:%c %p%%%#LineSeperator#")
 -- }}}
 -- ============================================================================

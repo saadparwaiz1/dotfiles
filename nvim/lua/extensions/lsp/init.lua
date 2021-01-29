@@ -5,7 +5,6 @@
 vim.cmd('packadd! nvim-lspconfig')
 
 local lspconfig = require('lspconfig')
-local completion = require('completion')
 -- }}}
 -- ============================================================================
 -- LSP Configuration {{{
@@ -22,7 +21,6 @@ local acn = "<cmd>lua vim.lsp.buf.code_action()<CR>"
 local defi = "<cmd>lua vim.lsp.buf.definition()<CR>"
 local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local refe = "<cmd>lua vim.lsp.buf.references()<CR>"
-local sign = "<cmd>lua vim.lsp.buf.signature_help()<CR>"
 local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
@@ -31,8 +29,6 @@ local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 local node_modules = "/Users/saadparwaiz/Library/Application Support/nvim/bin/node_modules/.bin/"
 
 local on_attach=function(client, bufnr)
-	completion.on_attach(client, bufnr)
-
 	if client.resolved_capabilities.document_formatting then
 		vim.api.nvim_set_keymap("n", "gq", fmt, options)
 	elseif client.resolved_capabilities.document_range_formatting then
@@ -46,7 +42,6 @@ local on_attach=function(client, bufnr)
 	end
 
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', acn, options)
-	vim.api.nvim_buf_set_keymap(bufnr, 'n', 'S', sign, options)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr", refe, options)
 	vim.api.nvim_buf_set_keymap(bufnr, 'n', "K", hover, options)
