@@ -1,10 +1,11 @@
-https://github.com/junegunn/fzf.vim
 https://github.com/windwp/nvim-autopairs
 https://github.com/hrsh7th/nvim-compe
 https://github.com/mfussenegger/nvim-dap
 https://github.com/neovim/nvim-lspconfig.git
 https://github.com/nvim-treesitter/nvim-treesitter.git
+https://github.com/nvim-lua/plenary.nvim
+https://github.com/nvim-lua/popup.nvim
+https://github.com/nvim-telescope/telescope.nvim
 https://github.com/tpope/vim-commentary.git
 git@github.com:saadparwaiz1/vim-surround.git
-https://github.com/hrsh7th/vim-vsnip-integ
 https://github.com/hrsh7th/vim-vsnip

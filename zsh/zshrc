@@ -125,11 +125,6 @@ alias rm="rm -iv"
 alias less="less -R"
 alias sudo="nocorrect sudo "
 
-# Core Util Replacements
-if command -v bat &>/dev/null; then
-	alias cat='bat'
-fi
-
 if command -v exa &>/dev/null; then
 	alias ls="exa --icons"
 	alias la="exa -lah --icons"
@@ -248,7 +243,6 @@ export MODE_INDICATOR=""
 #-----------------------------------------------------------------------------
 #FZF
 #-----------------------------------------------------------------------------
-
 [[ $- == *i* ]] && source "/opt/intel/homebrew/opt/fzf/shell/completion.zsh"
 
 source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"

@@ -2,8 +2,8 @@
 -- ============================================================================
 -- lua modules {{{
 -- ============================================================================
+require('extensions/completion')
 vim.cmd('packadd! nvim-lspconfig')
-
 local lspconfig = require('lspconfig')
 -- }}}
 -- ============================================================================
@@ -26,9 +26,10 @@ local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
 local wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"
 local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
-local node_modules = "/Users/saadparwaiz/Library/Application Support/nvim/bin/node_modules/.bin/"
+local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach=function(client, bufnr)
+	require('extensions.completion').on_attach(client, bufnr)
 	if client.resolved_capabilities.document_formatting then
 		vim.api.nvim_set_keymap("n", "gq", fmt, options)
 	elseif client.resolved_capabilities.document_range_formatting then
@@ -76,7 +77,14 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.pyright.setup {
 	cmd = {node_modules .. "pyright-langserver", '--stdio'},
 	on_attach = on_attach,
-	capabilities = capabilities
+	capabilities = capabilities,
+	settings = {
+		python = {
+			analysis = {
+				useLibraryCodeForTypes = false
+			}
+		}
+	}
 }
 
 lspconfig.bashls.setup {
@@ -96,7 +104,6 @@ lspconfig.clangd.setup {
 		}
 	}
 }
-
 
 lspconfig.sumneko_lua.setup{
 	cmd = {"lua-language-server"},
