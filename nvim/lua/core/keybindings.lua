@@ -13,9 +13,9 @@ local partial = {noremap = true, silent = true}
 
 local mappings = {
 	-- terminal interface mappings
-	['\\n'] = { '<cmd>bn<CR>', partial, 'n'},
-	['\\p'] = { '<cmd>bp<CR>', partial, 'n'},
-	['\\q'] = { '<cmd>bd<CR>', partial, 'n'},
+	['\\cmdn'] = { '<cmd>bn<CR>', partial, 'n'},
+	['\\cmdp'] = { '<cmd>bp<CR>', partial, 'n'},
+	['\\cmdq'] = { '<cmd>bd<CR>', partial, 'n'},
 
 	-- tab mappings
 	['<tab>'] = { [[pumvisible() ? "\<C-n>" : "\<Tab>"]], all, 'i'},

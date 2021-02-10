@@ -2,7 +2,6 @@
 -- ============================================================================
 -- lua modules {{{
 -- ============================================================================
-require('extensions/completion')
 vim.cmd('packadd! nvim-lspconfig')
 local lspconfig = require('lspconfig')
 -- }}}
@@ -29,7 +28,6 @@ local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach=function(client, bufnr)
-	require('extensions.completion').on_attach(client, bufnr)
 	if client.resolved_capabilities.document_formatting then
 		vim.api.nvim_set_keymap("n", "gq", fmt, options)
 	elseif client.resolved_capabilities.document_range_formatting then
@@ -78,13 +76,6 @@ lspconfig.pyright.setup {
 	cmd = {node_modules .. "pyright-langserver", '--stdio'},
 	on_attach = on_attach,
 	capabilities = capabilities,
-	settings = {
-		python = {
-			analysis = {
-				useLibraryCodeForTypes = false
-			}
-		}
-	}
 }
 
 lspconfig.bashls.setup {

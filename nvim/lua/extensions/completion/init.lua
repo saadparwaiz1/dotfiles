@@ -1,19 +1,15 @@
-vim.cmd('packadd! completion-nvim')
+vim.cmd('packadd! nvim-compe')
 
-vim.g.completion_chain_complete_list = {
-	default = {
-		{complete_items={'lsp', 'snippet'}},
-		{mode='<c-p>'},
-		{mode='<c-n>'},
-		{mode='file'}
+require('compe').setup {
+	enabled = true;
+	source = {
+		path = true;
+		spell = true;
+		vsnip = true;
+		buffer = true;
+		nvim_lsp = true;
+		nvim_lua = true;
 	}
 }
 
-vim.g.completion_matching_strategy_list = {
-	'exact',
-	'substring',
-}
-
-vim.g.completion_auto_change_source = 1
-
-return require('completion')
+vim.api.nvim_set_keymap('i', '<CR>', 'compe#confirm("<CR>")', {noremap = true, silent = true, expr = true})
