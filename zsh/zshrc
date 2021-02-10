@@ -5,7 +5,7 @@
 export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
 export MANPATH="/opt/intel/homebrew/share/man${MANPATH+:$MANPATH}:"
 export INFOPATH="/opt/intel/homebrew/share/info:${INFOPATH:-}"
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
 # }}}
 # ============================================================================
 # Set Up ZINIT {{{

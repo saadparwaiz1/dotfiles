@@ -9,7 +9,6 @@ local function map(mappings)
 end
 
 local all = {noremap = true, silent = true, expr = true}
-local wiki = '<cmd>lcd ~/Library/Projects/notes | edit ~/Library/Projects/notes/index.md<CR>'
 local partial = {noremap = true, silent = true}
 
 local mappings = {
@@ -17,8 +16,6 @@ local mappings = {
 	['\\n'] = { '<cmd>bn<CR>', partial, 'n'},
 	['\\p'] = { '<cmd>bp<CR>', partial, 'n'},
 	['\\q'] = { '<cmd>bd<CR>', partial, 'n'},
-	['\\w'] = {wiki, partial, 'n'},
-	['\\s'] = {'<cmd>w<CR>', partial, 'n'},
 
 	-- tab mappings
 	['<tab>'] = { [[pumvisible() ? "\<C-n>" : "\<Tab>"]], all, 'i'},
@@ -34,14 +31,10 @@ local mappings = {
 	['<Up>'] = { 'gk', partial, 'n'},
 	['<Down>'] = { 'gj', partial, 'n'},
 
-	-- Leader Key Mappings
-	['<leader>gf'] = {'0f(<cmd>e <cfile><cr>', partial, 'n'},
-
 	-- Random Key Mappings
 	['Q'] = { '<nop>', partial, 'n'},
 	['vv'] = {'^v$', partial, 'n'},
 	['jj'] = { '<Esc>', partial, 'i'},
-	['jk'] = {'<cmd>wq<CR>', partial, 'i'},
 }
 
 map(mappings)

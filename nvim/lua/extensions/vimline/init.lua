@@ -79,10 +79,10 @@ local function bufferline()
 
 		if v == this then
 			if v == '' then v = '[No Name]' else v = vim.fn.fnamemodify(v, ':t') end
-			table.insert(bufline, '%#ExtSeperator#%#Ext#' .. v .. '%#ExtSeperator#%#SubStatusLine#')
+			table.insert(bufline, '%#VimlineExtSeperator#%#VimlineExt#' .. v .. '%#VimlineExtSeperator#%#VimlineSubStatusLine#')
 		else
 		if v == '' then v = '[No Name]' else v = vim.fn.fnamemodify(v, ':t') end
-			table.insert(bufline, '%#FileSeperator#%#File#' .. v .. '%#FileSeperator#%#SubStatusLine#')
+			table.insert(bufline, '%#VimlineFileSeperator#%#VimlineFile#' .. v .. '%#VimlineFileSeperator#%#VimlineSubStatusLine#')
 		end
 	end
 
@@ -99,12 +99,12 @@ _G.vimline_git_branch = git_branch
 vim.o.statusline = ''
 vim.o.tabline = [[%!v:lua.vimline_bufferline()]]
 
-line([[%#Seperator#%#Mode#%{v:lua.vimline_current_mode()}%#Seperator#%#SubStatusLine# ]])
-line("%#FileSeperator#%#File#%t%#FileSeperator#%#SubStatusLine# ")
-line([[%#GitSeperator#%#Git#%{v:lua.vimline_git_branch()}%#GitSeperator#%#SubStatusLine#  ]])
-line("%#SubStatusLine#%=")
--- TODO: replace with builtin lsp status/errors
--- line([[%#ExtSeperator#%#Ext#%{v:lua.vimline_file_ext()}%#ExtSeperator#%#SubStatusLine# ]])
-line("%#LineSeperator#%#Line#%l:%c %p%%%#LineSeperator#")
+line([[%#VimlineSeperator#%#VimlineMode#%{v:lua.vimline_current_mode()}%#VimlineSeperator#%#VimlineSubStatusLine# ]])
+line("%#VimlineFileSeperator#%#VimlineFile#%t%#VimlineFileSeperator#%#VimlineSubStatusLine# ")
+line([[%#VimlineGitSeperator#%#VimlineGit#%{v:lua.vimline_git_branch()}%#VimlineGitSeperator#%#VimlineSubStatusLine#  ]])
+line("%#VimlineSubStatusLine#%=")
+line("%#VimlineErrorSeperator#%#VimlineError#E:%{luaeval('vim.lsp.diagnostic.get_count(0, [[Error]])')} ")
+line("%#VimlineWarning# W:%{luaeval('vim.lsp.diagnostic.get_count(0, [[Warning]])')}%#VimlineWarningSeperator#%#VimlineSubStatusLine# ")
+line("%#VimlineLineSeperator#%#VimlineLine#%l:%c %p%%%#VimlineLineSeperator#")
 -- }}}
 -- ============================================================================

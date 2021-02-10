@@ -1,6 +1,0 @@
-text/plain; $EDITOR %s;
-image/*; open %s;
-video/*; open %s;
-audio/*; open %s;
-text/html; open %s; nametemplate=%s.html
-application/*; open %s
