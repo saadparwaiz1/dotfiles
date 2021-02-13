@@ -1,6 +1,7 @@
 *.plist
 com.apple.*
 com.google.*
+org.*
 !local.enviroment.plist
 spicetify_data
 spotifyd

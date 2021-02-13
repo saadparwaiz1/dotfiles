@@ -1,13 +1,11 @@
-https://github.com/nvim-lua/completion-nvim
 https://github.com/windwp/nvim-autopairs
+https://github.com/hrsh7th/nvim-compe
 https://github.com/neovim/nvim-lspconfig.git
-https://github.com/kyazdani42/nvim-tree.lua
 https://github.com/nvim-treesitter/nvim-treesitter.git
 https://github.com/kyazdani42/nvim-web-devicons
 https://github.com/nvim-lua/plenary.nvim
 https://github.com/nvim-lua/popup.nvim
-https://github.com/norcalli/snippets.nvim
 https://github.com/nvim-telescope/telescope.nvim
-https://github.com/saadparwaiz1/vim-commentary
+git@github.com:saadparwaiz1/vim-commentary.git
 git@github.com:saadparwaiz1/vim-surround.git
 https://github.com/hrsh7th/vim-vsnip
