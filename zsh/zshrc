@@ -2,19 +2,15 @@
 # ============================================================================
 # Set Env Variable {{{
 # ============================================================================
-export PATH="/opt/intel/homebrew/bin:$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
-export MANPATH="/opt/intel/homebrew/share/man${MANPATH+:$MANPATH}:"
-export INFOPATH="/opt/intel/homebrew/share/info:${INFOPATH:-}"
+export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
 # }}}
 # ============================================================================
 # Set Up ZINIT {{{
 # ============================================================================
-fpath+=/opt/intel/homebrew/share/zsh/site-functions
-
 typeset -gA ZINIT
-export ZINIT[BIN_DIR]=/opt/intel/homebrew/opt/zinit
-export ZINIT[HOME_DIR]=/opt/intel/homebrew/opt/zinit
+export ZINIT[BIN_DIR]=$(brew --prefix)/opt/zinit
+export ZINIT[HOME_DIR]=$(brew --prefix)/opt/zinit
 export ZINIT[ZCOMPDUMP_PATH]=$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 export ZINIT[MUTE_WARNINGS]=1
 # }}}
@@ -139,7 +135,7 @@ fi
 alias purge="sudo --stdin purge"
 alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source $ZDOTDIR/.zshrc"
-alias nightly-nvim="brew uninstall neovim && brew install --HEAD neovim && brew autoremove && rm -rf $(/opt/intel/homebrew/bin/brew --prefix)/etc/luarocks"
+alias nightly-nvim="brew uninstall neovim && brew install --HEAD neovim && brew autoremove && rm -rf $(brew --prefix)/etc/luarocks"
 alias bu="brew update && brew upgrade --greedy"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
 alias d="kitty +kitten diff"
@@ -169,7 +165,7 @@ dir() {
 h() {
 	(( # == 0 )) && cd ~ && return
 
-	dest=$(fd --type d -E "venv" -E "venv.nosync" -E "Containers" -E "Group\ Containers" -E "node_modules" -E 'site-packages' -E '[Cc]ache*' --absolute-path --hidden "$1" ~)
+	dest=$(fd --type d --absolute-path --hidden "$1" ~)
 
 	if ! cd "$dest" &>/dev/null; then
 		dest=$(echo "$dest" | fzf)
@@ -243,9 +239,9 @@ export MODE_INDICATOR=""
 #-----------------------------------------------------------------------------
 #FZF
 #-----------------------------------------------------------------------------
-[[ $- == *i* ]] && source "/opt/intel/homebrew/opt/fzf/shell/completion.zsh"
+[[ $- == *i* ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
 
-source "/opt/intel/homebrew/opt/fzf/shell/key-bindings.zsh"
+source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 
 if command -v fd &>/dev/null; then
 	alias find='fd'

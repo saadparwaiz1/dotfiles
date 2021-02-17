@@ -6,7 +6,7 @@ tap "homebrew/core"
 tap "homebrew/cask"
 tap "homebrew/bundle"
 tap "homebrew/services"
-tap "saadparwaiz1/core"
+tap "saadparwaiz1/personal"
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"
 # }}}
@@ -27,13 +27,11 @@ brew "koekeishiya/formulae/yabai"
 # ============================================================================
 # Entertainment {{{
 # ============================================================================
-cask "spotify"
 # }}}
 # ============================================================================
 # Package Managers {{{
 # ============================================================================
-brew "mas"
-brew "saadparwaiz1/core/zinit", args: ["HEAD"]
+brew "saadparwaiz1/personal/zinit"
 # }}}
 # ============================================================================
 # Terminal Emulators {{{
@@ -46,12 +44,9 @@ cask "kitty"
 brew "fd"
 brew "fzf"
 brew "exa"
-brew "bat"
 brew "shfmt"
 brew "ripgrep"
-brew "shellcheck"
 brew "diff-so-fancy"
-brew "the_silver_searcher"
 # }}}
 # ============================================================================
 # Shells {{{
@@ -71,6 +66,8 @@ cask "font-jetbrains-mono-nerd-font"
 # Conferencing {{{
 # ============================================================================
 cask "zoom"
+cask "signal"
+cask "discord"
 # }}}
 # ============================================================================
 # Build Tools {{{
@@ -79,7 +76,7 @@ cask "zoom"
 # ============================================================================
 # Language Servers {{{
 # ============================================================================
-brew "saadparwaiz1/core/lua-language-server"
+brew "saadparwaiz1/personal/lua-language-server"
 # }}}
 # ============================================================================
 # Compilers {{{
@@ -89,17 +86,6 @@ brew "saadparwaiz1/core/lua-language-server"
 # Interpreters {{{
 # ============================================================================
 brew "node"
-brew "luajit", args: ["HEAD"]
 brew "python@3.9"
-# }}}
-# ============================================================================
-# Language Servers {{{
-# ============================================================================
-# }}}
-# ============================================================================
-# App Store Apps{{{
-# ============================================================================
-mas "1Password 7", id: 1333542190
-mas "NordVPN IKE", id: 1116599239
 # }}}
 # ============================================================================

@@ -96,26 +96,28 @@ lspconfig.clangd.setup {
 	}
 }
 
+lspconfig.tsserver.setup {
+	cmd = {node_modules .. 'typescript-language-server', '--stdio'},
+	on_attach = on_attach,
+	capabilities = capabilities,
+
+}
+
 lspconfig.sumneko_lua.setup{
-	cmd = {"lua-language-server"},
+	cmd = {"lua-langserver"},
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
 		Lua = {
 			runtime = {
 				version = 'LuaJIT',
-				path = {
-					'?.lua',
-					'?/init.lua',
-					'/opt/intel/homebrew/share/luajit-2.1.0-beta3/jit/?.lua',
-					'/opt/intel/homebrew/share/nvim/runtime/lua/?.lua',
-					'/opt/intel/homebrew/share/nvim/runtime/lua/vim/?.lua',
-					'/opt/intel/homebrew/share/nvim/runtime/lua/vim/lsp/?.lua',
-					'/opt/intel/homebrew/share/nvim/runtime/lua/vim/treesitter/?.lua',
-				}
+				path = vim.split(package.path, ';')
 			},
 			workspace = {
-				['/opt/intel/homebrew/share/luajit-2.1.0-beta3'] = true
+				library = {
+					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+					[vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+				},
 			},
 			diagnostics = {
 				globals = { 'vim' }
@@ -159,6 +161,5 @@ vim.fn.sign_define(
 	"LspDiagnosticsSignHint",
 	{text="", texthl="WildMenu"}
 )
-
 -- }}}
 -- ============================================================================
