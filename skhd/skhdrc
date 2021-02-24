@@ -26,5 +26,3 @@ shift + alt - space : yabai -m window --toggle float
 
 # Make window native fullscreen
 ctrl + cmd + alt - m : yabai -m window --toggle zoom-fullscreen
-
-shift - up: skhd --key "ctrl - f2"

@@ -42,8 +42,10 @@ cask "kitty"
 # Shell Tools{{{
 # ============================================================================
 brew "fd"
+brew "gh"
 brew "fzf"
 brew "exa"
+brew "glab"
 brew "shfmt"
 brew "ripgrep"
 brew "diff-so-fancy"
