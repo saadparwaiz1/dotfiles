@@ -1,5 +1,5 @@
-if exists("b:current_syntax") 
-    finish 
+if exists("b:current_syntax")
+    finish
 endif
 
 syntax keyword brewfileDirective brew cask tap mas cask_args

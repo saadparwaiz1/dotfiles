@@ -12,14 +12,15 @@ vim.o.splitright = true
 vim.o.writebackup = true
 vim.o.termguicolors = true
 
-vim.o.tabstop=2
-vim.o.shiftwidth=2
-vim.o.softtabstop=2
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.softtabstop = 2
 vim.o.cmdheight = 2
 vim.o.pumblend = 20
 vim.o.history = 100
-vim.o.showtabline=2
+vim.o.showtabline = 2
 vim.o.updatetime = 100
+vim.bo.expandtab = true
 
 vim.o.mouse = 'a'
 vim.o.listchars = "tab:| ,trail:~"
@@ -34,9 +35,10 @@ vim.o.isfname  = vim.o.isfname .. ',32'
 -- buffer options {{{
 -- ============================================================================
 
-vim.bo.tabstop=2
-vim.bo.shiftwidth=2
-vim.bo.softtabstop=2
+vim.bo.tabstop = 2
+vim.bo.shiftwidth = 2
+vim.bo.softtabstop = 2
+vim.bo.expandtab = true
 
 -- }}}
 -- ============================================================================

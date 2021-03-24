@@ -20,3 +20,4 @@ secret.neomuttrc
 *.sqlite
 jupyter/profile_default/startup/README
 glab-cli
+jupyter/migrated
