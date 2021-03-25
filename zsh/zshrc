@@ -3,7 +3,7 @@
 # Set Env Variable {{{
 # ============================================================================
 export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
-export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=4 nomod nolist noma' --cmd 'let g:indent_blankline_enabled=v:false' -\""
 # }}}
 # ============================================================================
 # Set Up ZINIT {{{
@@ -25,15 +25,15 @@ zinit ice wait'!0'
 zinit light Aloxaf/fzf-tab
 
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
-	zsh-users/zsh-completions
+    zsh-users/zsh-completions
 
 zinit wait'!1' lucid for \
-	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-	zdharma/fast-syntax-highlighting \
-	blockf \
-	zsh-users/zsh-completions \
-	atload"!_zsh_autosuggest_start" \
-	zsh-users/zsh-autosuggestions
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma/fast-syntax-highlighting \
+    blockf \
+    zsh-users/zsh-completions \
+    atload"!_zsh_autosuggest_start" \
+    zsh-users/zsh-autosuggestions
 
 zinit ice wait'!0'
 zinit light zsh-users/zsh-history-substring-search
@@ -122,13 +122,13 @@ alias less="less -R"
 alias sudo="nocorrect sudo "
 
 if command -v exa &>/dev/null; then
-	alias ls="exa --icons"
-	alias la="exa -lah --icons"
-	alias ll="exa --icons -alh  --git-ignore"
+    alias ls="exa --icons"
+    alias la="exa -lah --icons"
+    alias ll="exa --icons -alh  --git-ignore"
 else
-	alias ls="ls -GF"
-	alias la="ls -A"
-	alias ll="ls -alh"
+    alias ls="ls -GF"
+    alias la="ls -A"
+    alias ll="ls -alh"
 fi
 
 # Aliases for custom commands
@@ -147,30 +147,30 @@ alias nvimbrew="$XDG_CONFIG_HOME/darwin/nvimbrew.sh"
 # ============================================================================
 # Utils
 github() {
-	echo "$1" | sed s/github/raw\.githubusercontent/ | sed s/blob.//g | xargs curl -O
+  echo "$1" | sed s/github/raw\.githubusercontent/ | sed s/blob.//g | xargs curl -O
 }
 
 del() {
-	mv "$@" ~/.Trash
+  mv "$@" ~/.Trash
 }
 
 dir() {
-	for i in */; do
-		cd "$i"
-		eval $1
-		cd ".."
-	done
+    for i in */; do
+        cd "$i"
+        eval $1
+        cd ".."
+    done
 }
 
 h() {
-	(( # == 0 )) && cd ~ && return
+    (( # == 0 )) && cd ~ && return
 
-	dest=$(fd --type d --absolute-path --hidden "$1" ~)
+    dest=$(fd --type d --absolute-path --hidden "$1" ~)
 
-	if ! cd "$dest" &>/dev/null; then
-		dest=$(echo "$dest" | fzf)
-		cd "$dest"
-	fi
+    if ! cd "$dest" &>/dev/null; then
+        dest=$(echo "$dest" | fzf)
+        cd "$dest"
+    fi
 }
 # }}}
 # ============================================================================
@@ -184,13 +184,13 @@ HISTFILE="$XDG_DATA_HOME/History/zsh-history"
 # ZSH PROMPT {{{
 # ============================================================================
 prompts() {
-	for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
-		eval $COLOR='%{$fg[${(L)COLOR}]%}'
-	done
-	eval RESET='%{$reset_color%}'
+    for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
+        eval $COLOR='%{$fg[${(L)COLOR}]%}'
+    done
+    eval RESET='%{$reset_color%}'
 
-	export PS1='%B${RED}[${YELLOW}sp${CYAN}@${MAGENTA}home${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
-	export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
+    export PS1='%B${RED}[${YELLOW}sp${CYAN}@${MAGENTA}home${GREEN}:${MAGENTA}%(5~|%3~|%~)${RED}]${GREEN}%#%b${RESET} '
+    export RPROMPT='%(?.${GREEN} ✓.${RED} ✘) ${RESET} $vcs_info_msg_0_'
 }
 
 prompts
@@ -201,27 +201,27 @@ prompts
 bindkey -v
 
 zle-keymap-select() {
-	if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
-		echo -ne '\e[1 q'
-	elif [[ ${KEYMAP} == main ]] ||
-		[[ ${KEYMAP} == viins ]] ||
-		[[ ${KEYMAP} = '' ]] ||
-		[[ $1 = 'beam' ]]; then
-		echo -ne '\e[5 q'
-	fi
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+        echo -ne '\e[1 q'
+    elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+        echo -ne '\e[5 q'
+    fi
 }
 
 zle -N zle-keymap-select
 
 zle-line-init() {
-	zle -K viins
-	echo -ne '\e[5 q'
+    zle -K viins
+    echo -ne '\e[5 q'
 }
 
 zle -N zle-line-init
 echo -ne '\e[5 q'
 preexec() {
-	echo -ne '\e[5 q'
+    echo -ne '\e[5 q'
 }
 
 bindkey '^[[A' history-substring-search-up
@@ -244,14 +244,14 @@ export MODE_INDICATOR=""
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 
 if command -v fd &>/dev/null; then
-	alias find='fd'
-	export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden"
-	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+    alias find='fd'
+    export FZF_DEFAULT_COMMAND="fd --type f --follow --hidden"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 else
-	export FZF_DEFAULT_COMMAND="find . -type f -name '*'"
-	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_DEFAULT_COMMAND="find . -type f -name '*'"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 #----------------------------------------------------------------------------
 # Auto Suggestions

@@ -47,6 +47,6 @@ vim.bo.expandtab = true
 vim.wo.list = true
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.wo.conceallevel = 1
+vim.wo.conceallevel = 2
 -- }}}
 -- ============================================================================
