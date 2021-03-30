@@ -140,7 +140,6 @@ alias bu="brew update && brew upgrade --greedy"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
 alias d="kitty +kitten diff"
 alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
-alias nvimbrew="$XDG_CONFIG_HOME/darwin/nvimbrew.sh"
 # }}}
 # ============================================================================
 # ZSH FUNCTIONS {{{

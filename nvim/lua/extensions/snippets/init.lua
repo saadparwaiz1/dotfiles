@@ -1,5 +1,3 @@
-vim.cmd('packadd! vim-vsnip')
-
 vim.g.vsnip_snippet_dir = vim.fn.stdpath('data') .. '/snippets'
 
 

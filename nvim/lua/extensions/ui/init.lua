@@ -1,10 +1,5 @@
-vim.cmd('packadd! nvim-web-devicons')
-vim.cmd('packadd! lspkind-nvim')
-vim.cmd('packadd! indent-blankline.nvim')
-
-
 vim.g.indent_blankline_char = '│'
-vim.g.indent_blankline_filetype_exclude = { 'help', 'defx', 'vimwiki', 'man' }
+vim.g.indent_blankline_filetype_exclude = { 'help', 'defx', 'markdown', 'man' }
 vim.g.indent_blankline_space_char_blankline = ' '
 vim.g.indent_blankline_strict_tabs = true
 vim.g.indent_blankline_show_current_context = true

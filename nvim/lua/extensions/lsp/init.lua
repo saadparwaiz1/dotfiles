@@ -2,7 +2,6 @@
 -- ============================================================================
 -- lua modules {{{
 -- ============================================================================
-vim.cmd('packadd! nvim-lspconfig')
 local lspconfig = require('lspconfig')
 -- }}}
 -- ============================================================================
@@ -121,8 +120,11 @@ lspconfig.sumneko_lua.setup{
                 },
             },
             diagnostics = {
-                globals = { 'vim' }
-            }
+                globals = { 'vim', 'use' }
+            },
+						telemetry = {
+							enable = false
+						}
         }
     }
 }

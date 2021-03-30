@@ -1,5 +1,3 @@
-vim.cmd('packadd! nvim-compe')
-
 require('compe').setup {
     enabled = true,
     source = {

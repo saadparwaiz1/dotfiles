@@ -1,0 +1,41 @@
+vim.cmd('packadd packer.nvim')
+
+local packer = require('packer')
+
+packer.startup(function()
+  -- plugin manager
+  use 'wbthomason/packer.nvim'
+  -- fuzzy finder
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      {'nvim-lua/popup.nvim'},
+      {'nvim-lua/plenary.nvim'},
+      {'kyazdani42/nvim-web-devicons'}
+    }
+  }
+  -- LSP Extensions
+  use {
+    'hrsh7th/nvim-compe',
+    requires = {
+      {'hrsh7th/vim-vsnip'},
+      {'onsails/lspkind-nvim'},
+      {'neovim/nvim-lspconfig'},
+      {'rafamadriz/friendly-snippets'}
+    }
+  }
+  -- Treesiter Extensions
+  use {
+    'nvim-treesitter/nvim-treesitter'
+  }
+  -- Enchanced Functionality Plugins
+  use {
+    'windwp/nvim-autopairs',
+    config = 'require("nvim-autopairs").setup()'
+  }
+  use 'saadparwaiz1/vim-commentary'
+  use 'saadparwaiz1/vim-surround'
+  -- UI Related Plugins
+  use 'lukas-reineke/indent-blankline.nvim'
+end
+)
