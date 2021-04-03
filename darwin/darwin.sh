@@ -61,3 +61,4 @@ brew bundle install
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 ln -s "$DIR"/local.enviroment.plist ~/Library/LaunchAgents/local.enviroment.plist
 launchctl load ~/Library/LaunchAgents/local.enviroment.plist
+ln -s /Users/saadparwaiz/Library/Application\ Support /Users/saadparwaiz/Library/ApplicationSupport

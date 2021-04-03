@@ -2,8 +2,6 @@
 -- ============================================================================
 -- Utilities {{{
 -- ============================================================================
-local devicons = require('nvim-web-devicons')
-
 local function line(fmt)
     vim.o.statusline = vim.o.statusline .. fmt
 end
@@ -78,15 +76,12 @@ local function bufferline()
 
     for _, v in pairs(buffers) do
         local name = vim.api.nvim_buf_get_name(v)
-        local icon = devicons.get_icon(name, vim.api.nvim_buf_get_option(name, "filetype"), { default = true })
 
         if name == this then
             if name == '' then name = '[No Name]' else name = vim.fn.fnamemodify(name, ':t') end
-            name = name .. ' ' .. icon
             table.insert(bufline, '%#VimlineExtSeperator#%#VimlineExt#' .. name .. '%#VimlineExtSeperator#%#VimlineSubStatusLine#')
         else
         if name == '' then name = '[No Name]' else name = vim.fn.fnamemodify(name, ':t') end
-            name = name .. ' ' .. icon
             table.insert(bufline, '%#VimlineFileSeperator#%#VimlineFile#' .. name .. '%#VimlineFileSeperator#%#VimlineSubStatusLine#')
         end
     end

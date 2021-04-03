@@ -36,6 +36,9 @@ packer.startup(function()
   use 'saadparwaiz1/vim-commentary'
   use 'saadparwaiz1/vim-surround'
   -- UI Related Plugins
-  use 'lukas-reineke/indent-blankline.nvim'
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    branch = 'lua'
+  }
 end
 )
