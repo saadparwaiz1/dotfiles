@@ -28,8 +28,9 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.path = vim.o.path .. '**'
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.completeopt = 'menuone,noselect'
-vim.o.wildignore = '*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,**/node_modules'
-vim.o.isfname  = vim.o.isfname .. ',32'
+vim.o.wildignore =
+  '*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store,**/node_modules'
+vim.o.isfname = vim.o.isfname .. ',32'
 -- }}}
 -- ============================================================================
 -- buffer options {{{

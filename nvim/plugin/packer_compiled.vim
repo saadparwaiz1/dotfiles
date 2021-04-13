@@ -49,6 +49,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-autopairs"
   },
+  ["nvim-comment"] = {
+    config = { 'require("nvim_comment").setup()' },
+    loaded = true,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-comment"
+  },
   ["nvim-compe"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-compe"
@@ -81,10 +86,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/telescope.nvim"
   },
-  ["vim-commentary"] = {
-    loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/vim-commentary"
-  },
   ["vim-surround"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/vim-surround"
@@ -97,6 +98,8 @@ _G.packer_plugins = {
 
 -- Config for: nvim-autopairs
 require("nvim-autopairs").setup()
+-- Config for: nvim-comment
+require("nvim_comment").setup()
 END
 
 catch

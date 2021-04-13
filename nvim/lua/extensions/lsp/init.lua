@@ -7,10 +7,7 @@ local lspconfig = require('lspconfig')
 -- ============================================================================
 -- LSP Configuration {{{
 -- ============================================================================
-local options = {
-    noremap = true,
-    silent = true,
-}
+local options = {noremap = true, silent = true}
 
 local rnm = "<cmd>lua vim.lsp.buf.rename()<CR>"
 local hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
@@ -27,7 +24,7 @@ local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
 local lspsaga_find = "<cmd>Lspsaga lsp_finder<CR>"
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
-local on_attach=function(client, bufnr)
+local on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
         vim.api.nvim_set_keymap("n", "gq", fmt, options)
     elseif client.resolved_capabilities.document_range_formatting then
@@ -36,9 +33,7 @@ local on_attach=function(client, bufnr)
 
     local dir = client.config.root_dir
 
-    if dir then
-        vim.cmd('lcd ' .. dir)
-    end
+    if dir then vim.cmd('lcd ' .. dir) end
 
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', acn, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
@@ -68,14 +63,13 @@ local on_attach=function(client, bufnr)
     end
 end
 
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.pyright.setup {
     cmd = {node_modules .. "pyright-langserver", '--stdio'},
     on_attach = on_attach,
-    capabilities = capabilities,
+    capabilities = capabilities
 }
 
 lspconfig.bashls.setup {
@@ -85,46 +79,30 @@ lspconfig.bashls.setup {
 }
 
 lspconfig.clangd.setup {
-    cmd = {"clangd", "--background-index", "--suggest-missing-includes", "--header-insertion=iwyu", "--clang-tidy"},
+    cmd = {
+        "clangd", "--background-index", "--suggest-missing-includes",
+        "--header-insertion=iwyu", "--clang-tidy"
+    },
     on_attach = on_attach,
     capabilities = capabilities,
-    init_options = {
-        fallbackFlags = {
-            '-Wall',
-            '-Wextra',
-        }
-    }
+    init_options = {fallbackFlags = {'-Wall', '-Wextra'}}
 }
 
-lspconfig.tsserver.setup {
-    cmd = {node_modules .. 'typescript-language-server', '--stdio'},
-    on_attach = on_attach,
-    capabilities = capabilities,
-
-}
-
-lspconfig.sumneko_lua.setup{
+lspconfig.sumneko_lua.setup {
     cmd = {"lua-langserver"},
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
         Lua = {
-            runtime = {
-                version = 'LuaJIT',
-                path = vim.split(package.path, ';')
-            },
+            runtime = {version = 'LuaJIT', path = vim.split(package.path, ';')},
             workspace = {
                 library = {
                     [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-                },
+                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+                }
             },
-            diagnostics = {
-                globals = { 'vim', 'use' }
-            },
-						telemetry = {
-							enable = false
-						}
+            diagnostics = {globals = {'vim', 'use'}},
+            telemetry = {enable = false}
         }
     }
 }
@@ -132,37 +110,23 @@ lspconfig.sumneko_lua.setup{
 -- ============================================================================
 -- Diagnostic Configuration {{{
 -- ============================================================================
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        virtual_text = {
-            spacing = 5,
-            prefix = ' '
-        },
-        signs = true,
-        update_in_insert = false,
-    }
-)
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+  vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      underline = true,
+      virtual_text = {spacing = 5, prefix = ' '},
+      signs = true,
+      update_in_insert = false
+  })
 
-vim.fn.sign_define(
-    "LspDiagnosticsSignError",
-    {text= "✘", texthl="Debug"}
-)
+vim.fn.sign_define("LspDiagnosticsSignError", {text = "✘", texthl = "Debug"})
 
-vim.fn.sign_define(
-    "LspDiagnosticsSignWarning",
-    {text="", texthl="Typedef"}
-)
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+                   {text = "", texthl = "Typedef"})
 
-vim.fn.sign_define(
-    "LspDiagnosticsSignInformation",
-    {text="", texthl="WildMenu"}
-)
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+                   {text = "", texthl = "WildMenu"})
 
-
-vim.fn.sign_define(
-    "LspDiagnosticsSignHint",
-    {text="", texthl="WildMenu"}
-)
+vim.fn
+  .sign_define("LspDiagnosticsSignHint", {text = "", texthl = "WildMenu"})
 -- }}}
 -- ============================================================================
