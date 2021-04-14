@@ -27,8 +27,16 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.colors_name = 'gruvdark'
-vim.g.loaded_compe_treesitter = 1
+
+vim.g.loaded_compe_omni = 1
 vim.g.loaded_compe_calc = 1
+vim.g.loaded_compe_tags = 1
+vim.g.loaded_compe_emoji = 1
+vim.g.loaded_compe_vim_lsc = 1
+vim.g.loaded_compe_vim_lsp = 1
+vim.g.loaded_compe_luasnip = 1
+vim.g.loaded_compe_ultisnips = 1
+vim.g.loaded_compe_treesitter = 1
 vim.g.loaded_compe_snippets_nvim = 1
 -- }}}
 -- ============================================================================

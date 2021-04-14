@@ -41,6 +41,18 @@ vim.api.nvim_set_keymap('n', '\\cmdf',
                         {silent = true})
 vim.api.nvim_set_keymap('n', '\\cmdl', '<cmd>Telescope live_grep<CR>',
                         {silent = true})
-vim.api.nvim_set_keymap('n', '\\cmdo',
+vim.api.nvim_set_keymap('n', '\\cmdy',
                         '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
+                        {silent = true})
+vim.api.nvim_set_keymap('n', '\\optcmdb',
+                        '<cmd>lua require("telescope.builtin").file_browser()<CR>',
+                        {silent = true})
+
+vim.api.nvim_set_keymap('n', '<leader>gf', '<cmd>Telescope git_files<CR>',
+                        {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gc', '<cmd>Telescope git_commits<CR>',
+                        {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gb', '<cmd>Telescope git_branches<CR>',
+                        {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gs', '<cmd>Telescope git_status<CR>',
                         {silent = true})
