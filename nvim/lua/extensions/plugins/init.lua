@@ -29,4 +29,5 @@ packer.startup(function()
     use {'terrortylor/nvim-comment', config = 'require("nvim_comment").setup()'}
     -- UI Related Plugins
     use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+    use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
 end)

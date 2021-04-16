@@ -36,6 +36,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/friendly-snippets"
   },
+  ["gruvbox.nvim"] = {
+    loaded = true,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/gruvbox.nvim"
+  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/indent-blankline.nvim"
@@ -43,6 +47,10 @@ _G.packer_plugins = {
   ["lspkind-nvim"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/lspkind-nvim"
+  },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/lush.nvim"
   },
   ["nvim-autopairs"] = {
     config = { 'require("nvim-autopairs").setup()' },

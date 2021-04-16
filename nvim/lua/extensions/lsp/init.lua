@@ -118,15 +118,12 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
       update_in_insert = false
   })
 
-vim.fn.sign_define("LspDiagnosticsSignError", {text = "✘", texthl = "Debug"})
+vim.fn.sign_define("LspDiagnosticsSignError", {text = "✘"})
 
-vim.fn.sign_define("LspDiagnosticsSignWarning",
-                   {text = "", texthl = "Typedef"})
+vim.fn.sign_define("LspDiagnosticsSignWarning", {text = ""})
 
-vim.fn.sign_define("LspDiagnosticsSignInformation",
-                   {text = "", texthl = "WildMenu"})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
 
-vim.fn
-  .sign_define("LspDiagnosticsSignHint", {text = "", texthl = "WildMenu"})
+vim.fn.sign_define("LspDiagnosticsSignHint", {text = ""})
 -- }}}
 -- ============================================================================

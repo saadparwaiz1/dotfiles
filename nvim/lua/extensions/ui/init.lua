@@ -13,7 +13,7 @@ vim.g.indent_blankline_context_patterns =
   }
 
 vim.g.indent_blankline_char_highlight_list =
-  {"WarningMsg", "Identifier", "Delimiter", "Type", "String"}
+  {"WarningMsg", "Identifier", "Type", "String"}
 
 vim.g.indent_blankline_context_highlight_list = {'IndentBlanklineChar'}
 

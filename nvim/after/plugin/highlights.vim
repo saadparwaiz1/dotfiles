@@ -1,3 +1,4 @@
+hi Function guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE
 hi VimlineSubStatusLine guifg=NONE guibg=NONE guisp=NONE gui=NONE
 hi VimlineSeperator guifg=#a0c980 guibg=#34343c guisp=NONE gui=NONE
 hi VimlineMode guifg=#282828 guibg=#a0c980 guisp=NONE gui=bold
