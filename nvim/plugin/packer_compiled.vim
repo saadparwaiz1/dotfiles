@@ -32,9 +32,9 @@ local function try_loadstring(s, component, name)
 end
 
 _G.packer_plugins = {
-  ["friendly-snippets"] = {
+  LuaSnip = {
     loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/friendly-snippets"
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/LuaSnip"
   },
   ["gruvbox.nvim"] = {
     loaded = true,
@@ -97,10 +97,6 @@ _G.packer_plugins = {
   ["vim-surround"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/vim-surround"
-  },
-  ["vim-vsnip"] = {
-    loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/vim-vsnip"
   }
 }
 

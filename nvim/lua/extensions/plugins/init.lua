@@ -4,7 +4,7 @@ local packer = require('packer')
 
 packer.startup(function()
     -- plugin manager
-    use 'wbthomason/packer.nvim'
+    use {'wbthomason/packer.nvim'}
     -- fuzzy finder
     use {
         'nvim-telescope/telescope.nvim',
@@ -17,8 +17,8 @@ packer.startup(function()
     use {
         'hrsh7th/nvim-compe',
         requires = {
-            {'hrsh7th/vim-vsnip'}, {'onsails/lspkind-nvim'},
-            {'neovim/nvim-lspconfig'}, {'rafamadriz/friendly-snippets'}
+            {'onsails/lspkind-nvim'}, {'neovim/nvim-lspconfig'},
+            {'L3MON4D3/LuaSnip'}
         }
     }
     -- Treesiter Extensions

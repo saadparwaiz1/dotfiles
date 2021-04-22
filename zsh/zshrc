@@ -131,7 +131,9 @@ else
     alias ll="ls -alh"
 fi
 
+
 # Aliases for custom commands
+alias jpdf="/System/Library/Automator/Combine PDF Pages.action/Contents/Resources/join.py"
 alias purge="sudo --stdin purge"
 alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source $ZDOTDIR/.zshrc"
