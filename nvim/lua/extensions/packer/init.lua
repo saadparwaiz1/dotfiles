@@ -25,13 +25,26 @@ packer.startup(function()
     use {'nvim-treesitter/nvim-treesitter'}
     -- Enchanced Functionality Plugins
     use {'tpope/vim-surround'}
-    use {'terrortylor/nvim-comment', config = 'require("nvim_comment").setup()'}
+    use {
+        'terrortylor/nvim-comment',
+        config = function() require("nvim_comment").setup() end
+    }
     use {
         'steelsojka/pears.nvim',
-        config = require("pears").setup(function(conf)
-            conf.preset "tag_matching"
-            conf.expand_on_enter(false)
-        end)
+        config = function()
+            require("pears").setup(function(conf)
+                conf.preset "tag_matching"
+                conf.on_enter(function(pear_handle)
+                    if vim.fn.pumvisible() == 1 and
+                      vim.fn.complete_info().selected ~= -1 then
+                        vim.api.nvim_feedkeys(vim.fn['compe#confirm']('<CR>'),
+                                              "n", true)
+                    else
+                        pear_handle()
+                    end
+                end)
+            end)
+        end
     }
     -- UI Related Plugins
     use {'saadparwaiz1/nvimline'}
