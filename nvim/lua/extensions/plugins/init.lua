@@ -24,10 +24,31 @@ packer.startup(function()
     -- Treesiter Extensions
     use {'nvim-treesitter/nvim-treesitter'}
     -- Enchanced Functionality Plugins
-    use {'windwp/nvim-autopairs', config = 'require("nvim-autopairs").setup()'}
-    use 'saadparwaiz1/vim-surround'
+    use {'tpope/vim-surround'}
     use {'terrortylor/nvim-comment', config = 'require("nvim_comment").setup()'}
+    use {
+        'steelsojka/pears.nvim',
+        config = require("pears").setup(function(conf)
+            conf.preset "tag_matching"
+            conf.expand_on_enter(false)
+        end)
+    }
     -- UI Related Plugins
+    use {'saadparwaiz1/nvimline'}
     use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
-    use {'npxbr/gruvbox.nvim', requires = {"rktjmp/lush.nvim"}}
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {'nvim-lua/plenary.nvim'},
+        config = function() require('gitsigns').setup() end
+    }
+    use {
+        'npxbr/gruvbox.nvim',
+        requires = {"rktjmp/lush.nvim"},
+        config = function()
+            vim.g.gruvbox_italic = 1
+            vim.cmd('colorscheme gruvbox')
+            vim.cmd('hi Function guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE')
+            vim.cmd('hi Operator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE')
+        end
+    }
 end)

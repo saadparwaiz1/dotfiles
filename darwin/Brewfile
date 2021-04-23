@@ -6,9 +6,9 @@ tap "homebrew/core"
 tap "homebrew/cask"
 tap "homebrew/bundle"
 tap "homebrew/services"
-tap "saadparwaiz1/personal"
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"
+tap "saadparwaiz1/personal"
 # }}}
 # ============================================================================
 # Text Editors {{{
@@ -20,13 +20,14 @@ brew "neovim", args: ["HEAD"]
 # ============================================================================
 cask "alfred"
 cask "alt-tab"
-cask "adguard"
-brew "koekeishiya/formulae/skhd", args: ["with-logging"]
+cask "smcfancontrol"
 brew "koekeishiya/formulae/yabai"
+brew "koekeishiya/formulae/skhd", args: ["with-logging"]
 # }}}
 # ============================================================================
 # Entertainment {{{
 # ============================================================================
+cask "spotify"
 # }}}
 # ============================================================================
 # Package Managers {{{
@@ -45,8 +46,8 @@ brew "fd"
 brew "gh"
 brew "fzf"
 brew "exa"
-brew "glab"
-brew "shfmt"
+brew "ffmpeg"
+brew "pandoc"
 brew "ripgrep"
 brew "diff-so-fancy"
 # }}}
@@ -58,6 +59,7 @@ brew "bash"
 # ============================================================================
 # Browsers {{{
 # ============================================================================
+cask "firefox"
 # }}}
 # ============================================================================
 # Fonts {{{
@@ -72,8 +74,11 @@ cask "signal"
 cask "discord"
 # }}}
 # ============================================================================
-# Build Tools {{{
+# Tooling {{{
 # ============================================================================
+brew "cmake"
+brew "shfmt"
+brew "luarocks"
 # }}}
 # ============================================================================
 # Language Servers {{{
@@ -89,5 +94,15 @@ brew "saadparwaiz1/personal/lua-language-server"
 # ============================================================================
 brew "node"
 brew "python@3.9"
+# }}}
+# ============================================================================
+# Writing {{{
+# ============================================================================
+cask "obsidian"
+cask "microsoft-word"
+cask "microsoft-excel"
+cask "visual-studio-code"
+cask "microsoft-powerpoint"
+cask "microsoft-auto-update"
 # }}}
 # ============================================================================
