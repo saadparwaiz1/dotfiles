@@ -24,6 +24,9 @@ source $ZINIT[HOME_DIR]/zinit.zsh
 zinit ice wait'!0'
 zinit light Aloxaf/fzf-tab
 
+zinit ice wait'!0'
+zinit light agkozak/zsh-z
+
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for \
     zsh-users/zsh-completions
 
@@ -162,17 +165,6 @@ dir() {
         cd ".."
     done
 }
-
-h() {
-    (( # == 0 )) && cd ~ && return
-
-    dest=$(fd --type d --absolute-path --hidden "$1" ~)
-
-    if ! cd "$dest" &>/dev/null; then
-        dest=$(echo "$dest" | fzf)
-        cd "$dest"
-    fi
-}
 # }}}
 # ============================================================================
 # ZSH HISTORY {{{
@@ -259,5 +251,6 @@ fi
 # ---------------------------------------------------------------------------
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export ZSHZ_DATA="$XDG_DATA_HOME/History/z-history"
 # }}}
 # ============================================================================
