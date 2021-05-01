@@ -17,7 +17,8 @@ telescope.setup {
         generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
         shorten_path = true,
         file_ignore_patterns = {
-            "%.pdf", ".git/.*", "node_modules/.*", "__pycache__/.*", "%.swp"
+            "%.pdf", ".git/.*", "node_modules/.*", "__pycache__/.*", "%.swp",
+						"%.db", "Caches/.*",
         },
         winblend = 0,
         width = 0.75,

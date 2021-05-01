@@ -106,6 +106,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-compe"
   },
+  ["nvim-lightbulb"] = {
+    loaded = true,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-lightbulb"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-lspconfig"
@@ -154,14 +158,14 @@ time("Defining packer_plugins", false)
 time("Config for pears.nvim", true)
 try_loadstring("\27LJ\2\n¡\1\0\1\4\0\a\2\0226\1\0\0009\1\1\0019\1\2\1B\1\1\2\t\1\0\0X\1\r€6\1\0\0009\1\1\0019\1\3\1B\1\1\0029\1\4\1\b\1\1\0X\1\6€6\1\0\0009\1\1\0019\1\5\1'\3\6\0D\1\2\0X\1\2€\18\1\0\0B\1\1\1K\0\1\0\t<CR>\18compe#confirm\rselected\18complete_info\15pumvisible\afn\bvim\2þÿÿÿ\31l\1\1\4\0\5\0\n9\1\0\0'\3\1\0B\1\2\0019\1\2\0+\3\1\0B\1\2\0019\1\3\0003\3\4\0B\1\2\1K\0\1\0\0\ron_enter#remove_pair_on_outer_backspace\17tag_matching\vpreset8\1\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0003\2\3\0B\0\2\1K\0\1\0\0\nsetup\npears\frequire\0", "config", "pears.nvim")
 time("Config for pears.nvim", false)
--- Config for: nvim-comment
-time("Config for nvim-comment", true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17nvim_comment\frequire\0", "config", "nvim-comment")
-time("Config for nvim-comment", false)
 -- Config for: gitsigns.nvim
 time("Config for gitsigns.nvim", true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
 time("Config for gitsigns.nvim", false)
+-- Config for: nvim-comment
+time("Config for nvim-comment", true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17nvim_comment\frequire\0", "config", "nvim-comment")
+time("Config for nvim-comment", false)
 -- Config for: gruvbox.nvim
 time("Config for gruvbox.nvim", true)
 try_loadstring("\27LJ\2\nê\1\0\0\3\0\a\0\0176\0\0\0009\0\1\0)\1\1\0=\1\2\0006\0\0\0009\0\3\0'\2\4\0B\0\2\0016\0\0\0009\0\3\0'\2\5\0B\0\2\0016\0\0\0009\0\3\0'\2\6\0B\0\2\1K\0\1\0=hi Operator guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE=hi Function guifg=#8ec07c guibg=NONE guisp=NONE gui=NONE\24colorscheme gruvbox\bcmd\19gruvbox_italic\6g\bvim\0", "config", "gruvbox.nvim")

@@ -126,8 +126,7 @@ alias sudo="nocorrect sudo "
 
 if command -v exa &>/dev/null; then
     alias ls="exa --icons"
-    alias la="exa -lah --icons"
-    alias ll="exa --icons -alh  --git-ignore"
+    alias ll="exa --icons -alh"
 else
     alias ls="ls -GF"
     alias la="ls -A"

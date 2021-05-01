@@ -21,7 +21,6 @@ local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
 local wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"
 local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
-local lspsaga_find = "<cmd>Lspsaga lsp_finder<CR>"
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach = function(client, bufnr)
@@ -46,7 +45,6 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Left>", pdiag, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Right>", ndiag, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gh', lspsaga_find, options)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     if client.resolved_capabilities.document_highlight then
@@ -55,6 +53,7 @@ local on_attach = function(client, bufnr)
                 autocmd!
                 autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
                 autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+                autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
             augroup END
         ]], false)
     end

@@ -18,7 +18,7 @@ packer.startup(function()
         'hrsh7th/nvim-compe',
         requires = {
             {'onsails/lspkind-nvim'}, {'neovim/nvim-lspconfig'},
-            {'L3MON4D3/LuaSnip'}
+            {'L3MON4D3/LuaSnip'}, {'kosayoda/nvim-lightbulb'}
         }
     }
     -- Treesiter Extensions
