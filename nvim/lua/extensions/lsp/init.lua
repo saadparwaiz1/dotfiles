@@ -12,15 +12,15 @@ local options = {noremap = true, silent = true}
 local rnm = "<cmd>lua vim.lsp.buf.rename()<CR>"
 local hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
 local fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
-local acn = "<cmd>lua vim.lsp.buf.code_action()<CR>"
-local defi = "<cmd>lua vim.lsp.buf.definition()<CR>"
+local acn = "<cmd>Telescope lsp_code_actions<CR>"
+local defi = "<cmd>Telescope lsp_definitions<CR>"
 local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
-local refe = "<cmd>lua vim.lsp.buf.references()<CR>"
+local refe = "<cmd>Telescope lsp_references<CR>"
 local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
-local wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>"
-local diag = "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>"
+local wrkspc = "<cmd>Telescope lsp_workspace_symbols<CR>"
+local diag = "<cmd>Telescope lsp_workspace_diagnostics<CR>"
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach = function(client, bufnr)
@@ -101,6 +101,24 @@ lspconfig.sumneko_lua.setup {
             telemetry = {enable = false}
         }
     }
+}
+
+lspconfig.texlab.setup {
+    settings = {
+      latex = {
+        forwardSearch = {
+          args = {"%l", "%p", "%f"},
+          executable = "/Applications/Skim.app/Contents/SharedSupport/displayline",
+          onSave = false,
+        },
+				build = {
+          args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "-shell-escape", "-pv", "%f"};
+          executable = "latexmk";
+          onSave = false;
+        };
+
+			}
+		}
 }
 -- }}}
 -- ============================================================================

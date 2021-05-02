@@ -13,6 +13,10 @@ packer.startup(function()
             {'kyazdani42/nvim-web-devicons'}
         }
     }
+		use {
+			'nvim-telescope/telescope-fzf-native.nvim',
+			run = 'make'
+		}
     -- LSP Extensions
     use {
         'hrsh7th/nvim-compe',

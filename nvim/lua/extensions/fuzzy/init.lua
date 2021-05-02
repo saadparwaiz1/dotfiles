@@ -34,8 +34,17 @@ telescope.setup {
         grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
         qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
         buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
-    }
+    },
+		extensions = {
+			fzf = {
+				override_generic_sorter = false,
+				override_file_sorter = true,
+				case_mode = "smart_case",
+			}
+		}
 }
+
+require('telescope').load_extension('fzf')
 
 vim.api.nvim_set_keymap('n', '\\cmdf',
                         '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
