@@ -42,8 +42,8 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', impli, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD", declr, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', wrkspc, options)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Left>", pdiag, options)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', "<Right>", ndiag, options)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', "[e", pdiag, options)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', "]e", ndiag, options)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -112,7 +112,7 @@ lspconfig.texlab.setup {
           onSave = false,
         },
 				build = {
-          args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "-shell-escape", "-pv", "%f"};
+          args = {"-pdf", "-interaction=nonstopmode", "-synctex=1", "-shell-escape", "-pvc", "%f"};
           executable = "latexmk";
           onSave = false;
         };

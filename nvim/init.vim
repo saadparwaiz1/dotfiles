@@ -35,6 +35,7 @@ let g:loaded_compe_vsnip = 1
 let g:loaded_compe_ultisnips = 1
 let g:loaded_compe_treesitter = 1
 let g:loaded_compe_snippets_nvim = 1
+let g:markdown_syntax_conceal = 1
 "  }}}
 "  --------------------------------------------------
 "  vim options {{{
@@ -52,7 +53,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set cmdheight=2
-set pumblend=100
+set pumblend=30
 set history=100
 set showtabline=2
 set updatetime=100
@@ -80,10 +81,18 @@ augroup END
 "  --------------------------------------------------
 "  Mappings {{{
 "  --------------------------------------------------
+if !has('gui_vimr')
 noremap <silent> \cmdn <cmd>bn<CR>
 noremap <silent> \cmdp  <cmd>bp<CR>
-noremap <silent> \cmdq  <cmd>bd<CR>
+noremap <silent> \cmdw  <cmd>bd<CR>
 noremap <silent> \cmds  :%s/\\<<C-R><C-w>\\>/
+vnoremap <silent> \cmds :s/
+else
+noremap <silent> <D-A-Right> <cmd>bn<CR>
+noremap <silent> <D-A-left>  <cmd>bp<CR>
+noremap <silent> <D-s>  :%s/\\<<C-R><C-w>\\>/
+vnoremap <silent> <D-s> :s/
+end
 noremap <silent> <Left>  <C-w>h
 noremap <silent> <Down>  <C-w>j
 noremap <silent> <Up>  <C-w>k
@@ -92,7 +101,6 @@ noremap <silent> Q  <nop>
 noremap <silent> vv  ^v$
 inoremap <silent> <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <silent> <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-vnoremap <silent> \cmds :s/
 "  }}}
 "  --------------------------------------------------
 "  Lua Modules {{{
