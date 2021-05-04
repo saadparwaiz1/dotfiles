@@ -1,4 +1,5 @@
-" vim: set foldmethod=marker foldlevel=1 nomodeline: --------------------------------------------------
+" vim: set foldmethod=marker foldlevel=1 nomodeline:
+" ---------------------------------------------------
 "  global options {{{
 "  --------------------------------------------------
 let g:mapleader = " "
@@ -34,7 +35,7 @@ let g:loaded_compe_vim_lsp = 1
 let g:loaded_compe_vsnip = 1
 let g:loaded_compe_ultisnips = 1
 let g:loaded_compe_treesitter = 1
-let g:loaded_compe_snippets_nvim = 1
+let g:loaded_compe_luasnip = 1
 let g:markdown_syntax_conceal = 1
 "  }}}
 "  --------------------------------------------------
@@ -76,6 +77,7 @@ set conceallevel=1
 augroup autocmds_core
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=150}
+  autocmd FileType tex,plaintex setlocal spell
 augroup END
 "  }}}
 "  --------------------------------------------------
@@ -91,7 +93,8 @@ noremap <silent> <Up>  <C-w>k
 noremap <silent> <Right>  <C-w>l
 noremap <silent> Q  <nop>
 noremap <silent> vv  ^v$
-inoremap <silent> jj <Esc>
+inoremap <silent> jj <Esc><cmd>noh<CR>
+nnoremap <silent> <Esc> <cmd>noh<CR><Esc>
 inoremap <silent> <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <silent> <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 vnoremap <silent> \cmds :s/
@@ -99,6 +102,6 @@ vnoremap <silent> \cmds :s/
 "  --------------------------------------------------
 "  Lua Modules {{{
 "  --------------------------------------------------
-lua require('extensions')
+lua require('extensions/packer')
 "  }}}
 "  --------------------------------------------------

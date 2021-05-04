@@ -45,7 +45,6 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "[e", pdiag, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "]e", ndiag, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
