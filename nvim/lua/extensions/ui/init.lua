@@ -14,27 +14,27 @@ vim.g.indent_blankline_context_highlight_list = {'IndentBlanklineChar'}
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
 
 require('lspkind').init {
-    with_text = true,
-    symbol_map = {
-        Text = '',
-        Method = 'ƒ',
-        Function = '',
-        Constructor = '',
-        Variable = '',
-        Class = '',
-        Interface = 'ﰮ',
-        Module = '',
-        Property = '',
-        Unit = '',
-        Value = '',
-        Enum = '了',
-        Keyword = '',
-        Snippet = '﬌',
-        Color = '',
-        File = '',
-        Folder = '',
-        EnumMember = '',
-        Constant = '',
-        Struct = ''
-    }
+  with_text = true,
+  symbol_map = {
+    Text = '',
+    Method = 'ƒ',
+    Function = '',
+    Constructor = '',
+    Variable = '',
+    Class = '',
+    Interface = 'ﰮ',
+    Module = '',
+    Property = '',
+    Unit = '',
+    Value = '',
+    Enum = '了',
+    Keyword = '',
+    Snippet = '﬌',
+    Color = '',
+    File = '',
+    Folder = '',
+    EnumMember = '',
+    Constant = '',
+    Struct = ''
+  }
 }
