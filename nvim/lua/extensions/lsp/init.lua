@@ -157,3 +157,16 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = ""})
 -- }}}
 -- ============================================================================
+-- Hover/Signature Configuration {{{
+-- ============================================================================
+vim.lsp.handlers["textDocument/hover"] =
+  vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "single"
+  })
+
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "single"
+  })
+-- }}}
+-- ============================================================================

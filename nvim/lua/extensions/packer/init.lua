@@ -35,7 +35,8 @@ packer.startup(function()
         }
       }
       vim.api.nvim_set_keymap('i', '<C-e>', 'compe#close("<C-e>")', {noremap = true, silent = true, expr = true})
-    end
+    end,
+    after = "snippets.nvim"
   }
   use {
     'neovim/nvim-lspconfig',
@@ -45,13 +46,12 @@ packer.startup(function()
     end
   }
   use {
-    'norcalli/snippets.nvim',
+    'saadparwaiz1/snippets.nvim',
     ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
     config = function()
       require('extensions/snippets')
       local snippets = require('snippets')
       local indent = snippets.u.match_indentation
-
       snippets.snippets = {
         _global = {
           hd = "#!/usr/bin/env $1",
@@ -134,6 +134,14 @@ packer.startup(function()
   use {
     'terrortylor/nvim-comment',
     config = function() require("nvim_comment").setup() end
+  }
+  use {
+    'TimUntersberger/neogit',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function ()
+      require('neogit').setup({})
+    end,
+    cmd = 'Neogit'
   }
   use {
     'steelsojka/pears.nvim',
