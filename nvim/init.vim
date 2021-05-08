@@ -97,6 +97,7 @@ inoremap <silent> jj <Esc><cmd>noh<CR>
 nnoremap <silent> <Esc> <cmd>noh<CR><Esc>
 inoremap <silent> <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <silent> <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent> <expr> <CR> compe#confirm('<CR>')
 vnoremap <silent> \cmds :s/
 "  }}}
 "  --------------------------------------------------

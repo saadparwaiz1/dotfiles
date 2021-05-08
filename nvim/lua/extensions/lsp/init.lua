@@ -1,8 +1,20 @@
 -- vim: set foldmethod=marker foldlevel=1 nomodeline:
 -- ============================================================================
--- lua modules {{{
+-- lua modules and utils {{{
 -- ============================================================================
 local lspconfig = require('lspconfig')
+
+function SetRoot()
+    if vim.b.lsp_client_name ~= 'texlab' and vim.b.lsp_root_dir ~= nil then
+    	vim.cmd('lcd ' .. vim.b.lsp_root_dir)
+      return
+    end
+    local util = require('lspconfig.util')
+    local dir = util.find_git_ancestor(vim.fn.expand('%:p'))
+    if dir ~= nil then
+      vim.cmd('lcd ' .. dir)
+    end
+end
 -- }}}
 -- ============================================================================
 -- LSP Configuration {{{
@@ -29,11 +41,9 @@ local on_attach = function(client, bufnr)
   elseif client.resolved_capabilities.document_range_formatting then
     vim.api.nvim_set_keymap("n", "gq", fmt, options)
   end
-
-  local dir = client.config.root_dir
-
-  if dir then vim.cmd('lcd ' .. dir) end
-
+  vim.b.lsp_root_dir = client.config.root_dir
+  vim.b.lsp_client_name = client.config.name
+  vim.defer_fn(SetRoot, 1000)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', acn, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr", refe, options)
@@ -114,6 +124,8 @@ lspconfig.sumneko_lua.setup {
 }
 
 lspconfig.texlab.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
   settings = {
     latex = {
       forwardSearch = {
