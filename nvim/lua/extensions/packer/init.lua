@@ -36,7 +36,6 @@ packer.startup(function()
       }
       vim.api.nvim_set_keymap('i', '<C-e>', 'compe#close("<C-e>")', {noremap = true, silent = true, expr = true})
     end,
-    after = "snippets.nvim"
   }
   use {
     'neovim/nvim-lspconfig',
@@ -50,33 +49,7 @@ packer.startup(function()
     ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
     config = function()
       require('extensions/snippets')
-      local snippets = require('snippets')
-      local indent = snippets.u.match_indentation
-      snippets.snippets = {
-        _global = {
-          hd = "#!/usr/bin/env $1",
-          calc = "${1|calc_buffer(S.v)}",
-        },
-        c = {
-          main = "int main(int argc, char **argv){\n\treturn 0;\n}"
-        },
-        lua = {
-          req = [[local ${2:${1|S.v:match"([^.()]+)[()]*$"}} = require('$1')]],
-        },
-        python = {
-          pr = "print($1)",
-          imp = "import $1",
-          with = indent "with ${1} as ${2}:\n    ",
-          ifmain = indent "if __name__ == '__main__':\n    ${1:main()}",
-          cls = indent "class $1:\n    pass",
-          fn = indent "def $1(${2}):\n    pass",
-          init = indent "def __init__(self, ${1|complete_arg_list(S.v)}",
-          try = indent "try:\n    ${1:pass}\nexcept ${2:Exception} as ${3:e}:\n    ${4:pass}",
-          ["en"] = "# -*- coding: utf-8 -*-",
-          ["for"] = indent "for ${1:i} in ${2}:\n    $0",
-          ["while"] = indent "while ${1:True}:\n    pass",
-        }
-      }
+      vim.defer_fn(function () require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim') end, 500)
     end
   }
   use {
