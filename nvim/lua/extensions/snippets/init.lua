@@ -100,6 +100,6 @@ snippets.snippets = {
     ["while"] = indent "while ${1:True}:\n    pass",
   },
   tex = {
-    fig = indent [[\begin{figure}[${2:ht}]\n\t\centering\includegraphics{$1}\end{figure}]]
+    fig = indent "\\begin{figure}[${2:ht}]\n\t\\centering\n\t\\includegraphics[width=${4:\\textwidth}]{$1}\n\t\\caption{$3}\n\t\\label{fig:$1}\n\\end{figure}"
   }
 }

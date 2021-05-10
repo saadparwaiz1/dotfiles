@@ -21,7 +21,7 @@ packer.startup(function()
   -- LSP Extensions
   use {
     'hrsh7th/nvim-compe',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
     config = function()
       require('compe').setup {
         enabled = true,
@@ -39,14 +39,14 @@ packer.startup(function()
   }
   use {
     'neovim/nvim-lspconfig',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
     config = function ()
       require('extensions/lsp')
     end
   }
   use {
     'saadparwaiz1/snippets.nvim',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
     config = function()
       require('extensions/snippets')
       vim.defer_fn(function () require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim') end, 500)
@@ -54,11 +54,11 @@ packer.startup(function()
   }
   use {
     'kosayoda/nvim-lightbulb',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
   }
   use {
     'onsails/lspkind-nvim',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'plaintex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
     config = function ()
       require('lspkind').init {
         with_text = true,
@@ -114,6 +114,20 @@ packer.startup(function()
     requires = 'nvim-lua/plenary.nvim',
     config = function ()
       require('neogit').setup({})
+      local job = require'plenary.job'
+      job:new({
+        command = 'git',
+        args = { 'rev-parse', '--show-toplevel' },
+        cwd = '.',
+        env = {},
+        on_exit = function(j, return_val)
+          if return_val == 0 then
+            vim.defer_fn(function ()
+              vim.cmd('lcd ' ..j:result()[1])
+            end, 500)
+          end
+        end,
+      }):start()
     end,
     cmd = 'Neogit'
   }

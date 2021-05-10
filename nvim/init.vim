@@ -91,7 +91,7 @@ noremap <silent> \cmds  :%s/\\<<C-R><C-w>\\>/
 noremap <silent> <Left>  <C-w>h
 noremap <silent> <Down>  <C-w>j
 noremap <silent> <Up>  <C-w>k
-noremap <silent> <Right>  <C-w>l
+noremap <silent> <expr> <Right> pumvisible() ? "<C-e>" : "\<C-w>l"
 noremap <silent> Q  <nop>
 noremap <silent> vv  ^v$
 inoremap <silent> jj <Esc><cmd>noh<CR>
