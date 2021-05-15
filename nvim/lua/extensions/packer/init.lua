@@ -16,7 +16,17 @@ packer.startup(function()
     },
     config = function ()
     	require('extensions/fuzzy')
-    end
+    end,
+    keys = {
+      {'n', '\\cmdf'},
+      {'n', '\\cmdl'},
+      {'n', '\\cmdy'},
+      {'n', '\\optcmdb'},
+      {'n', '<leader>gf'},
+      {'n', '<leader>gc'},
+      {'n', '<leader>gb'},
+      {'n', '<leader>gs'}
+    }
   }
   -- LSP Extensions
   use {
@@ -34,22 +44,35 @@ packer.startup(function()
           snippets_nvim = true
         }
       }
-      vim.api.nvim_set_keymap('i', '<C-e>', 'compe#close("<C-e>")', {noremap = true, silent = true, expr = true})
+      vim.api.nvim_set_keymap(
+        'i',
+        '<C-e>',
+        'compe#close("<C-e>")',
+        {
+          noremap = true,
+          silent = true,
+          expr = true
+        }
+      )
     end,
   }
   use {
     'neovim/nvim-lspconfig',
     ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+    requires = {'ray-x/lsp_signature.nvim'},
     config = function ()
       require('extensions/lsp')
     end
   }
   use {
-    'saadparwaiz1/snippets.nvim',
+    '~/Library/Projects/snippets.nvim',
     ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
     config = function()
       require('extensions/snippets')
-      vim.defer_fn(function () require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim') end, 500)
+      vim.defer_fn(function ()
+        require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim')
+      end,
+      500)
     end
   }
   use {
@@ -107,7 +130,8 @@ packer.startup(function()
   use {'tpope/vim-surround'}
   use {
     'terrortylor/nvim-comment',
-    config = function() require("nvim_comment").setup() end
+    config = function() require("nvim_comment").setup() end,
+    keys = 'gc'
   }
   use {
     'TimUntersberger/neogit',
@@ -157,23 +181,39 @@ packer.startup(function()
     branch = 'lua',
     config = function ()
       vim.g.indent_blankline_char = '│'
-      vim.g.indent_blankline_filetype_exclude = { 'help', 'defx', 'markdown', 'man', 'packer' }
+      vim.g.indent_blankline_filetype_exclude = {
+        'help',
+        'defx',
+        'markdown',
+        'man',
+        'packer'
+      }
       vim.g.indent_blankline_space_char_blankline = ' '
       vim.g.indent_blankline_strict_tabs = false
       vim.g.indent_blankline_show_current_context = false
-      vim.g.indent_blankline_context_patterns = { 'class', 'function', 'method', '^if', 'while', 'for', 'with', 'func_literal', 'block' }
-      vim.g.indent_blankline_char_highlight_list = {"GruvboxRed", "GruvboxAqua", "GruvboxYellow", "GruvboxPurple", "GruvboxOrange", "GruvboxGreen"}
-      vim.g.indent_blankline_context_highlight_list = {'IndentBlanklineChar'}
+      vim.g.indent_blankline_context_patterns = {
+        'class',
+        'function',
+        'method',
+        '^if',
+        'while',
+        'for',
+        'with',
+        'func_literal',
+        'block'
+      }
       vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
-    end
+    end,
+    event = 'InsertEnter'
   }
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'},
-    config = function() require('gitsigns').setup() end
+    config = function() require('gitsigns').setup() end,
+    event = 'InsertEnter'
   }
   use {
-    'saadparwaiz1/gruvbox-custom',
+    '~/Library/Projects/gruvbox-custom',
     config = function ()
     	vim.cmd('colorscheme gruvbox')
     end,

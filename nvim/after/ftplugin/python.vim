@@ -1,1 +1,1 @@
-set formatprg='yapf'
+set formatprg=black\ --quiet\ -

@@ -73,8 +73,9 @@ time("Defining packer_plugins", true)
 _G.packer_plugins = {
   ["gitsigns.nvim"] = {
     config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
-    loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/gitsigns.nvim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/gitsigns.nvim"
   },
   ["gruvbox-custom"] = {
     config = { "\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0" },
@@ -82,12 +83,17 @@ _G.packer_plugins = {
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/gruvbox-custom"
   },
   ["indent-blankline.nvim"] = {
-    config = { "\27LJ\2\n�\5\0\0\2\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0+\1\1\0=\1\t\0006\0\0\0009\0\1\0005\1\v\0=\1\n\0006\0\0\0009\0\1\0005\1\r\0=\1\f\0006\0\0\0009\0\1\0005\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\3\0\0\rterminal\vnofile%indent_blankline_buftype_exclude\1\2\0\0\24IndentBlanklineChar,indent_blankline_context_highlight_list\1\a\0\0\15GruvboxRed\16GruvboxAqua\18GruvboxYellow\18GruvboxPurple\18GruvboxOrange\17GruvboxGreen)indent_blankline_char_highlight_list\1\n\0\0\nclass\rfunction\vmethod\b^if\nwhile\bfor\twith\17func_literal\nblock&indent_blankline_context_patterns*indent_blankline_show_current_context!indent_blankline_strict_tabs\6 *indent_blankline_space_char_blankline\1\6\0\0\thelp\tdefx\rmarkdown\bman\vpacker&indent_blankline_filetype_exclude\b│\26indent_blankline_char\6g\bvim\0" },
+    config = { "\27LJ\2\n�\3\0\0\2\0\14\0\0296\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0+\1\1\0=\1\t\0006\0\0\0009\0\1\0005\1\v\0=\1\n\0006\0\0\0009\0\1\0005\1\r\0=\1\f\0K\0\1\0\1\3\0\0\rterminal\vnofile%indent_blankline_buftype_exclude\1\n\0\0\nclass\rfunction\vmethod\b^if\nwhile\bfor\twith\17func_literal\nblock&indent_blankline_context_patterns*indent_blankline_show_current_context!indent_blankline_strict_tabs\6 *indent_blankline_space_char_blankline\1\6\0\0\thelp\tdefx\rmarkdown\bman\vpacker&indent_blankline_filetype_exclude\b│\26indent_blankline_char\6g\bvim\0" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/indent-blankline.nvim"
+  },
+  ["lsp_signature.nvim"] = {
     loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/indent-blankline.nvim"
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
-    config = { "\27LJ\2\n�\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\15symbol_map\1\0\20\tText\b\vFolder\b\tFile\b\15EnumMember\b\nColor\b\rConstant\b\fSnippet\b﬌\vStruct\b\fKeyword\b\tEnum\b了\nValue\b\tUnit\b\rProperty\b\vModule\b\14Interface\bﰮ\nClass\b\rVariable\b\16Constructor\b\rFunction\b\vMethod\aƒ\1\0\1\14with_text\2\tinit\flspkind\frequire\0" },
+    config = { "\27LJ\2\n�\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\15symbol_map\1\0\20\tFile\b\16Constructor\b\nColor\b\rFunction\b\vMethod\aƒ\tText\b\fSnippet\b﬌\fKeyword\b\tEnum\b了\nValue\b\tUnit\b\rProperty\b\vStruct\b\vModule\b\rConstant\b\14Interface\bﰮ\15EnumMember\b\nClass\b\vFolder\b\rVariable\b\1\0\1\14with_text\2\tinit\flspkind\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/lspkind-nvim"
@@ -101,12 +107,14 @@ _G.packer_plugins = {
   },
   ["nvim-comment"] = {
     config = { "\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17nvim_comment\frequire\0" },
-    loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/nvim-comment"
+    keys = { { "", "gc" } },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-comment"
   },
   ["nvim-compe"] = {
     after_files = { "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_buffer.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_calc.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_emoji.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_luasnip.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lsp.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lua.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_omni.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_path.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_snippets_nvim.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_spell.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_tags.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_treesitter.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_ultisnips.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsc.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsp.vim", "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vsnip.vim" },
-    config = { "\27LJ\2\n�\1\0\0\6\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0009\0\b\0'\2\t\0'\3\n\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\3\texpr\2\vsilent\2\fnoremap\2\25compe#close(\"<C-e>\")\n<C-e>\6i\20nvim_set_keymap\bapi\bvim\vsource\1\0\6\vbuffer\2\rnvim_lua\2\18snippets_nvim\2\tpath\2\rnvim_lsp\2\nspell\2\1\0\1\fenabled\2\nsetup\ncompe\frequire\0" },
+    config = { "\27LJ\2\n�\1\0\0\6\0\r\0\0176\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\0016\0\6\0009\0\a\0009\0\b\0'\2\t\0'\3\n\0'\4\v\0005\5\f\0B\0\5\1K\0\1\0\1\0\3\texpr\2\vsilent\2\fnoremap\2\25compe#close(\"<C-e>\")\n<C-e>\6i\20nvim_set_keymap\bapi\bvim\vsource\1\0\6\18snippets_nvim\2\rnvim_lua\2\rnvim_lsp\2\tpath\2\vbuffer\2\nspell\2\1\0\1\fenabled\2\nsetup\ncompe\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-compe"
@@ -165,8 +173,10 @@ _G.packer_plugins = {
   },
   ["telescope.nvim"] = {
     config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21extensions/fuzzy\frequire\0" },
-    loaded = true,
-    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/start/telescope.nvim"
+    keys = { { "n", "\\cmdf" }, { "n", "\\cmdl" }, { "n", "\\cmdy" }, { "n", "\\optcmdb" }, { "n", "<leader>gf" }, { "n", "<leader>gc" }, { "n", "<leader>gb" }, { "n", "<leader>gs" } },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/telescope.nvim"
   },
   ["vim-surround"] = {
     loaded = true,
@@ -175,49 +185,50 @@ _G.packer_plugins = {
 }
 
 time("Defining packer_plugins", false)
--- Config for: telescope.nvim
-time("Config for telescope.nvim", true)
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21extensions/fuzzy\frequire\0", "config", "telescope.nvim")
-time("Config for telescope.nvim", false)
 -- Config for: gruvbox-custom
 time("Config for gruvbox-custom", true)
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0", "config", "gruvbox-custom")
 time("Config for gruvbox-custom", false)
--- Config for: nvim-comment
-time("Config for nvim-comment", true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\17nvim_comment\frequire\0", "config", "nvim-comment")
-time("Config for nvim-comment", false)
 -- Config for: pears.nvim
 time("Config for pears.nvim", true)
 try_loadstring("\27LJ\2\n�\2\0\1\a\0\f\2#6\1\0\0009\1\1\0019\1\2\1B\1\1\2\t\1\0\0X\1\26�6\1\0\0009\1\1\0019\1\3\1B\1\1\0029\1\4\1\b\1\1\0X\1\19�6\1\0\0009\1\5\0019\1\6\1\15\0\1\0X\2\5�6\1\0\0009\1\1\0019\1\a\1'\3\b\0D\1\2\0006\1\0\0009\1\t\0019\1\n\1'\3\v\0+\4\2\0+\5\2\0+\6\2\0D\1\5\0X\1\2�\18\1\0\0B\1\1\1K\0\1\0\n<C-y>\27nvim_replace_termcodes\bapi\t<CR>\18compe#confirm\17loaded_compe\6g\rselected\18complete_info\15pumvisible\afn\bvim\2����\31l\1\1\4\0\5\0\n9\1\0\0'\3\1\0B\1\2\0019\1\2\0+\3\1\0B\1\2\0019\1\3\0003\3\4\0B\1\2\1K\0\1\0\0\ron_enter#remove_pair_on_outer_backspace\17tag_matching\vpreset8\1\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0003\2\3\0B\0\2\1K\0\1\0\0\nsetup\npears\frequire\0", "config", "pears.nvim")
 time("Config for pears.nvim", false)
--- Config for: gitsigns.nvim
-time("Config for gitsigns.nvim", true)
-try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
-time("Config for gitsigns.nvim", false)
--- Config for: indent-blankline.nvim
-time("Config for indent-blankline.nvim", true)
-try_loadstring("\27LJ\2\n�\5\0\0\2\0\18\0%6\0\0\0009\0\1\0'\1\3\0=\1\2\0006\0\0\0009\0\1\0005\1\5\0=\1\4\0006\0\0\0009\0\1\0'\1\a\0=\1\6\0006\0\0\0009\0\1\0+\1\1\0=\1\b\0006\0\0\0009\0\1\0+\1\1\0=\1\t\0006\0\0\0009\0\1\0005\1\v\0=\1\n\0006\0\0\0009\0\1\0005\1\r\0=\1\f\0006\0\0\0009\0\1\0005\1\15\0=\1\14\0006\0\0\0009\0\1\0005\1\17\0=\1\16\0K\0\1\0\1\3\0\0\rterminal\vnofile%indent_blankline_buftype_exclude\1\2\0\0\24IndentBlanklineChar,indent_blankline_context_highlight_list\1\a\0\0\15GruvboxRed\16GruvboxAqua\18GruvboxYellow\18GruvboxPurple\18GruvboxOrange\17GruvboxGreen)indent_blankline_char_highlight_list\1\n\0\0\nclass\rfunction\vmethod\b^if\nwhile\bfor\twith\17func_literal\nblock&indent_blankline_context_patterns*indent_blankline_show_current_context!indent_blankline_strict_tabs\6 *indent_blankline_space_char_blankline\1\6\0\0\thelp\tdefx\rmarkdown\bman\vpacker&indent_blankline_filetype_exclude\b│\26indent_blankline_char\6g\bvim\0", "config", "indent-blankline.nvim")
-time("Config for indent-blankline.nvim", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)
 vim.cmd [[command! -nargs=* -range -bang -complete=file Neogit lua require("packer.load")({'neogit'}, { cmd = "Neogit", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args> }, _G.packer_plugins)]]
 time("Defining lazy-load commands", false)
 
+-- Keymap lazy-loads
+time("Defining lazy-load keymaps", true)
+vim.cmd [[nnoremap <silent> <leader>gb <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>leader>gb", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <leader>gs <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>leader>gs", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> \cmdy <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "\\cmdy", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> \cmdl <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "\\cmdl", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> \cmdf <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "\\cmdf", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <leader>gc <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>leader>gc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'nvim-comment'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> \optcmdb <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "\\optcmdb", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> <leader>gf <cmd>lua require("packer.load")({'telescope.nvim'}, { keys = "<lt>leader>gf", prefix = "" }, _G.packer_plugins)<cr>]]
+time("Defining lazy-load keymaps", false)
+
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
-vim.cmd [[au FileType c ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "c" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'nvim-treesitter', 'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "python" }, _G.packer_plugins)]]
-vim.cmd [[au FileType bash ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "bash" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sh ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "sh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType zsh ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "zsh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType cpp ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "cpp" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "tex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType lua ++once lua require("packer.load")({'nvim-treesitter', 'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'snippets.nvim', 'nvim-lightbulb'}, { ft = "lua" }, _G.packer_plugins)]]
+vim.cmd [[au FileType cpp ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "cpp" }, _G.packer_plugins)]]
+vim.cmd [[au FileType lua ++once lua require("packer.load")({'nvim-treesitter', 'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "lua" }, _G.packer_plugins)]]
+vim.cmd [[au FileType bash ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "bash" }, _G.packer_plugins)]]
+vim.cmd [[au FileType sh ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "sh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType zsh ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "zsh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType c ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "c" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType python ++once lua require("packer.load")({'nvim-treesitter', 'snippets.nvim', 'nvim-compe', 'lspkind-nvim', 'nvim-lightbulb', 'nvim-lspconfig'}, { ft = "python" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
+  -- Event lazy-loads
+time("Defining lazy-load event autocommands", true)
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'gitsigns.nvim', 'indent-blankline.nvim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+time("Defining lazy-load event autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 time("Sourcing ftdetect script at: /Users/saadparwaiz/Library/ApplicationSupport/nvim/site/pack/packer/opt/nvim-treesitter/ftdetect/gdscript.vim", true)

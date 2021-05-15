@@ -78,7 +78,7 @@ set conceallevel=1
 augroup autocmds_core
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=150}
-  autocmd FileType tex,plaintex setlocal spell
+  autocmd FileType tex,plaintex,gitcommit setlocal spell
 augroup END
 "  }}}
 "  --------------------------------------------------

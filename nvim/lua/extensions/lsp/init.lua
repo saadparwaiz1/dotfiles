@@ -9,25 +9,30 @@ local lspconfig = require('lspconfig')
 -- ============================================================================
 local options = {noremap = true, silent = true}
 
+-- Normal LSP Mappings
 local rnm = "<cmd>lua vim.lsp.buf.rename()<CR>"
 local hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
-local fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
+local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
+local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
+local fmt = "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>"
+local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border='single'}})<CR>"
+local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border='single'}})<CR>"
+
+-- Telescope LSP
+local refe = "<cmd>Telescope lsp_references<CR>"
 local acn = "<cmd>Telescope lsp_code_actions<CR>"
 local defi = "<cmd>Telescope lsp_definitions<CR>"
-local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
-local refe = "<cmd>Telescope lsp_references<CR>"
-local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
-local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>"
-local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>"
 local wrkspc = "<cmd>Telescope lsp_workspace_symbols<CR>"
 local diag = "<cmd>Telescope lsp_workspace_diagnostics<CR>"
+
+-- path to node_modules
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_set_keymap("n", "gq", fmt, options)
+    vim.api.nvim_set_keymap("n", "<Space>f", fmt, options)
   elseif client.resolved_capabilities.document_range_formatting then
-    vim.api.nvim_set_keymap("n", "gq", fmt, options)
+    vim.api.nvim_set_keymap("n", "<Space>f", fmt, options)
   end
   if client.config.root_dir ~= nil then
     vim.cmd('lcd ' .. client.config.root_dir)
@@ -36,13 +41,20 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr", refe, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "K", hover, options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gs', diag, options)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ge', diag, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', impli, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD", declr, options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', wrkspc, options)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gw', wrkspc, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "[e", pdiag, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "]e", ndiag, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
+
+  require "lsp_signature".on_attach({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "single"
+      }
+  })
 
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
@@ -149,12 +161,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
   })
 
 vim.fn.sign_define("LspDiagnosticsSignError", {text = "✘"})
-
 vim.fn.sign_define("LspDiagnosticsSignWarning", {text = ""})
-
-vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
-
 vim.fn.sign_define("LspDiagnosticsSignHint", {text = ""})
+vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
 -- }}}
 -- ============================================================================
 -- Hover/Signature Configuration {{{
