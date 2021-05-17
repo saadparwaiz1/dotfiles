@@ -137,21 +137,7 @@ packer.startup(function()
     'TimUntersberger/neogit',
     requires = 'nvim-lua/plenary.nvim',
     config = function ()
-      require('neogit').setup({})
-      local job = require'plenary.job'
-      job:new({
-        command = 'git',
-        args = { 'rev-parse', '--show-toplevel' },
-        cwd = '.',
-        env = {},
-        on_exit = function(j, return_val)
-          if return_val == 0 then
-            vim.defer_fn(function ()
-              vim.cmd('lcd ' ..j:result()[1])
-            end, 500)
-          end
-        end,
-      }):start()
+      require('neogit').setup {}
     end,
     cmd = 'Neogit'
   }
