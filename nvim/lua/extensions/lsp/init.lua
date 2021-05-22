@@ -35,7 +35,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_set_keymap("n", "<Space>f", fmt, options)
   end
   if client.config.root_dir ~= nil then
-    vim.cmd('lcd ' .. client.config.root_dir)
+    vim.api.nvim_set_current_dir(client.config.root_dir)
   end
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', acn, options)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", defi, options)
@@ -50,7 +50,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
 
   require "lsp_signature".on_attach({
-      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      bind = true,
       handler_opts = {
         border = "single"
       }

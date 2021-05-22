@@ -77,7 +77,7 @@ local indent = snippets.u.match_indentation
 
 snippets.snippets = {
   _global = {
-    hd = "#!/usr/bin/env $1",
+    hd = "${LINE_COMMENT}!/usr/bin/env $1",
     calc = "${1|calc_buffer(S.v)}",
   },
   c = {

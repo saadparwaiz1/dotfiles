@@ -4,14 +4,19 @@ local packer = require('packer')
 
 packer.startup(function()
   -- plugin manager
-  use {'wbthomason/packer.nvim'}
+  use {
+    'wbthomason/packer.nvim'
+  }
   -- fuzzy finder
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
       {'nvim-lua/popup.nvim'},
       {'nvim-lua/plenary.nvim'},
-      {'kyazdani42/nvim-web-devicons'},
+      {
+        'kyazdani42/nvim-web-devicons',
+        module = 'nvim-web-devicons'
+      },
       {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
     },
     config = function ()
@@ -55,60 +60,65 @@ packer.startup(function()
         }
       )
     end,
-  }
-  use {
-    'neovim/nvim-lspconfig',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
-    requires = {'ray-x/lsp_signature.nvim'},
-    config = function ()
-      require('extensions/lsp')
-    end
-  }
-  use {
-    '~/Library/Projects/snippets.nvim',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
-    config = function()
-      require('extensions/snippets')
-      vim.defer_fn(function ()
-        require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim')
-      end,
-      500)
-    end
-  }
-  use {
-    'kosayoda/nvim-lightbulb',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
-  }
-  use {
-    'onsails/lspkind-nvim',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
-    config = function ()
-      require('lspkind').init {
-        with_text = true,
-        symbol_map = {
-            Text = '',
-            Method = 'ƒ',
-            Function = '',
-            Constructor = '',
-            Variable = '',
-            Class = '',
-            Interface = 'ﰮ',
-            Module = '',
-            Property = '',
-            Unit = '',
-            Value = '',
-            Enum = '了',
-            Keyword = '',
-            Snippet = '﬌',
-            Color = '',
-            File = '',
-            Folder = '',
-            EnumMember = '',
-            Constant = '',
-            Struct = ''
-        }
+    requires = {
+      {
+        'neovim/nvim-lspconfig',
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        requires = {'ray-x/lsp_signature.nvim'},
+        config = function ()
+          require('extensions/lsp')
+        end
+      },
+
+      {
+        '~/Library/Projects/snippets.nvim',
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        config = function()
+          require('extensions/snippets')
+          vim.defer_fn(function ()
+            require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim')
+          end,
+          500)
+        end
+      },
+
+      {
+        'kosayoda/nvim-lightbulb',
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+      },
+
+      {
+        'onsails/lspkind-nvim',
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        config = function ()
+          require('lspkind').init({
+            with_text = true,
+            symbol_map = {
+                Text = '',
+                Method = 'ƒ',
+                Function = '',
+                Constructor = '',
+                Variable = '',
+                Class = '',
+                Interface = 'ﰮ',
+                Module = '',
+                Property = '',
+                Unit = '',
+                Value = '',
+                Enum = '了',
+                Keyword = '',
+                Snippet = '﬌',
+                Color = '',
+                File = '',
+                Folder = '',
+                EnumMember = '',
+                Constant = '',
+                Struct = ''
+            }
+          })
+        end
       }
-    end
+    }
   }
 
   -- Treesiter Extensions
@@ -117,17 +127,31 @@ packer.startup(function()
     ft = {'lua', 'python'},
     config = function ()
       local treesitter = require('nvim-treesitter.configs')
-      treesitter.setup {
+      treesitter.setup({
         ensure_installed = {'lua', 'python'},
         highlight = {enable = true}
-      }
+      })
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
       vim.g.indent_blankline_show_current_context = true
     end
   }
   -- Enchanced Functionality Plugins
-  use {'tpope/vim-surround'}
+  use {
+    'tpope/vim-surround',
+    keys = {
+      {'n', 'ds'},
+      {'n', 'cs'},
+      {'n', 'cS'},
+      {'n', 'ys'},
+      {'n', 'yS'},
+      {'n', 'yss'},
+      {'n', 'ySs'},
+      {'n', 'ySS'},
+      {'x', 'S'},
+      {'x', 'gS'},
+    }
+  }
   use {
     'terrortylor/nvim-comment',
     config = function() require("nvim_comment").setup() end,
