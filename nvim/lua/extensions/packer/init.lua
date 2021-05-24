@@ -36,7 +36,7 @@ packer.startup(function()
   -- LSP Extensions
   use {
     'hrsh7th/nvim-compe',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
     config = function()
       require('compe').setup {
         enabled = true,
@@ -63,16 +63,16 @@ packer.startup(function()
     requires = {
       {
         'neovim/nvim-lspconfig',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
         requires = {'ray-x/lsp_signature.nvim'},
         config = function ()
           require('extensions/lsp')
-        end
+        end,
       },
 
       {
         '~/Library/Projects/snippets.nvim',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
         config = function()
           require('extensions/snippets')
           vim.defer_fn(function ()
@@ -84,12 +84,12 @@ packer.startup(function()
 
       {
         'kosayoda/nvim-lightbulb',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
       },
 
       {
         'onsails/lspkind-nvim',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex'},
+        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
         config = function ()
           require('lspkind').init({
             with_text = true,
@@ -117,6 +117,11 @@ packer.startup(function()
             }
           })
         end
+      },
+
+      {
+        'simrat39/rust-tools.nvim',
+        module = 'rust-tools'
       }
     }
   }

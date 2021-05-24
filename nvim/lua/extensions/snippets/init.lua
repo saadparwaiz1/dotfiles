@@ -71,35 +71,3 @@ end
 
 _G.calc_buffer = calc_buffer
 _G.complete_arg_list = complete_arg_list
-
-local snippets = require('snippets')
-local indent = snippets.u.match_indentation
-
-snippets.snippets = {
-  _global = {
-    hd = "${LINE_COMMENT}!/usr/bin/env $1",
-    calc = "${1|calc_buffer(S.v)}",
-  },
-  c = {
-    main = "int main(int argc, char **argv){\n\treturn 0;\n}"
-  },
-  lua = {
-    req = [[local ${2:${1|S.v:match"([^.()]+)[()]*$"}} = require('$1')]],
-  },
-  python = {
-    pr = "print($1)",
-    imp = "import $1",
-    with = indent "with ${1} as ${2}:\n    ",
-    ifmain = indent "if __name__ == '__main__':\n    ${1:main()}",
-    cls = indent "class $1:\n    pass",
-    fn = indent "def $1(${2}):\n    pass",
-    init = indent "def __init__(self, ${1|complete_arg_list(S.v)}",
-    try = indent "try:\n    ${1:pass}\nexcept ${2:Exception} as ${3:e}:\n    ${4:pass}",
-    ["en"] = "# -*- coding: utf-8 -*-",
-    ["for"] = indent "for ${1:i} in ${2}:\n    $0",
-    ["while"] = indent "while ${1:True}:\n    pass",
-  },
-  tex = {
-    fig = indent "\\begin{figure}[${2:ht}]\n\t\\centering\n\t\\includegraphics[width=${4:\\textwidth}]{$1}\n\t\\caption{$3}\n\t\\label{fig:$1}\n\\end{figure}"
-  }
-}

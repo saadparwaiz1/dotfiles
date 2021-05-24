@@ -40,6 +40,7 @@ let g:loaded_compe_snippets_nvim = 1
 let g:markdown_syntax_conceal = 1
 let g:markdown_fenced_languages = [ "lua", "vim", "json", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"]
 let g:gruvbox_groups = ["lua", "python", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"]
+let g:snippets_nvim_dir = stdpath('config') . '/lua/extensions/snippets/snippets'
 "  }}}
 "  --------------------------------------------------
 "  vim options {{{
