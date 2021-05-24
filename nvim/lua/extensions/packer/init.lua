@@ -223,10 +223,10 @@ packer.startup(function()
     event = 'InsertEnter'
   }
   use {
-    '~/Library/Projects/gruvbox-custom',
+    'saadparwaiz1/gruvbox-custom',
     config = function ()
     	vim.cmd('colorscheme gruvbox')
     end,
-    run = 'python3 init.py'
+    run = [[nvim -c 'lua require("gruv.gruvbox")' -c 'q']]
   }
 end)
