@@ -30,3 +30,5 @@ end
 
 _G.SUtils = {}
 _G.SUtils.Term = float_term
+
+A.nvim_set_keymap('n', '\\cmd;', '<cmd>lua SUtils.Term()<CR>', {silent=true})
