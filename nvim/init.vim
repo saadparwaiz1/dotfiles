@@ -36,7 +36,6 @@ let g:loaded_compe_vsnip = 1
 let g:loaded_compe_ultisnips = 1
 let g:loaded_compe_treesitter = 1
 let g:loaded_compe_luasnip = 1
-let g:loaded_compe_snippets_nvim = 1
 let g:markdown_syntax_conceal = 1
 let g:markdown_fenced_languages = [ "lua", "vim", "json", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"]
 let g:gruvbox_groups = ["lua", "python", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"]

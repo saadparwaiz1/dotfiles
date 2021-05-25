@@ -3,6 +3,7 @@ vim.cmd('packadd packer.nvim')
 local packer = require('packer')
 
 packer.startup(function()
+  local lsp_fts = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'}
   -- plugin manager
   use {
     'wbthomason/packer.nvim'
@@ -36,7 +37,7 @@ packer.startup(function()
   -- LSP Extensions
   use {
     'hrsh7th/nvim-compe',
-    ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
+    ft = lsp_fts,
     config = function()
       require('compe').setup {
         enabled = true,
@@ -63,7 +64,7 @@ packer.startup(function()
     requires = {
       {
         'neovim/nvim-lspconfig',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
+        ft = lsp_fts,
         requires = {'ray-x/lsp_signature.nvim'},
         config = function ()
           require('extensions/lsp')
@@ -72,24 +73,20 @@ packer.startup(function()
 
       {
         '~/Library/Projects/snippets.nvim',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
+        module = 'snippets',
         config = function()
           require('extensions/snippets')
-          vim.defer_fn(function ()
-            require'compe'.register_source('snippets_nvim', require'compe_snippets_nvim')
-          end,
-          500)
         end
       },
 
       {
         'kosayoda/nvim-lightbulb',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
+        ft = lsp_fts,
       },
 
       {
         'onsails/lspkind-nvim',
-        ft = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'},
+        ft = lsp_fts,
         config = function ()
           require('lspkind').init({
             with_text = true,

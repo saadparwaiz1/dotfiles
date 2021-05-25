@@ -42,32 +42,3 @@ vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", expr)
 vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", expr)
 vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", expr)
 vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", expr)
-
-
-
-local function complete_arg_list(string)
-   local rest_completion = string .. '):\n    '
-
-   for str in string.gmatch(string, "([^"..','.."]+)") do
-     rest_completion = rest_completion .. "self." .. str:gsub(" ", "") .. ' = ' .. str:gsub(" ", "") .. '\n    '
-   end
-
-   return rest_completion
-end
-
-local function calc_buffer(string)
-	if string == "" or string == nil then
-		return "nil"
-	end
-
-	local f = loadstring("return " .. string)
-
-	if f == nil then
-		return "nil"
-	end
-
-	return tostring(f())
-end
-
-_G.calc_buffer = calc_buffer
-_G.complete_arg_list = complete_arg_list
