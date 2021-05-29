@@ -34,7 +34,7 @@ local globals = {
   markdown_syntax_conceal = 1,
   markdown_fenced_languages = {"lua", "vim", "json", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"},
   gruvbox_groups = {"lua", "python", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"},
-  snippets_nvim_dir = vim.fn.stdpath('config') .. '/lua/extensions/snippets/snippets'
+  snippets_nvim_dir = SUtils.join(vim.fn.stdpath('config'), 'lua/extensions/snippets')
 }
 
 SUtils.globals(globals)
@@ -48,7 +48,7 @@ local options = {
   number = true,
   backup = false,
   undofile = true,
-  showmode = true,
+  showmode = false,
   lazyredraw = true,
   splitbelow = true,
   splitright = true,
@@ -73,7 +73,6 @@ local options = {
   inccommand = 'nosplit',
 }
 vim.opt.shortmess:append('c')
--- vim.opt.isfname:append(' ')
 SUtils.options(options)
 --  }}}
 --  --------------------------------------------------
@@ -82,7 +81,7 @@ SUtils.options(options)
 vim.api.nvim_exec([[
   augroup autocmds_core
     autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=150}
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='GruvboxOrangeBold', timeout=150}
     autocmd FileType tex,markdown,plaintex,gitcommit setlocal spell
   augroup END
 ]], false)
@@ -164,6 +163,12 @@ local maps = {
     opts = {silent = true, noremap = true}
   },
   {
+    mode = 'n',
+    lhs = '\\cmd;',
+    rhs = '<cmd>lua SUtils.Term()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
     mode = 'i',
     lhs = 'jj',
     rhs = '<Esc><cmd>noh<CR>',
@@ -182,10 +187,64 @@ local maps = {
     opts = {silent = true, noremap = true, expr = true}
   },
   {
+    mode = 'n',
+    lhs = '\\cmdp',
+    rhs = '<cmd>Neogit<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
     mode = 'i',
-    lhs = '<CR>',
-    rhs = [[compe#confirm('<CR>')]],
-    opts = {silent = true, noremap = true, expr = true}
+    lhs = '<C-e>',
+    rhs = 'compe#close("<C-e>")',
+    opts = {noremap = true, silent = true, expr = true}
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdf',
+    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdl',
+    rhs = '<cmd>lua require("telescope.builtin").live_grep()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdy',
+    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '\\optcmdb',
+    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs ='<leader>gf',
+    rhs ='<cmd>lua require("telescope.builtin").git_status()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gc',
+    rhs = '<cmd>lua require("telescope.builtin").git_commits()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gb',
+    rhs = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
+    opts = {silent = true, noremap = true}
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gs',
+    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>',
+    opts = {silent = true, noremap = true}
   },
 }
 SUtils.maps(maps)

@@ -19,20 +19,20 @@ local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border='single
 local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border='single'}})<CR>"
 
 -- Telescope LSP
-local refe = "<cmd>Telescope lsp_references<CR>"
-local acn = "<cmd>Telescope lsp_code_actions<CR>"
-local defi = "<cmd>Telescope lsp_definitions<CR>"
-local wrkspc = "<cmd>Telescope lsp_workspace_symbols<CR>"
-local diag = "<cmd>Telescope lsp_workspace_diagnostics<CR>"
+local refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
+local acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
+local defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
+local wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
+local diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
 
 -- path to node_modules
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
 
 local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_set_keymap("n", "<Space>f", fmt, options)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>f", fmt, options)
   elseif client.resolved_capabilities.document_range_formatting then
-    vim.api.nvim_set_keymap("n", "<Space>f", fmt, options)
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>f", fmt, options)
   end
   if client.config.root_dir ~= nil then
     vim.api.nvim_set_current_dir(client.config.root_dir)

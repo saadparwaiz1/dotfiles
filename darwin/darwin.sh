@@ -44,17 +44,17 @@ defaults write com.apple.dock orientation -string left
 killall Dock
 
 if command -v brew &>/dev/null; then
-	echo 'Homebrew is installed'
+    echo 'Homebrew is installed'
 else
-	read -p "Install Homebrew?" -n 1 -r
+    read -p "Install Homebrew?" -n 1 -r
 
-	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-		echo
-		echo 'Please Install Homebrew Yourself and Run The Script Again'
-		exit 1
-	fi
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo
+        echo 'Please Install Homebrew Yourself and Run The Script Again'
+        exit 1
+    fi
 
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 
 brew bundle install

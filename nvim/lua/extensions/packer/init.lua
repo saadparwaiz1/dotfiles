@@ -23,16 +23,7 @@ packer.startup(function()
     config = function ()
     	require('extensions/fuzzy')
     end,
-    keys = {
-      {'n', '\\cmdf'},
-      {'n', '\\cmdl'},
-      {'n', '\\cmdy'},
-      {'n', '\\optcmdb'},
-      {'n', '<leader>gf'},
-      {'n', '<leader>gc'},
-      {'n', '<leader>gb'},
-      {'n', '<leader>gs'}
-    }
+    module = 'telescope'
   }
   -- LSP Extensions
   use {
@@ -50,16 +41,6 @@ packer.startup(function()
           snippets_nvim = true
         }
       }
-      vim.api.nvim_set_keymap(
-        'i',
-        '<C-e>',
-        'compe#close("<C-e>")',
-        {
-          noremap = true,
-          silent = true,
-          expr = true
-        }
-      )
     end,
     requires = {
       {
@@ -75,7 +56,10 @@ packer.startup(function()
         '~/Library/Projects/snippets.nvim',
         module = 'snippets',
         config = function()
-          require('extensions/snippets')
+          vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.SUtils.tab_complete()", {expr=true})
+          vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.SUtils.tab_complete()", {expr=true})
+          vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.SUtils.s_tab_complete()", {expr=true})
+          vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.SUtils.s_tab_complete()", {expr=true})
         end
       },
 
@@ -216,7 +200,7 @@ packer.startup(function()
       }
       vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
     end,
-    ft = {'c', 'cpp', 'lua', 'python', 'tex', 'make'}
+    ft = {'c', 'sh', 'zsh', 'cpp', 'lua', 'python', 'tex', 'make'}
   }
   use {
     'lewis6991/gitsigns.nvim',

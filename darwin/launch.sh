@@ -2,7 +2,7 @@
 
 launchctl setenv XDG_CONFIG_HOME /Users/saadparwaiz/Library/Preferences
 launchctl setenv XDG_CACHE_HOME /Users/saadparwaiz/Library/Caches
-launchctl setenv XDG_DATA_HOME "/Users/saadparwaiz/Library/ApplicationSupport"
+launchctl setenv XDG_DATA_HOME "/Users/saadparwaiz/Library/Share"
 launchctl setenv EDITOR nvim
 launchctl setenv VISUAL nvim
 launchctl setenv HOMEBREW_NO_ANALYTICS 1

@@ -2,6 +2,21 @@ O = vim.o
 A = vim.api
 F = vim.fn
 
+-- Private API
+local __t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local __check_back_space = function()
+  local col = vim.fn.col('.') - 1
+  if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    return true
+  else
+    return false
+  end
+end
+
+-- Path Separator For Current OS
 local sep = (function()
   if jit then
     local os = string.lower(jit.os)
@@ -15,14 +30,14 @@ local sep = (function()
   end
 end)()
 
--- @param prefix string
--- @param suffix string
--- @return string
-local function join(prefix, suffix)
-  return prefix .. sep .. suffix
+-- Join Paths Togeather
+-- @returns string
+local function join(...)
+  return table.concat({...}, sep)
 end
 
-
+-- Create a floating terminal
+-- @return nil
 local function float_term()
     local height = math.floor((O.lines - 2) * 0.6)
     local row = math.floor((O.lines - height) / 2)
@@ -48,7 +63,9 @@ local function float_term()
     A.nvim_command(string.format(fmt, win))
 end
 
+-- create snippet for python class
 -- @param passed_str string
+-- @return string
 local function complete_arg_list(passed_str)
   local counter = 0
   local tab_width = vim.bo.sw
@@ -63,7 +80,9 @@ local function complete_arg_list(passed_str)
   return rest_completion:sub(1, -(2*tab_width + 2))
 end
 
+-- execute string and return it's output
 -- @param s string
+-- @return string
 local function calc_buffer(s)
   if s == "" or s == nil then
     return "nil"
@@ -78,33 +97,73 @@ local function calc_buffer(s)
   return tostring(f())
 end
 
+-- Intialise Global Variables
+-- @param gbl table
+-- @return nil
 local function globals(gbl)
 	for k,v in pairs(gbl) do
     vim.g[k] = v
   end
 end
 
+-- Intialise Options
+-- @param opts table
+-- @return nil
 local function options(opts)
 	for k,v in pairs(opts) do
     vim.opt[k] = v
   end
 end
 
+-- Create Keymaps
+-- @param mps table
+-- @return nil
 local function maps(mps)
 	for _,v in ipairs(mps) do
     A.nvim_set_keymap(v['mode'],v['lhs'],  v['rhs'], v['opts'])
   end
 end
 
-_G.SUtils = {}
-_G.SUtils.Term = float_term
-_G.SUtils.calc_buffer = calc_buffer
-_G.SUtils.complete_arg_list = complete_arg_list
-_G.SUtils.sep = sep
-_G.SUtils.join = join
-_G.SUtils.globals = globals
-_G.SUtils.options = options
-_G.SUtils.maps = maps
+-- Use tab to:
+-- move to next item in completion menuone
+-- jump to next snippet\'s placeholder
+-- @return nil
+local function tab_complete()
+  if vim.fn.pumvisible() == 1 then
+    return __t "<C-n>"
+  elseif require('snippets').has_active_snippet() then
+    return __t "<cmd>lua return require'snippets'.expand_or_advance(1)<CR>"
+  elseif __check_back_space() then
+    return __t "<Tab>"
+  else
+    return vim.fn['compe#complete']()
+  end
+end
 
-A.nvim_set_keymap('n', '\\cmd;', '<cmd>lua SUtils.Term()<CR>', {silent=true})
+-- Use s-tab to:
+-- move to prev item in completion menuone
+-- jump to prev snippet\'s placeholder
+-- @return nil
+local function s_tab_complete()
+  if vim.fn.pumvisible() == 1 then
+    return __t "<C-p>"
+  elseif require('snippets').has_active_snippet() then
+    return __t "<cmd>lua return require'snippets'.advance_snippet(-1)<CR>"
+  else
+    return __t "<S-Tab>"
+  end
+end
 
+
+_G.SUtils = {
+  Term = float_term,
+  calc_buffer = calc_buffer,
+  complete_arg_list = complete_arg_list,
+  sep = sep,
+  join = join,
+  globals = globals,
+  options = options,
+  maps = maps,
+  tab_complete = tab_complete,
+  s_tab_complete = s_tab_complete
+}

@@ -61,54 +61,6 @@ require('telescope').load_extension('fzf')
 local silent = {silent = true}
 
 local maps = {
-  {
-    mode = 'n',
-    lhs = '\\cmdf',
-    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '\\cmdl',
-    rhs = '<cmd>Telescope live_grep<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '\\cmdy',
-    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '\\optcmdb',
-    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs ='<leader>gf',
-    rhs ='<cmd>Telescope git_files<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gc',
-    rhs = '<cmd>Telescope git_commits<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gb',
-    rhs = '<cmd>Telescope git_branches<CR>',
-    opts = silent
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gs',
-    rhs = '<cmd>Telescope git_status<CR>',
-    opts = silent
-  },
 }
 
 SUtils.maps(maps)
