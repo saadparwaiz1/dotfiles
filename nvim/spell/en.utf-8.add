@@ -1,0 +1,9 @@
+Plugins
+virtualenv
+treesitter
+health
+ABI
+COLORTERM
+truecolor
+terminfo
+nvim

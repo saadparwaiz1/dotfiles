@@ -216,7 +216,7 @@ packer.startup(function()
       }
       vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
     end,
-    event = 'InsertEnter'
+    ft = {'c', 'cpp', 'lua', 'python', 'tex', 'make'}
   }
   use {
     'lewis6991/gitsigns.nvim',
@@ -225,7 +225,7 @@ packer.startup(function()
     event = 'InsertEnter'
   }
   use {
-    'saadparwaiz1/gruvbox-custom',
+    'saadparwaiz1/gruvbox-autogenerate',
     config = function ()
     	vim.cmd('colorscheme gruvbox')
     end,

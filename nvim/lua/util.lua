@@ -2,6 +2,26 @@ O = vim.o
 A = vim.api
 F = vim.fn
 
+local sep = (function()
+  if jit then
+    local os = string.lower(jit.os)
+    if os == 'linux' or os == 'osx' or os == 'bsd' then
+      return '/'
+    else
+      return '\\'
+    end
+  else
+    return package.config:sub(1, 1)
+  end
+end)()
+
+-- @param prefix string
+-- @param suffix string
+-- @return string
+local function join(prefix, suffix)
+  return prefix .. sep .. suffix
+end
+
 
 local function float_term()
     local height = math.floor((O.lines - 2) * 0.6)
@@ -28,6 +48,7 @@ local function float_term()
     A.nvim_command(string.format(fmt, win))
 end
 
+-- @param passed_str string
 local function complete_arg_list(passed_str)
   local counter = 0
   local tab_width = vim.bo.sw
@@ -42,12 +63,13 @@ local function complete_arg_list(passed_str)
   return rest_completion:sub(1, -(2*tab_width + 2))
 end
 
-local function calc_buffer(string)
-  if string == "" or string == nil then
+-- @param s string
+local function calc_buffer(s)
+  if s == "" or s == nil then
     return "nil"
   end
 
-  local f = loadstring("return " .. string)
+  local f = loadstring("return " .. s)
 
   if f == nil then
     return "nil"
@@ -56,9 +78,33 @@ local function calc_buffer(string)
   return tostring(f())
 end
 
+local function globals(gbl)
+	for k,v in pairs(gbl) do
+    vim.g[k] = v
+  end
+end
+
+local function options(opts)
+	for k,v in pairs(opts) do
+    vim.opt[k] = v
+  end
+end
+
+local function maps(mps)
+	for _,v in ipairs(mps) do
+    A.nvim_set_keymap(v['mode'],v['lhs'],  v['rhs'], v['opts'])
+  end
+end
+
 _G.SUtils = {}
 _G.SUtils.Term = float_term
 _G.SUtils.calc_buffer = calc_buffer
 _G.SUtils.complete_arg_list = complete_arg_list
+_G.SUtils.sep = sep
+_G.SUtils.join = join
+_G.SUtils.globals = globals
+_G.SUtils.options = options
+_G.SUtils.maps = maps
 
 A.nvim_set_keymap('n', '\\cmd;', '<cmd>lua SUtils.Term()<CR>', {silent=true})
+

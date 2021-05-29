@@ -1,13 +1,24 @@
 local telescope = require('telescope')
 local actions = require('telescope.actions')
-local map = vim.api.nvim_set_keymap
+
+local chdir = function (br)
+  local selected = require('telescope.actions.state').get_selected_entry(br)
+  local cwd = selected.cwd
+  local ordinal = selected.ordinal
+  local selected_dir = SUtils.join(cwd, ordinal)
+  vim.api.nvim_set_current_dir(selected_dir)
+  require('telescope.actions').close(br)
+end
 
 telescope.setup {
   defaults = {
     vimgrep_arguments = {
       'rg', '--with-filename', '--line-number', '--column', '--smart-case'
     },
-    mappings = {i = {['<Esc>'] = actions.close}},
+    mappings = {i = {
+      ['<Esc>'] = actions.close,
+      ['\\optcmdcr'] = chdir
+    }},
     prompt_position = 'bottom',
     prompt_prefix = '🔍',
     initial_mode = 'insert',
@@ -49,11 +60,55 @@ require('telescope').load_extension('fzf')
 
 local silent = {silent = true}
 
-map('n', '\\cmdf', '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>', silent)
-map('n', '\\cmdl', '<cmd>Telescope live_grep<CR>', silent)
-map('n', '\\cmdy', '<cmd>lua require("telescope.builtin").oldfiles()<CR>', silent)
-map('n', '\\optcmdb', '<cmd>lua require("telescope.builtin").file_browser()<CR>', silent)
-map('n', '<leader>gf', '<cmd>Telescope git_files<CR>', silent)
-map('n', '<leader>gc', '<cmd>Telescope git_commits<CR>', silent)
-map('n', '<leader>gb', '<cmd>Telescope git_branches<CR>', silent)
-map('n', '<leader>gs', '<cmd>Telescope git_status<CR>', silent)
+local maps = {
+  {
+    mode = 'n',
+    lhs = '\\cmdf',
+    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdl',
+    rhs = '<cmd>Telescope live_grep<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdy',
+    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '\\optcmdb',
+    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs ='<leader>gf',
+    rhs ='<cmd>Telescope git_files<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gc',
+    rhs = '<cmd>Telescope git_commits<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gb',
+    rhs = '<cmd>Telescope git_branches<CR>',
+    opts = silent
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gs',
+    rhs = '<cmd>Telescope git_status<CR>',
+    opts = silent
+  },
+}
+
+SUtils.maps(maps)
