@@ -1,0 +1,22 @@
+#!/bin/sh
+
+launchctl setenv XDG_CONFIG_HOME "$XDG_CONFIG_HOME"
+launchctl setenv XDG_CACHE_HOME "$XDG_CACHE_HOME"
+launchctl setenv XDG_DATA_HOME "$XDG_DATA_HOME"
+launchctl setenv EDITOR nvim
+launchctl setenv VISUAL nvim
+launchctl setenv HOMEBREW_NO_ANALYTICS 1
+launchctl setenv ZDOTDIR "$XDG_CONFIG_HOME/zsh"
+launchctl setenv NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"
+launchctl setenv LESSHISTFILE "-"
+launchctl setenv JUPYTER_CONFIG_DIR  "$XDG_CONFIG_HOME/jupyter"
+launchctl setenv IPYTHONDIR "$XDG_CONFIG_HOME/jupyter"
+launchctl setenv GOPATH "$XDG_DATA_HOME/go"
+launchctl setenv GEM_HOME "$XDG_DATA_HOME/gem"
+launchctl setenv RUSTUP_HOME "$XDG_DATA_HOME/rustup"
+launchctl setenv CARGO_HOME "$XDG_DATA_HOME/cargo"
+launchctl setenv PSQL_HISTORY "$XDG_DATA_HOME/History/psql_history"
+launchctl setenv SQLITE_HISTORY "$XDG_DATA_HOME/History/sqlite_history"
+launchctl setenv NODE_REPL_HISTORY "$XDG_DATA_HOME/History/node_repl_history"
+launchctl setenv VSCODE_PORTABLE "$XDG_DATA_HOME/VSCodePortable"
+launchctl setenv GH_CONFIG_DIR "$XDG_DATA_HOME/GithubCLI"

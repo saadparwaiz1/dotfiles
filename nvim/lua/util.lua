@@ -17,18 +17,7 @@ local __check_back_space = function()
 end
 
 -- Path Separator For Current OS
-local sep = (function()
-  if jit then
-    local os = string.lower(jit.os)
-    if os == 'linux' or os == 'osx' or os == 'bsd' then
-      return '/'
-    else
-      return '\\'
-    end
-  else
-    return package.config:sub(1, 1)
-  end
-end)()
+local sep = vim.loop.os_uname().version:match("Windows") and '\\' or '/'
 
 -- Join Paths Togeather
 -- @returns string

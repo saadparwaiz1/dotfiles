@@ -188,7 +188,7 @@ local maps = {
   },
   {
     mode = 'n',
-    lhs = '\\cmdp',
+    lhs = '\\cmd]',
     rhs = '<cmd>Neogit<CR>',
     opts = {silent = true, noremap = true}
   },

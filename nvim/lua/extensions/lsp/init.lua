@@ -50,10 +50,10 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', rnm, options)
 
   require "lsp_signature".on_attach({
-      bind = true,
-      handler_opts = {
-        border = "single"
-      }
+    bind = true,
+    hint_prefix = " ",
+    handler_opts = { border = "single" },
+    floating_window = true,
   })
 
   if client.resolved_capabilities.document_highlight then

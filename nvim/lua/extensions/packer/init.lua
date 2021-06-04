@@ -200,13 +200,13 @@ packer.startup(function()
       }
       vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
     end,
-    ft = {'c', 'sh', 'zsh', 'cpp', 'lua', 'python', 'tex', 'make'}
+    event = 'BufReadPre'
   }
   use {
     'lewis6991/gitsigns.nvim',
     requires = {'nvim-lua/plenary.nvim'},
     config = function() require('gitsigns').setup() end,
-    event = 'InsertEnter'
+    event = 'BufReadPre'
   }
   use {
     'saadparwaiz1/gruvbox-autogenerate',

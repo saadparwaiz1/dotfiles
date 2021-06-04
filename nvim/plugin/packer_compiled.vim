@@ -93,7 +93,7 @@ _G.packer_plugins = {
     path = "/Users/saadparwaiz/Library/Share/nvim/site/pack/packer/start/lsp_signature.nvim"
   },
   ["lspkind-nvim"] = {
-    config = { "\27LJ\2\n�\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\15symbol_map\1\0\20\vFolder\b\nClass\b\15EnumMember\b\rVariable\b\rConstant\b\16Constructor\b\vStruct\b\rFunction\b\vMethod\aƒ\tText\b\tFile\b\nColor\b\fSnippet\b﬌\fKeyword\b\tEnum\b了\nValue\b\tUnit\b\rProperty\b\vModule\b\14Interface\bﰮ\1\0\1\14with_text\2\tinit\flspkind\frequire\0" },
+    config = { "\27LJ\2\n�\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\15symbol_map\1\0\20\vFolder\b\vModule\b\15EnumMember\b\14Interface\bﰮ\rConstant\b\nClass\b\vStruct\b\rVariable\b\16Constructor\b\rFunction\b\vMethod\aƒ\tText\b\tFile\b\nColor\b\fSnippet\b﬌\fKeyword\b\tEnum\b了\nValue\b\tUnit\b\rProperty\b\1\0\1\14with_text\2\tinit\flspkind\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/Users/saadparwaiz/Library/Share/nvim/site/pack/packer/opt/lspkind-nvim"
@@ -114,7 +114,7 @@ _G.packer_plugins = {
   },
   ["nvim-compe"] = {
     after_files = { "/Users/saadparwaiz/Library/Share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe.vim" },
-    config = { "\27LJ\2\n�\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\vsource\1\0\6\nspell\2\rnvim_lua\2\rnvim_lsp\2\18snippets_nvim\2\tpath\2\vbuffer\2\1\0\1\fenabled\2\nsetup\ncompe\frequire\0" },
+    config = { "\27LJ\2\n�\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\vsource\1\0\6\rnvim_lua\2\vbuffer\2\tpath\2\18snippets_nvim\2\nspell\2\rnvim_lsp\2\1\0\1\fenabled\2\nsetup\ncompe\frequire\0" },
     loaded = false,
     needs_bufread = false,
     path = "/Users/saadparwaiz/Library/Share/nvim/site/pack/packer/opt/nvim-compe"
@@ -217,14 +217,14 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
--- Config for: gruvbox-autogenerate
-time("Config for gruvbox-autogenerate", true)
-try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0", "config", "gruvbox-autogenerate")
-time("Config for gruvbox-autogenerate", false)
 -- Config for: pears.nvim
 time("Config for pears.nvim", true)
 try_loadstring("\27LJ\2\n�\2\0\1\a\0\f\2#6\1\0\0009\1\1\0019\1\2\1B\1\1\2\t\1\0\0X\1\26�6\1\0\0009\1\1\0019\1\3\1B\1\1\0029\1\4\1\b\1\1\0X\1\19�6\1\0\0009\1\5\0019\1\6\1\15\0\1\0X\2\5�6\1\0\0009\1\1\0019\1\a\1'\3\b\0D\1\2\0006\1\0\0009\1\t\0019\1\n\1'\3\v\0+\4\2\0+\5\2\0+\6\2\0D\1\5\0X\1\2�\18\1\0\0B\1\1\1K\0\1\0\n<C-y>\27nvim_replace_termcodes\bapi\t<CR>\18compe#confirm\17loaded_compe\6g\rselected\18complete_info\15pumvisible\afn\bvim\2����\31l\1\1\4\0\5\0\n9\1\0\0'\3\1\0B\1\2\0019\1\2\0+\3\1\0B\1\2\0019\1\3\0003\3\4\0B\1\2\1K\0\1\0\0\ron_enter#remove_pair_on_outer_backspace\17tag_matching\vpreset8\1\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0003\2\3\0B\0\2\1K\0\1\0\0\nsetup\npears\frequire\0", "config", "pears.nvim")
 time("Config for pears.nvim", false)
+-- Config for: gruvbox-autogenerate
+time("Config for gruvbox-autogenerate", true)
+try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\24colorscheme gruvbox\bcmd\bvim\0", "config", "gruvbox-autogenerate")
+time("Config for gruvbox-autogenerate", false)
 
 -- Command lazy-loads
 time("Defining lazy-load commands", true)
@@ -233,37 +233,36 @@ time("Defining lazy-load commands", false)
 
 -- Keymap lazy-loads
 time("Defining lazy-load keymaps", true)
-vim.cmd [[nnoremap <silent> ySs <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ySs", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> ys <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ys", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> cs <cmd>lua require("packer.load")({'vim-surround'}, { keys = "cs", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[xnoremap <silent> gS <cmd>lua require("packer.load")({'vim-surround'}, { keys = "gS", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[xnoremap <silent> S <cmd>lua require("packer.load")({'vim-surround'}, { keys = "S", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> ySS <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ySS", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> yss <cmd>lua require("packer.load")({'vim-surround'}, { keys = "yss", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> ds <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ds", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> cs <cmd>lua require("packer.load")({'vim-surround'}, { keys = "cs", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[noremap <silent> gc <cmd>lua require("packer.load")({'nvim-comment'}, { keys = "gc", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> ys <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ys", prefix = "" }, _G.packer_plugins)<cr>]]
-vim.cmd [[nnoremap <silent> yS <cmd>lua require("packer.load")({'vim-surround'}, { keys = "yS", prefix = "" }, _G.packer_plugins)<cr>]]
 vim.cmd [[nnoremap <silent> cS <cmd>lua require("packer.load")({'vim-surround'}, { keys = "cS", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> ds <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ds", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> yS <cmd>lua require("packer.load")({'vim-surround'}, { keys = "yS", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> yss <cmd>lua require("packer.load")({'vim-surround'}, { keys = "yss", prefix = "" }, _G.packer_plugins)<cr>]]
+vim.cmd [[nnoremap <silent> ySs <cmd>lua require("packer.load")({'vim-surround'}, { keys = "ySs", prefix = "" }, _G.packer_plugins)<cr>]]
 time("Defining lazy-load keymaps", false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time("Defining lazy-load filetype autocommands", true)
-vim.cmd [[au FileType cpp ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "cpp" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-treesitter', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "python" }, _G.packer_plugins)]]
-vim.cmd [[au FileType sh ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "sh" }, _G.packer_plugins)]]
-vim.cmd [[au FileType c ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "c" }, _G.packer_plugins)]]
-vim.cmd [[au FileType make ++once lua require("packer.load")({'indent-blankline.nvim'}, { ft = "make" }, _G.packer_plugins)]]
-vim.cmd [[au FileType lua ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-treesitter', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "lua" }, _G.packer_plugins)]]
-vim.cmd [[au FileType rust ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb'}, { ft = "rust" }, _G.packer_plugins)]]
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "tex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType bash ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb'}, { ft = "bash" }, _G.packer_plugins)]]
-vim.cmd [[au FileType zsh ++once lua require("packer.load")({'nvim-compe', 'lspkind-nvim', 'nvim-lspconfig', 'nvim-lightbulb', 'indent-blankline.nvim'}, { ft = "zsh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "tex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType rust ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "rust" }, _G.packer_plugins)]]
+vim.cmd [[au FileType sh ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "sh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType python ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-treesitter', 'nvim-compe', 'nvim-lightbulb'}, { ft = "python" }, _G.packer_plugins)]]
+vim.cmd [[au FileType cpp ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "cpp" }, _G.packer_plugins)]]
+vim.cmd [[au FileType bash ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "bash" }, _G.packer_plugins)]]
+vim.cmd [[au FileType c ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "c" }, _G.packer_plugins)]]
+vim.cmd [[au FileType zsh ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-compe', 'nvim-lightbulb'}, { ft = "zsh" }, _G.packer_plugins)]]
+vim.cmd [[au FileType lua ++once lua require("packer.load")({'nvim-lspconfig', 'lspkind-nvim', 'nvim-treesitter', 'nvim-compe', 'nvim-lightbulb'}, { ft = "lua" }, _G.packer_plugins)]]
 time("Defining lazy-load filetype autocommands", false)
   -- Event lazy-loads
 time("Defining lazy-load event autocommands", true)
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'gitsigns.nvim'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'gitsigns.nvim', 'indent-blankline.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
 time("Defining lazy-load event autocommands", false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

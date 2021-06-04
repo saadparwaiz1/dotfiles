@@ -43,6 +43,18 @@ defaults write com.apple.dock autohide -int 1
 defaults write com.apple.dock orientation -string left
 killall Dock
 
+XDG_CONFIG_HOME="/Users/saadparwaiz/Library/Preferences"
+XDG_CACHE_HOME="/Users/saadparwaiz/Library/Caches"
+XDG_DATA_HOME="/Users/saadparwaiz/Library/Share"
+
+cp launch launch.sh
+
+sed -i .bak "s|\$XDG_DATA_HOME|$XDG_DATA_HOME|" launch.sh
+sed -i .bak "s|\$XDG_CONFIG_HOME|$XDG_CONFIG_HOME|" launch.sh
+sed -i .bak "s|\$XDG_CACHE_HOME|$XDG_CACHE_HOME|" launch.sh
+
+[ -f launch.sh ] && rm launch.sh.bak
+
 if command -v brew &>/dev/null; then
     echo 'Homebrew is installed'
 else
