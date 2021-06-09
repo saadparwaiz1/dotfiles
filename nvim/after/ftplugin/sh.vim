@@ -1,1 +1,1 @@
-set formatprg='shfmt'
+setlocal formatprg='shfmt'

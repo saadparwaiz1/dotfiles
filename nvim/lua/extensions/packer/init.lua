@@ -69,38 +69,6 @@ packer.startup(function()
       },
 
       {
-        'onsails/lspkind-nvim',
-        ft = lsp_fts,
-        config = function ()
-          require('lspkind').init({
-            with_text = true,
-            symbol_map = {
-                Text = '',
-                Method = 'ƒ',
-                Function = '',
-                Constructor = '',
-                Variable = '',
-                Class = '',
-                Interface = 'ﰮ',
-                Module = '',
-                Property = '',
-                Unit = '',
-                Value = '',
-                Enum = '了',
-                Keyword = '',
-                Snippet = '﬌',
-                Color = '',
-                File = '',
-                Folder = '',
-                EnumMember = '',
-                Constant = '',
-                Struct = ''
-            }
-          })
-        end
-      },
-
-      {
         'simrat39/rust-tools.nvim',
         module = 'rust-tools'
       }
@@ -110,11 +78,11 @@ packer.startup(function()
   -- Treesiter Extensions
   use {
     'nvim-treesitter/nvim-treesitter',
-    ft = {'lua', 'python'},
+    ft = {'lua', 'sh', 'python'},
     config = function ()
       local treesitter = require('nvim-treesitter.configs')
       treesitter.setup({
-        ensure_installed = {'lua', 'python'},
+        ensure_installed = {'lua', 'bash', 'python'},
         highlight = {enable = true}
       })
       vim.wo.foldmethod = 'expr'
@@ -140,7 +108,16 @@ packer.startup(function()
   }
   use {
     'terrortylor/nvim-comment',
-    config = function() require("nvim_comment").setup() end,
+    config = function()
+      require("nvim_comment").setup()
+      vim.api.nvim_set_keymap(
+        'n',
+        'gc',
+        ':set operatorfunc=CommentOperator<CR>g@l',
+        {noremap=true, silent=true}
+      )
+      vim.api.nvim_del_keymap('n', 'gcc')
+    end,
     keys = 'gc'
   }
   use {

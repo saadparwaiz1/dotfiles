@@ -32,7 +32,7 @@ local globals = {
   loaded_python_provider = 0,
   loaded_python3_provider = 0,
   markdown_syntax_conceal = 1,
-  markdown_fenced_languages = {"lua", "vim", "json", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"},
+  markdown_fenced_languages = {"lua", "vim", "json", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"},
   gruvbox_groups = {"lua", "python", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"},
   snippets_nvim_dir = SUtils.join(vim.fn.stdpath('config'), 'lua/extensions/snippets')
 }

@@ -141,10 +141,9 @@ alias keys="pbcopy < ~/.ssh/id_rsa.pub"
 alias reload="source $ZDOTDIR/.zshrc"
 alias nightly-nvim="brew uninstall neovim && brew install --HEAD neovim && brew autoremove && rm -rf $(brew --prefix)/etc/luarocks"
 alias bu="brew update && brew upgrade --greedy"
+alias rs="brew services restart yabai && brew services restart skhd"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
-alias d="kitty +kitten diff"
 alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
-alias ntime='nvim --startuptime time.log +q'
 # }}}
 # ============================================================================
 # ZSH FUNCTIONS {{{

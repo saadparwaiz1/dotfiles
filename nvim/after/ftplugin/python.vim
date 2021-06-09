@@ -1,1 +1,1 @@
-set formatprg=black\ --quiet\ -
+setlocal formatprg=black\ --quiet\ -

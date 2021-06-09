@@ -1,3 +1,3 @@
-set shiftwidth=8
-set tabstop=8
-set softtabstop=0
+setlocal shiftwidth=8
+setlocal tabstop=8
+setlocal softtabstop=0

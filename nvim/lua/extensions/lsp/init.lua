@@ -10,13 +10,13 @@ local lspconfig = require('lspconfig')
 local options = {noremap = true, silent = true}
 
 -- Normal LSP Mappings
-local rnm = "<cmd>lua vim.lsp.buf.rename()<CR>"
+local rnm = "<cmd>lua SUtils.rename()<CR>"
 local hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
 local declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local fmt = "<cmd>lua vim.lsp.buf.formatting_seq_sync()<CR>"
-local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border='single'}})<CR>"
-local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border='single'}})<CR>"
+local ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=SUtils.border}})<CR>"
+local pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=SUtils.border}})<CR>"
 
 -- Telescope LSP
 local refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
@@ -24,6 +24,32 @@ local acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
 local defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
 local wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
 local diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
+
+vim.lsp.protocol.CompletionItemKind = {
+  '',
+  'ƒ',
+  '',
+  '',
+  '',
+  '',
+  'ﰮ',
+  '',
+  '',
+  '',
+  '',
+  '了',
+  '',
+  '﬌',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
+  'ﬦ',
+  '',
+}
 
 -- path to node_modules
 local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin/"
@@ -52,7 +78,7 @@ local on_attach = function(client, bufnr)
   require "lsp_signature".on_attach({
     bind = true,
     hint_prefix = " ",
-    handler_opts = { border = "single" },
+    handler_opts = { border = SUtils.border },
     floating_window = true,
   })
 
@@ -200,16 +226,7 @@ local opts = {
         hover_actions = {
             -- the border that is used for the hover window
             -- see vim.api.nvim_open_win()
-            border = {
-              {"╭", "FloatBorder"},
-              {"─", "FloatBorder"},
-              {"╮", "FloatBorder"},
-              {"│", "FloatBorder"},
-              {"╯", "FloatBorder"},
-              {"─", "FloatBorder"},
-              {"╰", "FloatBorder"},
-              {"│", "FloatBorder"}
-            },
+            border = SUtils.border,
         }
     },
 
@@ -242,12 +259,12 @@ vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
 -- ============================================================================
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "single"
+    border = SUtils.border
   })
 
 vim.lsp.handlers["textDocument/signatureHelp"] =
   vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "single"
+    border = SUtils.border
   })
 -- }}}
 -- ============================================================================
