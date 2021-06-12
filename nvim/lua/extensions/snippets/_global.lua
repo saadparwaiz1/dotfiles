@@ -1,4 +1,4 @@
 return {
   hd = "${LINE_COMMENT}!/usr/bin/env $1",
-  calc = "${1>SUtils.calc_buffer(S.v)}",
+  calc = "${1>require('util').calc_buffer(S.v)}",
 }

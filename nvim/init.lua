@@ -1,8 +1,8 @@
 -- vim: set foldmethod=marker foldlevel=1 nomodeline:
 --  --------------------------------------------------
---  Load Utils {{{
+--  Load Util {{{
 --  --------------------------------------------------
-require('util')
+local util = require('util')
 --  }}}
 -- ---------------------------------------------------
 --  global options {{{
@@ -33,11 +33,10 @@ local globals = {
   loaded_python3_provider = 0,
   markdown_syntax_conceal = 1,
   markdown_fenced_languages = {"lua", "vim", "json", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"},
-  gruvbox_groups = {"lua", "python", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"},
-  snippets_nvim_dir = SUtils.join(vim.fn.stdpath('config'), 'lua/extensions/snippets')
+  gruvbox_groups = {"lua", "python", "rust", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"},
+  snippets_nvim_dir = util.join(vim.fn.stdpath('config'), 'lua', 'extensions', 'snippets')
 }
-
-SUtils.globals(globals)
+util.globals(globals)
 --  }}}
 --  --------------------------------------------------
 --  vim options {{{
@@ -65,15 +64,18 @@ local options = {
   updatetime = 100,
   expandtab = true,
   mouse = 'a',
-  listchars= { tab = '| ', trail = '~'},
   clipboard = 'unnamedplus',
-  completeopt = {'menuone', 'noselect'},
-  wildignore = {'*.o','*~','*.pyc','*/.git/*','*/.hg/*','*/.svn/*','*/.DS_store','**/node_modules'},
   conceallevel = 1,
   inccommand = 'nosplit',
 }
+-- Set options using vim.o
+util.options(options)
+
+-- Set some options using vim.opt
+vim.opt.listchars= { tab = '| ', trail = '~'}
+vim.opt.completeopt = {'menuone', 'noselect'}
+vim.opt.wildignore = {'*.o','*~','*.pyc','*/.git/*','*/.hg/*','*/.svn/*','*/.DS_store','**/node_modules'}
 vim.opt.shortmess:append('c')
-SUtils.options(options)
 --  }}}
 --  --------------------------------------------------
 --  autocmds {{{
@@ -90,89 +92,122 @@ vim.api.nvim_exec([[
 --  Mappings {{{
 --  --------------------------------------------------
 local maps = {
+  -- Normal Mode Mappings
   {
     mode = 'n',
     lhs = '\\cmdn',
     rhs = '<cmd>bn<CR>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '\\cmdp',
     rhs = '<cmd>bp<CR>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '\\cmdw',
     rhs = '<cmd>bd<CR>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '\\cmds',
     rhs = ':%s/\\<<C-R><C-w>\\>/',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '<Left>',
     rhs = '<C-w>h',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '<Down>',
     rhs = '<C-w>j',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '<Up>',
     rhs = '<C-w>k',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '<Right>',
     rhs = '<C-w>l',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = 'Q',
     rhs = '<nop>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = 'vv',
     rhs = '^v$',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = 'vv',
     rhs = '^v$',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '<Esc>',
     rhs = '<cmd>noh<CR><Esc>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'n',
     lhs = '\\cmd;',
-    rhs = '<cmd>lua SUtils.Term()<CR>',
-    opts = {silent = true, noremap = true}
+    rhs = '<cmd>lua require("util").Term()<CR>',
   },
+  {
+    mode = 'n',
+    lhs = '\\cmd]',
+    rhs = '<cmd>Neogit<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdf',
+    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdl',
+    rhs = '<cmd>lua require("telescope.builtin").live_grep()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '\\cmdy',
+    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '\\optcmdb',
+    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs ='<leader>gf',
+    rhs ='<cmd>lua require("telescope.builtin").git_status()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gc',
+    rhs = '<cmd>lua require("telescope.builtin").git_commits()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gb',
+    rhs = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gs',
+    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>',
+  },
+  -- Insert Mode Mappings
   {
     mode = 'i',
     lhs = 'jj',
     rhs = '<Esc><cmd>noh<CR>',
-    opts = {silent = true, noremap = true}
   },
   {
     mode = 'i',
@@ -187,71 +222,12 @@ local maps = {
     opts = {silent = true, noremap = true, expr = true}
   },
   {
-    mode = 'n',
-    lhs = '\\cmd]',
-    rhs = '<cmd>Neogit<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
     mode = 'i',
     lhs = '<C-e>',
     rhs = 'compe#close("<C-e>")',
     opts = {noremap = true, silent = true, expr = true}
   },
-  {
-    mode = 'n',
-    lhs = '\\cmdf',
-    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '\\cmdl',
-    rhs = '<cmd>lua require("telescope.builtin").live_grep()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '\\cmdy',
-    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '\\optcmdb',
-    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs ='<leader>gf',
-    rhs ='<cmd>lua require("telescope.builtin").git_status()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gc',
-    rhs = '<cmd>lua require("telescope.builtin").git_commits()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gb',
-    rhs = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
-    opts = {silent = true, noremap = true}
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gs',
-    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>',
-    opts = {silent = true, noremap = true}
-  },
 }
-SUtils.maps(maps)
---  }}}
---  --------------------------------------------------
---  Packer/Plugins {{{
---  --------------------------------------------------
-require('extensions/packer')
+util.maps(maps, {silent = true, noremap = true})
 --  }}}
 --  --------------------------------------------------

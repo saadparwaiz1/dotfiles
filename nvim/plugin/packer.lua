@@ -2,7 +2,7 @@ vim.cmd('packadd packer.nvim')
 
 local packer = require('packer')
 
-packer.startup(function()
+packer.startup({function()
   local lsp_fts = {'python', 'bash', 'sh', 'zsh', 'c', 'cpp', 'lua', 'tex', 'rust'}
   -- plugin manager
   use {
@@ -45,10 +45,55 @@ packer.startup(function()
     requires = {
       {
         'neovim/nvim-lspconfig',
-        ft = lsp_fts,
         requires = {'ray-x/lsp_signature.nvim'},
+        module = 'lspconfig',
         config = function ()
-          require('extensions/lsp')
+        vim.lsp.handlers["textDocument/publishDiagnostics"] =
+          vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+            underline = true,
+            virtual_text = {spacing = 5, prefix = ' '},
+            signs = true,
+            update_in_insert = false
+          })
+
+        vim.fn.sign_define("LspDiagnosticsSignError", {text = "✘"})
+        vim.fn.sign_define("LspDiagnosticsSignWarning", {text = ""})
+        vim.fn.sign_define("LspDiagnosticsSignHint", {text = ""})
+        vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
+        vim.lsp.handlers["textDocument/hover"] =
+          vim.lsp.with(vim.lsp.handlers.hover, {
+            border = require('util').border
+          })
+
+        vim.lsp.handlers["textDocument/signatureHelp"] =
+          vim.lsp.with(vim.lsp.handlers.signature_help, {
+            border = require('util').border
+          })
+        vim.lsp.protocol.CompletionItemKind = {
+          '',
+          'ƒ',
+          '',
+          '',
+          '',
+          '',
+          'ﰮ',
+          '',
+          '',
+          '',
+          '',
+          '了',
+          '',
+          '﬌',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          'ﬦ',
+          '',
+        }
         end,
       },
 
@@ -56,10 +101,10 @@ packer.startup(function()
         '~/Library/Projects/snippets.nvim',
         module = 'snippets',
         config = function()
-          vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.SUtils.tab_complete()", {expr=true})
-          vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.SUtils.tab_complete()", {expr=true})
-          vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.SUtils.s_tab_complete()", {expr=true})
-          vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.SUtils.s_tab_complete()", {expr=true})
+          vim.api.nvim_set_keymap("i", "<Tab>", [[luaeval("require('util').tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("s", "<Tab>", [[luaeval("require('util').tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("i", "<S-Tab>", [[luaeval("require('util').s_tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("s", "<S-Tab>", [[luaeval("require('util').s_tab_complete()")]], {expr=true})
         end
       },
 
@@ -190,6 +235,10 @@ packer.startup(function()
     config = function ()
     	vim.cmd('colorscheme gruvbox')
     end,
-    run = [[nvim -c 'lua require("gruv.gruvbox")' -c 'q']]
+    run = [[nvim -c 'lua require("gruvbox").generate()' -c 'q']]
   }
-end)
+end, config = {
+  display = {
+    open_fn = require('packer.util').float
+  }
+}})
