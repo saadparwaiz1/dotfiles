@@ -5,7 +5,7 @@ local chdir = function (br)
   local selected = require('telescope.actions.state').get_selected_entry(br)
   local cwd = selected.cwd
   local ordinal = selected.ordinal
-  local selected_dir = require('util').join(cwd, ordinal)
+  local selected_dir = require('util').path.join(cwd, ordinal)
   vim.api.nvim_set_current_dir(selected_dir)
   require('telescope.actions').close(br)
 end

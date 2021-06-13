@@ -3,8 +3,8 @@ local util = require('util')
 
 lspconfig.sumneko_lua.setup {
   cmd = {"lua-langserver"},
-  on_attach = util.on_attach,
-  capabilities = util.capabilities,
+  on_attach = util.lsp.on_attach,
+  capabilities = util.lsp.capabilities,
   settings = {
     Lua = {
       runtime = {

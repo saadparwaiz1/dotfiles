@@ -1,10 +1,44 @@
-O = vim.o
-A = vim.api
-F = vim.fn
+local O = vim.o
+local A = vim.api
+local F = vim.fn
 
--- Private API
+-- Private API Variables
 
--- Functions
+local __options = {noremap = true, silent = true}
+local __hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
+local __fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
+local __rnm = "<cmd>lua require('util').lsp.rename()<CR>"
+local __declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
+local __impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
+local __refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
+local __defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
+local __acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
+local __wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
+local __diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
+local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('util').config.border}})<CR>"
+local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('util').config.border}})<CR>"
+
+-- Public API Variables
+
+-- Path Separator For Current OS
+local sep = vim.loop.os_uname().version:match("Windows") and '\\' or '/'
+
+-- Default Border For Floating Windows
+local border = {'╭', '─',  '╮', '│', '╯', '─', '╰', '│'}
+
+-- Default `node_modules` Location
+local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin"
+
+-- Supported LSP Client Capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Private API Functions
+
+local __dorename = function (text)
+  vim.cmd(string.format('silent! bdelete! %s', A.nvim_get_current_buf()))
+  vim.lsp.buf.rename(text)
+end
 
 local __t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -19,37 +53,41 @@ local __check_back_space = function()
   end
 end
 
--- Variables
+local function __npm_cmd(cmd, operation, o)
+  local height = math.floor((O.lines - 2) * 0.6)
+  local row = math.floor((O.lines - height) / 2)
+  local width = math.floor(O.columns * 0.6)
+  local col = math.floor((O.columns - width) / 2)
+  o = o or {keep = false}
 
-local __options = {noremap = true, silent = true}
-local __rnm = "<cmd>lua require('util').rename()<CR>"
-local __hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
-local __declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
-local __impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
-local __fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
-local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('util').border}})<CR>"
-local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('util').border}})<CR>"
-local __refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
-local __acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
-local __defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
-local __wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
-local __diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
+  local opts = {
+    relative = 'editor',
+    row = row,
+    col = col,
+    width = width,
+    height = height,
+    style = 'minimal',
+    border = border
+  }
 
--- Public API
+  local buf = A.nvim_create_buf(false, true)
+  local win = A.nvim_open_win(buf, true, opts)
+  local wdir = F.fnamemodify(node_modules, ':h:h')
+  local script = "npm %s %s"
+  script = string.format(script, cmd, operation)
+  F.termopen(script, {
+    cwd = wdir,
+    on_exit = function (_, err)
+    	if err ~= 0 then error('could not update') end
+      if not o.keep then
+        A.nvim_win_close(win, true)
+      end
+    end
+  })
+end
 
--- Variables
 
--- Path Separator For Current OS
-local sep = vim.loop.os_uname().version:match("Windows") and '\\' or '/'
--- Default Border For Floating Windows
-local border = {'╭', '─',  '╮', '│', '╯', '─', '╰', '│'}
--- Default `node_modules` Location
-local node_modules = vim.fn.stdpath('data') .. "/bin/node_modules/.bin"
--- Supported LSP Client Capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- Functions
+-- Public API Functions
 
 -- Get Current Script Path Exclusive Of Script Name
 --- @return string
@@ -114,6 +152,25 @@ local function npm_get_binary(binary)
 	return join(node_modules, binary)
 end
 
+-- Install a package using npm
+--- @param package string
+--- @return nil
+local function npm_install(package)
+  __npm_cmd('install', package)
+end
+--
+-- Update all package using npm
+--- @return nil
+local function npm_update()
+  __npm_cmd('update', '')
+end
+
+-- List all package using npm
+--- @return nil
+local function npm_list()
+  __npm_cmd('list', '', {keep=true})
+end
+
 -- Create a floating terminal
 --- @return nil
 local function float_term()
@@ -141,17 +198,6 @@ local function float_term()
   A.nvim_command(string.format(fmt, win))
 end
 
--- Perform a Rename Request
---- @param win number
---- @param exec_req boolean
---- @return nil
-local function dorename(win, exec_req)
-	local new_name = vim.trim(vim.fn.getline('.'))
-  A.nvim_win_close(win, true)
-  if exec_req then
-  vim.lsp.buf.rename(new_name)
-  end
-end
 
 -- Setup Rename Request Using Floating Windows
 --- @return nil
@@ -167,13 +213,12 @@ local function rename()
   }
   local cword = vim.fn.expand('<cword>')
   local buf = A.nvim_create_buf(false, true)
-  local win = A.nvim_open_win(buf, true, opts)
-  local fmt =  '<cmd>lua require("util").dorename(%d, %s)<CR>'
-
+  A.nvim_open_win(buf, true, opts)
+  A.nvim_buf_set_option(buf, 'buftype', 'prompt')
   A.nvim_buf_set_lines(buf, 0, -1, false, {cword})
-  A.nvim_buf_set_keymap(buf, 'i', '<CR>', string.format(fmt, win, 'true'), {silent=true})
-  A.nvim_buf_set_keymap(buf, 'n', '<CR>', string.format(fmt, win, 'true'), {silent=true})
-  A.nvim_buf_set_keymap(buf, 'n', 'q', string.format(fmt, win, 'false'), {silent=true})
+  F.prompt_setcallback(buf, __dorename)
+  F.prompt_setprompt(buf, ' ')
+  vim.cmd('startinsert')
 end
 
 -- create snippet for python class
@@ -246,8 +291,8 @@ local function maps(mps, defaults)
 end
 
 -- Use tab to:
---- move to next item in completion menuone
---- jump to next snippet\'s placeholder
+-- move to next item in completion menuone
+-- jump to next snippet\'s placeholder
 --- @return string
 local function tab_complete()
   if vim.fn.pumvisible() == 1 then
@@ -261,9 +306,24 @@ local function tab_complete()
   end
 end
 
+local function get_visual_selection_range()
+  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
+  return csrow, cscol, cerow, cecol
+end
+
+local function sort_lines()
+  local ls, _, le, _ = get_visual_selection_range()
+  local lines = F.getline(ls, le)
+  table.sort(lines, function (a, b)
+  	return string.len(a) < string.len(b)
+  end)
+  A.nvim_buf_set_lines(A.nvim_get_current_buf(), ls-1, le, true, lines)
+end
+
 -- Use s-tab to:
---- move to prev item in completion menuone
---- jump to prev snippet\'s placeholder
+-- move to prev item in completion menuone
+-- jump to prev snippet\'s placeholder
 --- @return string
 local function s_tab_complete()
   if vim.fn.pumvisible() == 1 then
@@ -275,21 +335,50 @@ local function s_tab_complete()
   end
 end
 
-return {
-  border = border,
-  script_path = script_path,
-  Term = float_term,
-  rename = rename,
-  dorename = dorename,
-  calc_buffer = calc_buffer,
-  complete_arg_list = complete_arg_list,
-  npm_get_binary = npm_get_binary,
+local npm = {
+  list = npm_list,
+  update = npm_update,
+  install = npm_install,
+  get_binary = npm_get_binary,
+}
+
+local path = {
   sep = sep,
   join = join,
+  script_path = script_path
+}
+
+local config = {
+  maps = maps,
+  border = border,
   globals = globals,
   options = options,
-  maps = maps,
   tab_complete = tab_complete,
   s_tab_complete = s_tab_complete,
-  on_attach = on_attach
+}
+
+local lsp = {
+  rename = rename,
+  on_attach = on_attach,
+  term = float_term,
+  capabilities = capabilities
+}
+
+local vim = {
+  sort_lines = sort_lines,
+  get_visual_selection_range = get_visual_selection_range,
+}
+
+local snips = {
+  calc_buffer = calc_buffer,
+  complete_arg_list = complete_arg_list
+}
+
+return {
+  npm = npm,
+  vim = vim,
+  lsp = lsp,
+  path = path,
+  snips = snips,
+  config = config,
 }

@@ -9,8 +9,8 @@ lspconfig.clangd.setup {
     "--header-insertion=iwyu",
     "--clang-tidy"
   },
-  on_attach = util.on_attach,
-  capabilities = util.capabilities,
+  on_attach = util.lsp.on_attach,
+  capabilities = util.lsp.capabilities,
   init_options = {
     fallbackFlags = {
       '-Wall',

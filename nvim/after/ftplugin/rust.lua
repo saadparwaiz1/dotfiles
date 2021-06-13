@@ -17,8 +17,13 @@ local opts = {
           right_align_padding = 7,
         },
         hover_actions = {
-          border = util.border,
+          border = util.config.border,
         }
+    },
+    
+    server = {
+      on_attach = util.lsp.on_attach,
+      capabilities = util.lsp.capabilities
     }
 }
 

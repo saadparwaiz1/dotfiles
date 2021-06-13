@@ -2,8 +2,8 @@ local lspconfig = require('lspconfig')
 local util = require('util')
 
 lspconfig.texlab.setup {
-  on_attach = util.on_attach,
-  capabilities = util.capabilities,
+  on_attach = util.lsp.on_attach,
+  capabilities = util.lsp.capabilities,
   texlab = {
     latexFormatter = 'latexindent',
     latexindent = {

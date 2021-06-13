@@ -62,12 +62,12 @@ packer.startup({function()
         vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
         vim.lsp.handlers["textDocument/hover"] =
           vim.lsp.with(vim.lsp.handlers.hover, {
-            border = require('util').border
+            border = require('util').config.border
           })
 
         vim.lsp.handlers["textDocument/signatureHelp"] =
           vim.lsp.with(vim.lsp.handlers.signature_help, {
-            border = require('util').border
+            border = require('util').config.border
           })
         vim.lsp.protocol.CompletionItemKind = {
           '',
@@ -101,10 +101,10 @@ packer.startup({function()
         '~/Library/Projects/snippets.nvim',
         module = 'snippets',
         config = function()
-          vim.api.nvim_set_keymap("i", "<Tab>", [[luaeval("require('util').tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("s", "<Tab>", [[luaeval("require('util').tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("i", "<S-Tab>", [[luaeval("require('util').s_tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("s", "<S-Tab>", [[luaeval("require('util').s_tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("i", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("s", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("i", "<S-Tab>", [[luaeval("require('util').config.s_tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap("s", "<S-Tab>", [[luaeval("require('util').config.s_tab_complete()")]], {expr=true})
         end
       },
 

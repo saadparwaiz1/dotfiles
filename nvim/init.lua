@@ -8,73 +8,73 @@ local util = require('util')
 --  global options {{{
 --  --------------------------------------------------
 local globals = {
-  mapleader = " ",
-  loaded_tar = 1,
   loaded_zip = 1,
+  loaded_tar = 1,
   loaded_gzip = 1,
+  mapleader = " ",
   loaded_netrw = 1,
-  loaded_logiPat = 1,
-  loaded_matchit = 1,
   loaded_vimball = 1,
+  loaded_matchit = 1,
+  loaded_logiPat = 1,
   loaded_rrhelper = 1,
-  loaded_getscript = 1,
   loaded_tarPlugin = 1,
+  loaded_getscript = 1,
   loaded_zipPlugin = 1,
   loaded_netrwPlugin = 1,
   loaded_2html_plugin = 1,
   loaded_netrwSettings = 1,
+  loaded_perl_provider = 0,
+  loaded_ruby_provider = 0,
+  loaded_node_provider = 0,
   loaded_vimballPlugin = 1,
   loaded_getscriptPlugin = 1,
-  loaded_netrwFileHandlers = 1,
-  loaded_ruby_provider = 0,
-  loaded_perl_provider = 0,
-  loaded_node_provider = 0,
   loaded_python_provider = 0,
-  loaded_python3_provider = 0,
   markdown_syntax_conceal = 1,
-  markdown_fenced_languages = {"lua", "vim", "json", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh"},
-  gruvbox_groups = {"lua", "python", "rust", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline"},
-  snippets_nvim_dir = util.join(vim.fn.stdpath('config'), 'lua', 'extensions', 'snippets')
+  loaded_python3_provider = 0,
+  loaded_netrwFileHandlers = 1,
+  snippets_nvim_dir = util.path.join(vim.fn.stdpath('config'), 'lua', 'extensions', 'snippets'),
+  gruvbox_groups = { "lua", "python", "rust", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline" },
+  markdown_fenced_languages = { "lua", "vim", "json", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh" },
 }
-util.globals(globals)
+util.config.globals(globals)
 --  }}}
 --  --------------------------------------------------
 --  vim options {{{
 --  --------------------------------------------------
 local options = {
   list = true,
-  hidden = true,
+  mouse = 'a',
+  tabstop = 2,
   number = true,
+  pumblend = 30,
+  cmdheight = 1,
+  history = 100,
+  hidden = true,
   backup = false,
+  shiftwidth = 2,
+  softtabstop = 2,
   undofile = true,
+  showtabline = 2,
+  updatetime = 100,
   showmode = false,
+  expandtab = true,
+  conceallevel = 1,
+  splitright = true,
   lazyredraw = true,
   splitbelow = true,
-  splitright = true,
   writebackup = true,
   termguicolors = true,
   relativenumber = true,
-  tabstop = 2,
-  shiftwidth = 2,
-  softtabstop = 2,
-  cmdheight = 1,
-  pumblend = 30,
-  history = 100,
-  showtabline = 2,
-  updatetime = 100,
-  expandtab = true,
-  mouse = 'a',
-  clipboard = 'unnamedplus',
-  conceallevel = 1,
   inccommand = 'nosplit',
+  clipboard = 'unnamedplus',
 }
 -- Set options using vim.o
-util.options(options)
+util.config.options(options)
 
 -- Set some options using vim.opt
-vim.opt.listchars= { tab = '| ', trail = '~'}
+vim.opt.listchars = { tab = '| ', trail = '~'}
 vim.opt.completeopt = {'menuone', 'noselect'}
-vim.opt.wildignore = {'*.o','*~','*.pyc','*/.git/*','*/.hg/*','*/.svn/*','*/.DS_store','**/node_modules'}
+vim.opt.wildignore = { '*.o','*~','*.pyc', '*/.git/*','*/.hg/*', '*/.svn/*','*/.DS_store', '**/node_modules' }
 vim.opt.shortmess:append('c')
 --  }}}
 --  --------------------------------------------------
@@ -156,7 +156,7 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmd;',
-    rhs = '<cmd>lua require("util").Term()<CR>',
+    rhs = '<cmd>lua require("util").lsp.term()<CR>',
   },
   {
     mode = 'n',
@@ -203,6 +203,16 @@ local maps = {
     lhs = '<leader>gs',
     rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>',
   },
+  {
+    mode = 'n',
+    lhs = '<C-l>',
+    rhs = '<cmd>cnext<CR>'
+  },
+  {
+    mode = 'n',
+    rhs = '<C-h>',
+    lhs = '<cmd>cprev<CR>'
+  },
   -- Insert Mode Mappings
   {
     mode = 'i',
@@ -228,6 +238,6 @@ local maps = {
     opts = {noremap = true, silent = true, expr = true}
   },
 }
-util.maps(maps, {silent = true, noremap = true})
+util.config.maps(maps, {silent = true, noremap = true})
 --  }}}
 --  --------------------------------------------------
