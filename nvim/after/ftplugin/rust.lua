@@ -20,7 +20,6 @@ local opts = {
           border = util.config.border,
         }
     },
-    
     server = {
       on_attach = util.lsp.on_attach,
       capabilities = util.lsp.capabilities

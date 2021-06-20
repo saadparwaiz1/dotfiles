@@ -53,7 +53,27 @@ local __check_back_space = function()
   end
 end
 
-local function __npm_cmd(cmd, operation, o)
+-- Public API Functions
+
+-- Get Current Script Path Exclusive Of Script Name
+--- @return string
+local script_path = function()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*[/\\])")
+end
+
+-- Join Paths Togeather
+--- @vararg string
+--- @return string
+local function join(...)
+  return table.concat({...}, sep)
+end
+
+-- Exec a Script Using Your Default Shell
+--- @param script string
+--- @param o table
+--- @return nil
+local function exec_script(script, o)
   local height = math.floor((O.lines - 2) * 0.6)
   local row = math.floor((O.lines - height) / 2)
   local width = math.floor(O.columns * 0.6)
@@ -71,12 +91,11 @@ local function __npm_cmd(cmd, operation, o)
   }
 
   local buf = A.nvim_create_buf(false, true)
+  A.nvim_buf_set_keymap(buf, 'n', 'q', 'ZQ', __options)
   local win = A.nvim_open_win(buf, true, opts)
-  local wdir = F.fnamemodify(node_modules, ':h:h')
-  local script = "npm %s %s"
-  script = string.format(script, cmd, operation)
+  local cwd = o.cwd or F.fnamemodify(node_modules, ':h:h')
   F.termopen(script, {
-    cwd = wdir,
+    cwd = cwd,
     on_exit = function (_, err)
     	if err ~= 0 then error('could not update') end
       if not o.keep then
@@ -86,45 +105,28 @@ local function __npm_cmd(cmd, operation, o)
   })
 end
 
-
--- Public API Functions
-
--- Get Current Script Path Exclusive Of Script Name
---- @return string
-local script_path = function()
-   local str = debug.getinfo(2, "S").source:sub(2)
-   return str:match("(.*[/\\])")
-end
-
--- Join Paths Togeather
---- @vararg string
---- @return string
-local function join(...)
-  return table.concat({...}, sep)
-end
-
 -- General LSP Attach Function
 --- @param client table
 local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>f", __fmt, __options)
+    A.nvim_buf_set_keymap(bufnr, "n", "<Space>f", __fmt, __options)
   elseif client.resolved_capabilities.document_range_formatting then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>f", __fmt, __options)
+    A.nvim_buf_set_keymap(bufnr, "n", "<Space>f", __fmt, __options)
   end
   if client.config.root_dir ~= nil then
-    vim.api.nvim_set_current_dir(client.config.root_dir)
+    A.nvim_set_current_dir(client.config.root_dir)
   end
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ga', __acn, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "gd", __defi, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "gr", __refe, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "K", __hover, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'ge', __diag, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', __impli, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "gD", __declr, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gw', __wrkspc, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "[e", __pdiag, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', "]e", __ndiag, __options)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', __rnm, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', 'ga', __acn, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "gd", __defi, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "gr", __refe, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "K", __hover, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', 'ge', __diag, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', 'gi', __impli, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "gD", __declr, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', 'gw', __wrkspc, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "[e", __pdiag, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', "]e", __ndiag, __options)
+  A.nvim_buf_set_keymap(bufnr, 'n', '<Space>rn', __rnm, __options)
 
   require "lsp_signature".on_attach({
     bind = true,
@@ -134,7 +136,7 @@ local on_attach = function(client, bufnr)
   })
 
   if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
+    A.nvim_exec([[
       augroup lsp_document_highlight
         autocmd!
         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
@@ -156,19 +158,19 @@ end
 --- @param package string
 --- @return nil
 local function npm_install(package)
-  __npm_cmd('install', package)
+  exec_script('npm install ' .. package)
 end
 --
 -- Update all package using npm
 --- @return nil
 local function npm_update()
-  __npm_cmd('update', '')
+  exec_script('npm update')
 end
 
 -- List all package using npm
 --- @return nil
 local function npm_list()
-  __npm_cmd('list', '', {keep=true})
+  exec_script('npm list', {keep=true})
 end
 
 -- Create a floating terminal
@@ -297,8 +299,8 @@ end
 local function tab_complete()
   if vim.fn.pumvisible() == 1 then
     return __t "<C-n>"
-  elseif require('snippets').has_active_snippet() then
-    return __t "<cmd>lua return require'snippets'.expand_or_advance(1)<CR>"
+  elseif require('luasnip').expand_or_jumpable() then
+    return __t "<Plug>luasnip-expand-or-jump"
   elseif __check_back_space() then
     return __t "<Tab>"
   else
@@ -328,8 +330,8 @@ end
 local function s_tab_complete()
   if vim.fn.pumvisible() == 1 then
     return __t "<C-p>"
-  elseif require('snippets').has_active_snippet() then
-    return __t "<cmd>lua return require'snippets'.advance_snippet(-1)<CR>"
+  elseif require('luasnip').jumpable(-1) then
+    return __t "<Plug>luasnip-jump-prev"
   else
     return __t "<S-Tab>"
   end
@@ -366,6 +368,7 @@ local lsp = {
 
 local vim = {
   sort_lines = sort_lines,
+  exec_script = exec_script,
   get_visual_selection_range = get_visual_selection_range,
 }
 

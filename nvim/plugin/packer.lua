@@ -38,7 +38,6 @@ packer.startup({function()
           buffer = true,
           nvim_lsp = true,
           nvim_lua = true,
-          snippets_nvim = true
         }
       }
     end,
@@ -98,9 +97,9 @@ packer.startup({function()
       },
 
       {
-        '~/Library/Projects/snippets.nvim',
-        module = 'snippets',
-        config = function()
+        'L3MON4D3/LuaSnip',
+        module = 'luasnip',
+        config = function ()
           vim.api.nvim_set_keymap("i", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
           vim.api.nvim_set_keymap("s", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
           vim.api.nvim_set_keymap("i", "<S-Tab>", [[luaeval("require('util').config.s_tab_complete()")]], {expr=true})
