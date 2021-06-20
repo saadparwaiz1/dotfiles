@@ -54,7 +54,6 @@ local __check_back_space = function()
 end
 
 -- Public API Functions
-
 -- Get Current Script Path Exclusive Of Script Name
 --- @return string
 local script_path = function()
@@ -67,6 +66,109 @@ end
 --- @return string
 local function join(...)
   return table.concat({...}, sep)
+end
+
+-- Check Existence of a Directory or File
+--- @param filename string
+--- @return boolean
+local function exists(filename)
+  local stat = vim.loop.fs_stat(filename)
+  return stat and stat.type or false
+end
+
+-- Check if passed string is a file
+--- @param filename string
+--- @return boolean
+local function is_file(filename)
+  return exists(filename) == 'file'
+end
+
+-- Check if passed string is a directory
+--- @param dirname string
+--- @return boolean
+local function is_dir(dirname)
+  return exists(dirname) == 'directory'
+end
+
+-- Remove the last part of the path
+--- @param dir string
+--- @return string
+local function dirname(dir)
+  return vim.fn.fnamemodify(dir, ':h')
+end
+
+
+-- Check if string passed is file system root
+--- @param root string
+--- @return boolean
+local function is_root(root)
+  if sep == '/' then
+    return sep == root
+  end
+
+  return root:match("^%a:$")
+end
+
+-- Search through ancestors of a path
+--- @param path string
+--- @param stop function
+--- @return string
+local function search_parents(path, stop)
+  path = vim.loop.fs_realpath(path)
+  local dir = path
+  if is_file(dir) then dir = dirname(dir) end
+  for _ = 1, 100 do
+    if is_root(dir) then
+      return nil
+    end
+    if stop(dir) then
+      return dir
+    end
+    dir = dirname(dir)
+  end
+  return nil
+end
+
+-- Grep Through Files Using ripgrep
+local function rg()
+  local snap = require('snap')
+  snap.run {
+    prompt = "🔍 ",
+    producer = snap.get'producer.ripgrep.vimgrep',
+    select = snap.get'select.vimgrep'.select,
+    multiselect = snap.get'select.vimgrep'.multiselect,
+    views = {snap.get'preview.vimgrep'}
+  }
+end
+
+-- Find Files Using fd
+local function fd()
+  local snap = require('snap')
+  local general = snap.get('producer.fd.general')
+  snap.run {
+    prompt = "🔍 ",
+    producer = snap.get'consumer.fzy'(
+    function(request)
+      local cwd = snap.sync(vim.fn.getcwd)
+      return general(request, {args = {'--type=file'}, cwd = cwd})
+    end
+    ),
+    select = snap.get'select.file'.select,
+    multiselect = snap.get'select.file'.multiselect,
+    views = {snap.get'preview.file'}
+  }
+end
+
+-- Search Through Old Files
+local function oldfiles()
+  local snap = require('snap')
+  snap.run {
+    prompt = '🔍 ',
+    producer = snap.get'consumer.fzy'(snap.get'producer.vim.oldfile'),
+    select = snap.get'select.file'.select,
+    multiselect = snap.get'select.file'.multiselect,
+    views = {snap.get'preview.file'}
+  }
 end
 
 -- Exec a Script Using Your Default Shell
@@ -200,7 +302,6 @@ local function float_term()
   A.nvim_command(string.format(fmt, win))
 end
 
-
 -- Setup Rename Request Using Floating Windows
 --- @return nil
 local function rename()
@@ -221,47 +322,6 @@ local function rename()
   F.prompt_setcallback(buf, __dorename)
   F.prompt_setprompt(buf, ' ')
   vim.cmd('startinsert')
-end
-
--- create snippet for python class
---- @param passed_str string
---- @return string
-local function complete_arg_list(passed_str)
-  local counter = 0
-  local wspc = '\t'
-  local tab_width = 1
-  if vim.bo.expandtab then
-    wspc = ' '
-    tab_width = vim.bo.sw
-  end
-  local rest_compe = passed_str .. '):\n' .. wspc:rep(2*tab_width)
-  for str in string.gmatch(passed_str, "([^"..','.."]+)") do
-    counter = counter + 1
-    rest_compe = rest_compe .. "self.".. str:gsub(" ", "")
-    rest_compe = rest_compe .. ' = ' .. str:gsub(" ", "")
-    rest_compe = rest_compe .. '\n' .. wspc:rep(2*tab_width)
-  end
-  if counter == 0 then
-    return passed_str .. '):\n' .. wspc:rep(2*tab_width) .. 'pass'
-  end
-  return rest_compe:sub(1, -(2*tab_width + 2))
-end
-
--- execute string and return it's output
---- @param s string
---- @return string
-local function calc_buffer(s)
-  if s == "" or s == nil then
-    return "nil"
-  end
-
-  local f = loadstring("return " .. s)
-
-  if f == nil then
-    return "nil"
-  end
-
-  return tostring(f())
 end
 
 -- Wrapper over vim.g to set global variables using a table
@@ -347,7 +407,12 @@ local npm = {
 local path = {
   sep = sep,
   join = join,
-  script_path = script_path
+  is_dir = is_dir,
+  exists = exists,
+  is_file = is_file,
+  is_root = is_root,
+  script_path = script_path,
+  search_parents = search_parents,
 }
 
 local config = {
@@ -361,8 +426,8 @@ local config = {
 
 local lsp = {
   rename = rename,
-  on_attach = on_attach,
   term = float_term,
+  on_attach = on_attach,
   capabilities = capabilities
 }
 
@@ -372,9 +437,10 @@ local vim = {
   get_visual_selection_range = get_visual_selection_range,
 }
 
-local snips = {
-  calc_buffer = calc_buffer,
-  complete_arg_list = complete_arg_list
+local snaps = {
+  fd = fd,
+  rg = rg,
+  oldfiles = oldfiles,
 }
 
 return {
@@ -382,6 +448,6 @@ return {
   vim = vim,
   lsp = lsp,
   path = path,
-  snips = snips,
+  snaps = snaps,
   config = config,
 }

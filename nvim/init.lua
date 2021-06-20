@@ -33,7 +33,7 @@ local globals = {
   loaded_python3_provider = 0,
   loaded_netrwFileHandlers = 1,
   snippets_nvim_dir = util.path.join(vim.fn.stdpath('config'), 'lua', 'extensions', 'snippets'),
-  gruvbox_groups = { "lua", "python", "rust", "java", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "telescope", "indent_blankline" },
+  gruvbox_groups = { "lua", "python", "rust", "java", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "indent_blankline", "snap", "telescope" },
   markdown_fenced_languages = { "lua", "vim", "json", "java", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh" },
 }
 util.config.globals(globals)
@@ -166,27 +166,27 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmdf',
-    rhs = '<cmd>lua require("telescope.builtin").find_files({hidden=true})<CR>',
+    rhs = '<cmd>lua require("util").snaps.fd()<CR>'
   },
   {
     mode = 'n',
     lhs = '\\cmdl',
-    rhs = '<cmd>lua require("telescope.builtin").live_grep()<CR>',
+    rhs = '<cmd>lua require("util").snaps.rg()<CR>'
   },
   {
     mode = 'n',
     lhs = '\\cmdy',
-    rhs = '<cmd>lua require("telescope.builtin").oldfiles()<CR>',
+    rhs = '<cmd>lua require("util").snaps.oldfiles()<CR>'
+  },
+  {
+    mode = 'n',
+    lhs = '<leader>gs',
+    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>'
   },
   {
     mode = 'n',
     lhs = '\\optcmdb',
     rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
-  },
-  {
-    mode = 'n',
-    lhs ='<leader>gf',
-    rhs ='<cmd>lua require("telescope.builtin").git_status()<CR>',
   },
   {
     mode = 'n',
@@ -200,8 +200,8 @@ local maps = {
   },
   {
     mode = 'n',
-    lhs = '<leader>gs',
-    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>',
+    lhs = '<leader><leader>gs',
+    rhs = '<cmd>lua require("telescope.builtin").git_stash()<CR>',
   },
   {
     mode = 'n',
@@ -210,8 +210,8 @@ local maps = {
   },
   {
     mode = 'n',
-    rhs = '<C-h>',
-    lhs = '<cmd>cprev<CR>'
+    lhs = '<C-h>',
+    rhs = '<cmd>cprev<CR>'
   },
   -- Insert Mode Mappings
   {
