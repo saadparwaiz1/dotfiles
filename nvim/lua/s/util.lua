@@ -7,7 +7,7 @@ local F = vim.fn
 local __options = {noremap = true, silent = true}
 local __hover = "<cmd>lua vim.lsp.buf.hover()<CR>"
 local __fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
-local __rnm = "<cmd>lua require('util').lsp.rename()<CR>"
+local __rnm = "<cmd>lua require('s.util').lsp.rename()<CR>"
 local __declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local __impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local __refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
@@ -15,8 +15,8 @@ local __defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
 local __acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
 local __wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
 local __diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
-local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('util').config.border}})<CR>"
-local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('util').config.border}})<CR>"
+local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
+local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('s.util').config.border}})<CR>"
 
 -- Public API Variables
 
@@ -54,6 +54,209 @@ local __check_back_space = function()
 end
 
 -- Public API Functions
+
+-- Set Up galaxyline
+--- @return nil
+local function galaxyline()
+  local gl = require('galaxyline')
+  local colors = require('galaxyline.theme').default
+  local condition = require('galaxyline.condition')
+  local gls = gl.section
+  gl.short_line_list = {'NvimTree','vista','dbui','packer'}
+
+  gls.left[#(gls.left)+1] = {
+    ViMode = {
+      provider = function()
+        -- auto change color according the vim mode
+        local mode_color = {n = colors.red, i = colors.green,v=colors.blue,
+                            [''] = colors.blue,V=colors.blue,
+                            c = colors.magenta,no = colors.red,s = colors.orange,
+                            S=colors.orange,[''] = colors.orange,
+                            ic = colors.yellow,R = colors.violet,Rv = colors.violet,
+                            cv = colors.red,ce=colors.red, r = colors.cyan,
+                            rm = colors.cyan, ['r?'] = colors.cyan,
+                            ['!']  = colors.red,t = colors.red}
+        vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color[vim.fn.mode()])
+        return '   '
+      end,
+      highlight = {colors.red,colors.bg,'bold'},
+    },
+  }
+  gls.left[#(gls.left)+1] = {
+    FileSize = {
+      provider = 'FileSize',
+      condition = condition.buffer_not_empty,
+      highlight = {colors.fg,colors.bg}
+    }
+  }
+  gls.left[#(gls.left)+1] ={
+    FileIcon = {
+      provider = 'FileIcon',
+      condition = condition.buffer_not_empty,
+      highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.bg},
+    },
+  }
+
+  gls.left[#(gls.left)+1] = {
+    FileName = {
+      provider = 'FileName',
+      condition = condition.buffer_not_empty,
+      highlight = {colors.magenta,colors.bg,'bold'}
+    }
+  }
+
+  gls.left[#(gls.left)+1] = {
+    LineInfo = {
+      provider = 'LineColumn',
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.fg,colors.bg},
+    },
+  }
+
+  gls.left[#(gls.left)+1] = {
+    PerCent = {
+      provider = 'LinePercent',
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.fg,colors.bg,'bold'},
+    }
+  }
+
+  gls.left[#(gls.left)+1] = {
+    DiagnosticError = {
+      provider = 'DiagnosticError',
+      icon = '  ',
+      highlight = {colors.red,colors.bg}
+    }
+  }
+  gls.left[#(gls.left)+1] = {
+    DiagnosticWarn = {
+      provider = 'DiagnosticWarn',
+      icon = '  ',
+      highlight = {colors.yellow,colors.bg},
+    }
+  }
+
+  gls.left[#(gls.left)+1] = {
+    DiagnosticHint = {
+      provider = 'DiagnosticHint',
+      icon = '  ',
+      highlight = {colors.cyan,colors.bg},
+    }
+  }
+
+  gls.left[#(gls.left)+1] = {
+    DiagnosticInfo = {
+      provider = 'DiagnosticInfo',
+      icon = '  ',
+      highlight = {colors.blue,colors.bg},
+    }
+  }
+
+  -- gls.mid[#(gls.mid)+1] = {
+  --   ShowLspClient = {
+  --     provider = 'GetLspClient',
+  --     condition = function ()
+  --       local tbl = {['dashboard'] = true,['']=true}
+  --       if tbl[vim.bo.filetype] then
+  --         return false
+  --       end
+  --       return true
+  --     end,
+  --     icon = ' LSP:',
+  --     highlight = {colors.cyan,colors.bg,'bold'}
+  --   }
+  -- }
+
+  gls.right[#(gls.right)+1] = {
+    FileEncode = {
+      provider = 'FileEncode',
+      condition = condition.hide_in_width,
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.green,colors.bg,'bold'}
+    }
+  }
+
+  gls.right[#(gls.right)+1] = {
+    FileFormat = {
+      provider = 'FileFormat',
+      condition = condition.hide_in_width,
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.green,colors.bg,'bold'}
+    }
+  }
+
+  gls.right[#(gls.right)+1] = {
+    GitIcon = {
+      provider = function() return '  ' end,
+      condition = condition.check_git_workspace,
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.violet,colors.bg,'bold'},
+    }
+  }
+
+  gls.right[#(gls.right)+1] = {
+    GitBranch = {
+      provider = 'GitBranch',
+      condition = condition.check_git_workspace,
+      highlight = {colors.violet,colors.bg,'bold'},
+    }
+  }
+
+  gls.right[#(gls.right)+1] = {
+    DiffAdd = {
+      provider = 'DiffAdd',
+      condition = condition.hide_in_width,
+      icon = '   ',
+      highlight = {colors.green,colors.bg},
+    }
+  }
+  gls.right[#(gls.right)+1] = {
+    DiffModified = {
+      provider = 'DiffModified',
+      condition = condition.hide_in_width,
+      icon = '  柳',
+      highlight = {colors.orange,colors.bg},
+    }
+  }
+  gls.right[#(gls.right)+1] = {
+    DiffRemove = {
+      provider = 'DiffRemove',
+      condition = condition.hide_in_width,
+      icon = '   ',
+      highlight = {colors.red,colors.bg},
+    }
+  }
+
+  gls.short_line_left[#(gls.short_line_left)+1] = {
+    BufferType = {
+      provider = 'FileTypeName',
+      separator = ' ',
+      separator_highlight = {'NONE',colors.bg},
+      highlight = {colors.blue,colors.bg,'bold'}
+    }
+  }
+
+  gls.short_line_left[#(gls.short_line_left)+1] = {
+    SFileName = {
+      provider =  'SFileName',
+      condition = condition.buffer_not_empty,
+      highlight = {colors.fg,colors.bg,'bold'}
+    }
+  }
+
+  gls.short_line_right[#(gls.short_line_right)+1] = {
+    BufferIcon = {
+      provider= 'BufferIcon',
+      highlight = {colors.fg,colors.bg}
+    }
+  }
+end
+
 -- Get Current Script Path Exclusive Of Script Name
 --- @return string
 local script_path = function()
@@ -149,7 +352,7 @@ local function fd()
     prompt = "🔍 ",
     producer = snap.get'consumer.fzy'(
     function(request)
-      local cwd = snap.sync(vim.fn.getcwd)
+      local cwd = vim.loop.cwd()
       return general(request, {args = {'--type=file'}, cwd = cwd})
     end
     ),
@@ -314,11 +517,9 @@ local function rename()
     style = 'minimal',
     border = border
   }
-  local cword = vim.fn.expand('<cword>')
   local buf = A.nvim_create_buf(false, true)
   A.nvim_open_win(buf, true, opts)
   A.nvim_buf_set_option(buf, 'buftype', 'prompt')
-  A.nvim_buf_set_lines(buf, 0, -1, false, {cword})
   F.prompt_setcallback(buf, __dorename)
   F.prompt_setprompt(buf, ' ')
   vim.cmd('startinsert')
@@ -411,6 +612,7 @@ local path = {
   exists = exists,
   is_file = is_file,
   is_root = is_root,
+  dirname = dirname,
   script_path = script_path,
   search_parents = search_parents,
 }
@@ -420,6 +622,7 @@ local config = {
   border = border,
   globals = globals,
   options = options,
+  galaxyline = galaxyline,
   tab_complete = tab_complete,
   s_tab_complete = s_tab_complete,
 }

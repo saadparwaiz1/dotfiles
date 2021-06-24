@@ -1,6 +1,6 @@
 vim.opt_local.formatprg = 'shfmt'
 local lspconfig = require('lspconfig')
-local util = require('util')
+local util = require('s.util')
 
 
 lspconfig.bashls.setup {

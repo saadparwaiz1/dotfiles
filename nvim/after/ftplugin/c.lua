@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local util = require('util')
+local util = require('s.util')
 
 lspconfig.clangd.setup {
   cmd = {

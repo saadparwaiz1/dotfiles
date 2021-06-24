@@ -29,7 +29,7 @@ packer.startup({function()
           local selected = require('telescope.actions.state').get_selected_entry(br)
           local cwd = selected.cwd
           local ordinal = selected.ordinal
-          local selected_dir = require('util').path.join(cwd, ordinal)
+          local selected_dir = require('s.util').path.join(cwd, ordinal)
           vim.api.nvim_set_current_dir(selected_dir)
           require('telescope.actions').close(br)
         end
@@ -120,37 +120,22 @@ packer.startup({function()
         vim.fn.sign_define("LspDiagnosticsSignInformation", {text = ""})
         vim.lsp.handlers["textDocument/hover"] =
           vim.lsp.with(vim.lsp.handlers.hover, {
-            border = require('util').config.border
+            border = require('s.util').config.border
           })
 
         vim.lsp.handlers["textDocument/signatureHelp"] =
           vim.lsp.with(vim.lsp.handlers.signature_help, {
-            border = require('util').config.border
+            border = require('s.util').config.border
           })
         vim.lsp.protocol.CompletionItemKind = {
-          '',
-          'ƒ',
-          '',
-          '',
-          '',
-          '',
-          'ﰮ',
-          '',
-          '',
-          '',
-          '',
-          '了',
-          '',
-          '﬌',
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          'ﬦ',
-          '',
+          '', 'ƒ', '',
+          '', '', '',
+          'ﰮ', '', '',
+          '', '', '了',
+          '', '﬌', '',
+          '', '', '',
+          '', '', '',
+          'ﬦ', '',
         }
         end,
       },
@@ -159,10 +144,30 @@ packer.startup({function()
         'L3MON4D3/LuaSnip',
         module = 'luasnip',
         config = function ()
-          vim.api.nvim_set_keymap("i", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("s", "<Tab>", [[luaeval("require('util').config.tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("i", "<S-Tab>", [[luaeval("require('util').config.s_tab_complete()")]], {expr=true})
-          vim.api.nvim_set_keymap("s", "<S-Tab>", [[luaeval("require('util').config.s_tab_complete()")]], {expr=true})
+          vim.api.nvim_set_keymap(
+            "i",
+            "<Tab>",
+            [[luaeval("require('s.util').config.tab_complete()")]],
+            {expr=true}
+          )
+          vim.api.nvim_set_keymap(
+            "s",
+            "<Tab>",
+            [[luaeval("require('s.util').config.tab_complete()")]],
+            {expr=true}
+          )
+          vim.api.nvim_set_keymap(
+            "i",
+            "<S-Tab>",
+            [[luaeval("require('s.util').config.s_tab_complete()")]],
+            {expr=true}
+          )
+          vim.api.nvim_set_keymap(
+            "s",
+            "<S-Tab>",
+            [[luaeval("require('s.util').config.s_tab_complete()")]],
+            {expr=true}
+          )
         end
       },
 
@@ -181,11 +186,11 @@ packer.startup({function()
   -- Treesiter Extensions
   use {
     'nvim-treesitter/nvim-treesitter',
-    ft = {'lua', 'sh', 'python'},
+    ft = {'lua', 'bash', 'python', 'latex'},
     config = function ()
       local treesitter = require('nvim-treesitter.configs')
       treesitter.setup({
-        ensure_installed = {'lua', 'bash', 'python'},
+        ensure_installed = {'lua', 'bash', 'python', 'latex'},
         highlight = {enable = true}
       })
       vim.wo.foldmethod = 'expr'
@@ -250,8 +255,28 @@ packer.startup({function()
       end)
     end
   }
+  -- FileType Specific Plugins
+  use {
+    'iamcco/markdown-preview.nvim',
+    ft = 'markdown',
+    run = 'cd app && npm install'
+  }
   -- UI Related Plugins
-  use {'saadparwaiz1/nvimline'}
+  use {
+    'glepnir/galaxyline.nvim',
+    config = function ()
+      require('s.util').config.galaxyline()
+    end,
+    requires = {
+      {
+        'kyazdani42/nvim-web-devicons',
+        module = 'nvim-web-devicons'
+      }
+    }
+  }
+  use {
+    'romgrk/barbar.nvim'
+  }
   use {
     'lukas-reineke/indent-blankline.nvim',
     branch = 'lua',

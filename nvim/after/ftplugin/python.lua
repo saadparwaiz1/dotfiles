@@ -1,5 +1,5 @@
 vim.opt_local.formatprg='black --quiet -'
-local util = require('util')
+local util = require('s.util')
 local lspconfig = require('lspconfig')
 
 lspconfig.pyright.setup {

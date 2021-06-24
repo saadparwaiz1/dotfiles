@@ -1,4 +1,4 @@
-local util = require('util')
+local util = require('s.util')
 
 local opts = {
     tools = {

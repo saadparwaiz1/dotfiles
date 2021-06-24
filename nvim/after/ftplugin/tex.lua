@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local util = require('util')
+local util = require('s.util')
 
 lspconfig.texlab.setup {
   on_attach = util.lsp.on_attach,

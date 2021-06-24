@@ -1,17 +1,14 @@
--- vim: set foldmethod=marker foldlevel=1 nomodeline:
---  --------------------------------------------------
---  Load Util {{{
---  --------------------------------------------------
-local util = require('util')
---  }}}
--- ---------------------------------------------------
---  global options {{{
---  --------------------------------------------------
+-- Load Util Module
+local util = require('s.util')
+
+
+-- Define Global Variables
 local globals = {
   loaded_zip = 1,
   loaded_tar = 1,
   loaded_gzip = 1,
   mapleader = " ",
+  tex_flavour = 'latex',
   loaded_netrw = 1,
   loaded_vimball = 1,
   loaded_matchit = 1,
@@ -32,15 +29,42 @@ local globals = {
   markdown_syntax_conceal = 1,
   loaded_python3_provider = 0,
   loaded_netrwFileHandlers = 1,
-  snippets_nvim_dir = util.path.join(vim.fn.stdpath('config'), 'lua', 'extensions', 'snippets'),
-  gruvbox_groups = { "lua", "python", "rust", "java", "gitcommit", "diff", "markdown", "vimscript", "lsp", "gitsigns", "indent_blankline", "snap", "telescope" },
-  markdown_fenced_languages = { "lua", "vim", "json", "java", "rust", "typescript", "javascript", "js=javascript", "ts=typescript", "shell=sh", "python", "sh", "bash=sh", "console=sh" },
+  gruvbox_groups = {
+    "lua",
+    "lsp",
+    "rust",
+    "diff",
+    "java",
+    "snap",
+    "python",
+    "barbar",
+    "gitsigns",
+    "markdown",
+    "gitcommit",
+    "vimscript",
+    "telescope",
+    "indent_blankline",
+  },
+  markdown_fenced_languages = {
+    "sh",
+    "lua",
+    "vim",
+    "java",
+    "rust",
+    "json",
+    "python",
+    "bash=sh",
+    "shell=sh",
+    "javascript",
+    "console=sh",
+    "typescript",
+    "ts=typescript",
+    "js=javascript",
+  },
 }
 util.config.globals(globals)
---  }}}
---  --------------------------------------------------
---  vim options {{{
---  --------------------------------------------------
+
+-- Define Options
 local options = {
   list = true,
   mouse = 'a',
@@ -76,21 +100,16 @@ vim.opt.listchars = { tab = '| ', trail = '~'}
 vim.opt.completeopt = {'menuone', 'noselect'}
 vim.opt.wildignore = { '*.o','*~','*.pyc', '*/.git/*','*/.hg/*', '*/.svn/*','*/.DS_store', '**/node_modules' }
 vim.opt.shortmess:append('c')
---  }}}
---  --------------------------------------------------
---  autocmds {{{
---  --------------------------------------------------
+
+-- Define Autocmds
 vim.api.nvim_exec([[
   augroup autocmds_core
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='GruvboxOrangeBold', timeout=150}
-    autocmd FileType tex,markdown,plaintex,gitcommit setlocal spell
   augroup END
 ]], false)
---  }}}
---  --------------------------------------------------
---  Mappings {{{
---  --------------------------------------------------
+
+-- Define Maps
 local maps = {
   -- Normal Mode Mappings
   {
@@ -156,7 +175,7 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmd;',
-    rhs = '<cmd>lua require("util").lsp.term()<CR>',
+    rhs = '<cmd>lua require("s.util").lsp.term()<CR>',
   },
   {
     mode = 'n',
@@ -166,17 +185,17 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmdf',
-    rhs = '<cmd>lua require("util").snaps.fd()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.fd()<CR>'
   },
   {
     mode = 'n',
     lhs = '\\cmdl',
-    rhs = '<cmd>lua require("util").snaps.rg()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.rg()<CR>'
   },
   {
     mode = 'n',
     lhs = '\\cmdy',
-    rhs = '<cmd>lua require("util").snaps.oldfiles()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.oldfiles()<CR>'
   },
   {
     mode = 'n',
@@ -238,6 +257,5 @@ local maps = {
     opts = {noremap = true, silent = true, expr = true}
   },
 }
+
 util.config.maps(maps, {silent = true, noremap = true})
---  }}}
---  --------------------------------------------------
