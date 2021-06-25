@@ -5,7 +5,7 @@ local opts = {
         autoSetHints = true,
         hover_with_actions = true,
         runnables = {
-          use_telescope = true
+          use_telescope = false
         },
         inlay_hints = {
           show_parameter_hints = true,

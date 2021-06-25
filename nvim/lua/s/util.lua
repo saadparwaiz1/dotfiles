@@ -10,11 +10,10 @@ local __fmt = "<cmd>lua vim.lsp.buf.formatting()<CR>"
 local __rnm = "<cmd>lua require('s.util').lsp.rename()<CR>"
 local __declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local __impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
-local __refe = "<cmd>lua require('telescope.builtin').lsp_references()<CR>"
-local __defi = "<cmd>lua require('telescope.builtin').lsp_definitions()<CR>"
-local __acn = "<cmd>lua require('telescope.builtin').lsp_code_actions()<CR>"
-local __wrkspc = "<cmd>lua require('telescope.builtin').lsp_workspace_symbols()<CR>"
-local __diag = "<cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<CR>"
+local __refe = "<cmd>lua vim.lsp.buf.references()<CR>"
+local __defi = "<cmd>lua vim.lsp.buf.definitions()<CR>"
+local __acn = "<cmd>lua vim.lsp.buf.code_actions()<CR>"
+local __wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbols()<CR>"
 local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
 local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('s.util').config.border}})<CR>"
 
@@ -374,6 +373,31 @@ local function oldfiles()
   }
 end
 
+-- Search Through Git Status
+local function git_status()
+  local snap = require('snap')
+  local git = require('s.git')
+  snap.run {
+    prompt = '🔍 ',
+    producer = git.producer.git_status,
+    select = git.select.git_status,
+    multiselect = git.multiselect.git_status,
+    views = {git.views.git_status}
+  }
+end
+
+-- Search Through Git Status
+local function git_log()
+  local snap = require('snap')
+  local git = require('s.git')
+  snap.run {
+    prompt = '🔍 ',
+    producer = git.producer.git_log,
+    views = {git.views.git_log},
+    select = print
+  }
+end
+
 -- Exec a Script Using Your Default Shell
 --- @param script string
 --- @param o table
@@ -425,7 +449,6 @@ local on_attach = function(client, bufnr)
   A.nvim_buf_set_keymap(bufnr, 'n', "gd", __defi, __options)
   A.nvim_buf_set_keymap(bufnr, 'n', "gr", __refe, __options)
   A.nvim_buf_set_keymap(bufnr, 'n', "K", __hover, __options)
-  A.nvim_buf_set_keymap(bufnr, 'n', 'ge', __diag, __options)
   A.nvim_buf_set_keymap(bufnr, 'n', 'gi', __impli, __options)
   A.nvim_buf_set_keymap(bufnr, 'n', "gD", __declr, __options)
   A.nvim_buf_set_keymap(bufnr, 'n', 'gw', __wrkspc, __options)
@@ -644,6 +667,8 @@ local snaps = {
   fd = fd,
   rg = rg,
   oldfiles = oldfiles,
+  git_status = git_status,
+  git_log = git_log,
 }
 
 return {

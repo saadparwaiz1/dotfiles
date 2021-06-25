@@ -14,80 +14,11 @@ packer.startup({function()
     rocks = {'fzy'},
     module = 'snap'
   }
-  use {
-      'nvim-telescope/telescope.nvim',
-      requires = {
-        {'nvim-lua/popup.nvim'},
-        {'nvim-lua/plenary.nvim'},
-        {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'}
-      },
-      config = function ()
-        local telescope = require('telescope')
-        local actions = require('telescope.actions')
-
-        local chdir = function (br)
-          local selected = require('telescope.actions.state').get_selected_entry(br)
-          local cwd = selected.cwd
-          local ordinal = selected.ordinal
-          local selected_dir = require('s.util').path.join(cwd, ordinal)
-          vim.api.nvim_set_current_dir(selected_dir)
-          require('telescope.actions').close(br)
-        end
-
-        telescope.setup {
-          defaults = {
-            vimgrep_arguments = {
-              'rg', '--with-filename', '--line-number', '--column', '--smart-case'
-            },
-            mappings = {i = {
-              ['<Esc>'] = actions.close,
-              ['\\optcmdcr'] = chdir
-            }},
-            prompt_position = 'bottom',
-            prompt_prefix = '🔍',
-            initial_mode = 'insert',
-            selection_strategy = "reset",
-            sorting_strategy = "descending",
-            layout_strategy = "horizontal",
-            file_sorter = require'telescope.sorters'.get_fzy_sorter,
-            generic_sorter = require'telescope.sorters'.get_generic_fuzzy_sorter,
-            shorten_path = true,
-            file_ignore_patterns = {
-              "%.pdf", ".git/.*", "node_modules/.*", "__pycache__/.*", "%.swp",
-              "%.db", "Caches/.*", '%.png', '%.jpg'
-            },
-            winblend = 0,
-            width = 0.75,
-            preview_cutoff = 120,
-            results_height = 1,
-            results_width = 0.8,
-            border = {},
-            borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
-            color_devicons = true,
-            use_less = true,
-            set_env = {['COLORTERM'] = 'truecolor'},
-            file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-            grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-            qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
-            buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker
-          },
-          extensions = {
-            fzf = {
-              override_generic_sorter = false,
-              override_file_sorter = true,
-              case_mode = "smart_case",
-            }
-          }
-        }
-
-        require('telescope').load_extension('fzf')
-      end,
-      module = 'telescope'
-  }
   -- LSP Extensions
   use {
     'hrsh7th/nvim-compe',
-    ft = lsp_fts,
+    event = 'InsertEnter *',
+    after = 'LuaSnip',
     config = function()
       require('compe').setup {
         enabled = true,
@@ -95,6 +26,7 @@ packer.startup({function()
           path = true,
           spell = true,
           buffer = true,
+          luasnip = true,
           nvim_lsp = true,
           nvim_lua = true,
         }
@@ -142,7 +74,7 @@ packer.startup({function()
 
       {
         'L3MON4D3/LuaSnip',
-        module = 'luasnip',
+        event = 'InsertEnter *',
         config = function ()
           vim.api.nvim_set_keymap(
             "i",
@@ -187,20 +119,85 @@ packer.startup({function()
   use {
     'nvim-treesitter/nvim-treesitter',
     ft = {'lua', 'bash', 'python', 'latex'},
-    config = function ()
-      local treesitter = require('nvim-treesitter.configs')
-      treesitter.setup({
-        ensure_installed = {'lua', 'bash', 'python', 'latex'},
-        highlight = {enable = true}
-      })
-      vim.wo.foldmethod = 'expr'
-      vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-      vim.g.indent_blankline_show_current_context = true
-    end
+    requires = {
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        after = 'nvim-treesitter',
+        config = function ()
+          local treesitter = require('nvim-treesitter.configs')
+          treesitter.setup({
+            ensure_installed = {'lua', 'bash', 'python', 'latex'},
+            highlight = {enable = true},
+            textobjects = {
+              select = {
+                enable = true,
+                keymaps = {
+                  -- You can use the capture groups defined in textobjects.scm
+                  ["af"] = "@function.outer",
+                  ["if"] = "@function.inner",
+                  ["ac"] = "@class.outer",
+                  ["ic"] = "@class.inner",
+                },
+              },
+              swap = {
+                enable = true,
+                swap_next = {
+                  ["<leader>a"] = "@parameter.inner",
+                },
+                swap_previous = {
+                  ["<leader>A"] = "@parameter.inner",
+                },
+              },
+
+              move = {
+                enable = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
+                goto_next_start = {
+                  ["]m"] = "@function.outer",
+                  ["]]"] = "@class.outer",
+                },
+                goto_next_end = {
+                  ["]M"] = "@function.outer",
+                  ["]["] = "@class.outer",
+                },
+                goto_previous_start = {
+                  ["[m"] = "@function.outer",
+                  ["[["] = "@class.outer",
+                },
+                goto_previous_end = {
+                  ["[M"] = "@function.outer",
+                  ["[]"] = "@class.outer",
+                },
+              },
+            },
+          })
+          vim.wo.foldmethod = 'expr'
+          vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
+          vim.g.indent_blankline_show_current_context = true
+        end
+      },
+      {
+        'nvim-treesitter/playground',
+        after = 'nvim-treesitter',
+      }
+    },
   }
   -- Enchanced Functionality Plugins
   use {
-    'tpope/vim-surround',
+    'machakann/vim-sandwich',
+    setup = function ()
+      vim.g['sandwich#magicchar#f#patterns'] = {
+        {
+          header = [[\<\%(\h\k*\.\)*\h\k*]],
+          bra    = '(',
+          ket    = ')',
+          footer = '',
+        }
+      }
+    end,
+    config = function ()
+      vim.cmd('runtime macros/sandwich/keymap/surround.vim')
+    end,
     keys = {
       {'n', 'ds'},
       {'n', 'cs'},
@@ -318,7 +315,7 @@ packer.startup({function()
     config = function ()
     	vim.cmd('colorscheme gruvbox')
     end,
-    run = [[nvim -c 'lua require("gruvbox").generate()' -c 'q']]
+    run = [[:lua require("gruvbox").generate()]]
   }
 end, config = {
   display = {

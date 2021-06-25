@@ -1,7 +1,6 @@
 -- Load Util Module
 local util = require('s.util')
 
-
 -- Define Global Variables
 local globals = {
   loaded_zip = 1,
@@ -42,7 +41,6 @@ local globals = {
     "markdown",
     "gitcommit",
     "vimscript",
-    "telescope",
     "indent_blankline",
   },
   markdown_fenced_languages = {
@@ -200,27 +198,12 @@ local maps = {
   {
     mode = 'n',
     lhs = '<leader>gs',
-    rhs = '<cmd>lua require("telescope.builtin").git_status()<CR>'
-  },
-  {
-    mode = 'n',
-    lhs = '\\optcmdb',
-    rhs ='<cmd>lua require("telescope.builtin").file_browser()<CR>',
+    rhs = '<cmd>lua require("s.util").snaps.git_status()<CR>'
   },
   {
     mode = 'n',
     lhs = '<leader>gc',
-    rhs = '<cmd>lua require("telescope.builtin").git_commits()<CR>',
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gb',
-    rhs = '<cmd>lua require("telescope.builtin").git_branches()<CR>',
-  },
-  {
-    mode = 'n',
-    lhs = '<leader><leader>gs',
-    rhs = '<cmd>lua require("telescope.builtin").git_stash()<CR>',
+    rhs = '<cmd>lua require("s.util").snaps.git_log()<CR>'
   },
   {
     mode = 'n',
