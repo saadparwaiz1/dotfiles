@@ -7,24 +7,25 @@ local globals = {
   loaded_tar = 1,
   loaded_gzip = 1,
   mapleader = " ",
-  tex_flavour = 'latex',
   loaded_netrw = 1,
+  loaded_logiPat = 1,
   loaded_vimball = 1,
   loaded_matchit = 1,
-  loaded_logiPat = 1,
   loaded_rrhelper = 1,
+  loaded_zipPlugin = 1,
   loaded_tarPlugin = 1,
   loaded_getscript = 1,
-  loaded_zipPlugin = 1,
+  loaded_matchparen = 1,
+  tex_flavour = 'latex',
   loaded_netrwPlugin = 1,
   loaded_2html_plugin = 1,
-  loaded_netrwSettings = 1,
-  loaded_perl_provider = 0,
-  loaded_ruby_provider = 0,
-  loaded_node_provider = 0,
   loaded_vimballPlugin = 1,
-  loaded_getscriptPlugin = 1,
+  loaded_node_provider = 0,
+  loaded_ruby_provider = 0,
+  loaded_perl_provider = 0,
+  loaded_netrwSettings = 1,
   loaded_python_provider = 0,
+  loaded_getscriptPlugin = 1,
   markdown_syntax_conceal = 1,
   loaded_python3_provider = 0,
   loaded_netrwFileHandlers = 1,
@@ -215,6 +216,11 @@ local maps = {
     lhs = '<C-h>',
     rhs = '<cmd>cprev<CR>'
   },
+  {
+    mode = 'n',
+    lhs = '\\optcmdb',
+    rhs = '<cmd>NvimTreeToggle<CR>'
+  },
   -- Insert Mode Mappings
   {
     mode = 'i',
@@ -242,3 +248,5 @@ local maps = {
 }
 
 util.config.maps(maps, {silent = true, noremap = true})
+
+vim.cmd('command! PackerSet :lua require("s.packer")')

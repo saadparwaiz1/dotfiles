@@ -11,7 +11,7 @@ local __rnm = "<cmd>lua require('s.util').lsp.rename()<CR>"
 local __declr = "<cmd>lua vim.lsp.buf.declaration()<CR>"
 local __impli = "<cmd>lua vim.lsp.buf.implementation()<CR>"
 local __refe = "<cmd>lua vim.lsp.buf.references()<CR>"
-local __defi = "<cmd>lua vim.lsp.buf.definitions()<CR>"
+local __defi = "<cmd>lua vim.lsp.buf.definition()<CR>"
 local __acn = "<cmd>lua vim.lsp.buf.code_actions()<CR>"
 local __wrkspc = "<cmd>lua vim.lsp.buf.workspace_symbols()<CR>"
 local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
@@ -59,6 +59,7 @@ end
 local function galaxyline()
   local gl = require('galaxyline')
   local colors = require('galaxyline.theme').default
+  colors.bg = '#282828'
   local condition = require('galaxyline.condition')
   local gls = gl.section
   gl.short_line_list = {'NvimTree','vista','dbui','packer'}
@@ -67,14 +68,18 @@ local function galaxyline()
     ViMode = {
       provider = function()
         -- auto change color according the vim mode
-        local mode_color = {n = colors.red, i = colors.green,v=colors.blue,
-                            [''] = colors.blue,V=colors.blue,
-                            c = colors.magenta,no = colors.red,s = colors.orange,
-                            S=colors.orange,[''] = colors.orange,
-                            ic = colors.yellow,R = colors.violet,Rv = colors.violet,
-                            cv = colors.red,ce=colors.red, r = colors.cyan,
-                            rm = colors.cyan, ['r?'] = colors.cyan,
-                            ['!']  = colors.red,t = colors.red}
+        local mode_color = {
+          ce=colors.red, r = colors.cyan,
+          n = colors.red, i = colors.green,
+          V=colors.blue, c = colors.magenta,
+          no = colors.red,s = colors.orange,
+          ['!']  = colors.red,t = colors.red,
+          v=colors.blue, [''] = colors.blue,
+          Rv = colors.violet, cv = colors.red,
+          ic = colors.yellow,R = colors.violet,
+          S=colors.orange,[''] = colors.orange,
+          rm = colors.cyan, ['r?'] = colors.cyan,
+        }
         vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color[vim.fn.mode()])
         return '   '
       end,

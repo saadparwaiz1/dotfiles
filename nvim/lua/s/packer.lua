@@ -18,7 +18,6 @@ packer.startup({function()
   use {
     'hrsh7th/nvim-compe',
     event = 'InsertEnter *',
-    after = 'LuaSnip',
     config = function()
       require('compe').setup {
         enabled = true,
@@ -76,30 +75,7 @@ packer.startup({function()
         'L3MON4D3/LuaSnip',
         event = 'InsertEnter *',
         config = function ()
-          vim.api.nvim_set_keymap(
-            "i",
-            "<Tab>",
-            [[luaeval("require('s.util').config.tab_complete()")]],
-            {expr=true}
-          )
-          vim.api.nvim_set_keymap(
-            "s",
-            "<Tab>",
-            [[luaeval("require('s.util').config.tab_complete()")]],
-            {expr=true}
-          )
-          vim.api.nvim_set_keymap(
-            "i",
-            "<S-Tab>",
-            [[luaeval("require('s.util').config.s_tab_complete()")]],
-            {expr=true}
-          )
-          vim.api.nvim_set_keymap(
-            "s",
-            "<S-Tab>",
-            [[luaeval("require('s.util').config.s_tab_complete()")]],
-            {expr=true}
-          )
+          require('s.snippets')
         end
       },
 
@@ -126,13 +102,11 @@ packer.startup({function()
         config = function ()
           local treesitter = require('nvim-treesitter.configs')
           treesitter.setup({
-            ensure_installed = {'lua', 'bash', 'python', 'latex'},
             highlight = {enable = true},
             textobjects = {
               select = {
                 enable = true,
                 keymaps = {
-                  -- You can use the capture groups defined in textobjects.scm
                   ["af"] = "@function.outer",
                   ["if"] = "@function.inner",
                   ["ac"] = "@class.outer",
@@ -151,7 +125,7 @@ packer.startup({function()
 
               move = {
                 enable = true,
-                set_jumps = true, -- whether to set jumps in the jumplist
+                set_jumps = true,
                 goto_next_start = {
                   ["]m"] = "@function.outer",
                   ["]]"] = "@class.outer",
@@ -169,6 +143,9 @@ packer.startup({function()
                   ["[]"] = "@class.outer",
                 },
               },
+              matchup = {
+                enable = true
+              },
             },
           })
           vim.wo.foldmethod = 'expr'
@@ -177,8 +154,11 @@ packer.startup({function()
         end
       },
       {
-        'nvim-treesitter/playground',
+        'romgrk/nvim-treesitter-context',
         after = 'nvim-treesitter',
+        config = function ()
+          require'treesitter-context.config'.setup{enable = true}
+        end
       }
     },
   }
@@ -210,6 +190,9 @@ packer.startup({function()
       {'x', 'S'},
       {'x', 'gS'},
     }
+  }
+  use {
+    'andymass/vim-matchup',
   }
   use {
     'terrortylor/nvim-comment',
@@ -251,6 +234,14 @@ packer.startup({function()
         end)
       end)
     end
+  }
+  use{
+    'kyazdani42/nvim-tree.lua',
+    cmd = 'NvimTreeToggle'
+  }
+  use {
+    'mbbill/undotree',
+    cmd = 'UndotreeToggle'
   }
   -- FileType Specific Plugins
   use {
