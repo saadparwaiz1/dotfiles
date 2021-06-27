@@ -2,7 +2,7 @@
 # ============================================================================
 # Set Env Variable {{{
 # ============================================================================
-export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin"
+export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/$XDG_DATA_HOME/cargo/bin"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=4 nomod nolist noma' --cmd 'let g:indent_blankline_enabled=v:false' -\""
 # }}}
 # ============================================================================

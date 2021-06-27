@@ -6,7 +6,7 @@ local globals = {
   loaded_zip = 1,
   loaded_tar = 1,
   loaded_gzip = 1,
-  mapleader = " ",
+  mapleader = ' ',
   loaded_netrw = 1,
   loaded_logiPat = 1,
   loaded_vimball = 1,
@@ -15,50 +15,52 @@ local globals = {
   loaded_zipPlugin = 1,
   loaded_tarPlugin = 1,
   loaded_getscript = 1,
+  vim_markdown_math = 1,
   loaded_matchparen = 1,
-  tex_flavour = 'latex',
+  tex_flavor = 'latex',
   loaded_netrwPlugin = 1,
   loaded_2html_plugin = 1,
-  loaded_vimballPlugin = 1,
   loaded_node_provider = 0,
-  loaded_ruby_provider = 0,
   loaded_perl_provider = 0,
+  loaded_vimballPlugin = 1,
   loaded_netrwSettings = 1,
+  loaded_ruby_provider = 0,
   loaded_python_provider = 0,
   loaded_getscriptPlugin = 1,
-  markdown_syntax_conceal = 1,
   loaded_python3_provider = 0,
+  markdown_syntax_conceal = 1,
   loaded_netrwFileHandlers = 1,
+  vim_markdown_strikethrough = 1,
   gruvbox_groups = {
-    "lua",
-    "lsp",
-    "rust",
-    "diff",
-    "java",
-    "snap",
-    "python",
-    "barbar",
-    "gitsigns",
-    "markdown",
-    "gitcommit",
-    "vimscript",
-    "indent_blankline",
+    'lua',
+    'lsp',
+    'rust',
+    'diff',
+    'java',
+    'snap',
+    'python',
+    'barbar',
+    'gitsigns',
+    'markdown',
+    'gitcommit',
+    'vimscript',
+    'indent_blankline',
   },
   markdown_fenced_languages = {
-    "sh",
-    "lua",
-    "vim",
-    "java",
-    "rust",
-    "json",
-    "python",
-    "bash=sh",
-    "shell=sh",
-    "javascript",
-    "console=sh",
-    "typescript",
-    "ts=typescript",
-    "js=javascript",
+    'sh',
+    'lua',
+    'vim',
+    'java',
+    'rust',
+    'json',
+    'python',
+    'bash=sh',
+    'shell=sh',
+    'javascript',
+    'console=sh',
+    'typescript',
+    'ts=typescript',
+    'js=javascript',
   },
 }
 util.config.globals(globals)
@@ -81,7 +83,7 @@ local options = {
   updatetime = 100,
   showmode = false,
   expandtab = true,
-  conceallevel = 1,
+  conceallevel = 2,
   splitright = true,
   lazyredraw = true,
   splitbelow = true,
@@ -95,18 +97,30 @@ local options = {
 util.config.options(options)
 
 -- Set some options using vim.opt
-vim.opt.listchars = { tab = '| ', trail = '~'}
-vim.opt.completeopt = {'menuone', 'noselect'}
-vim.opt.wildignore = { '*.o','*~','*.pyc', '*/.git/*','*/.hg/*', '*/.svn/*','*/.DS_store', '**/node_modules' }
+vim.opt.listchars = { tab = '| ', trail = '~' }
+vim.opt.completeopt = { 'menuone', 'noselect' }
+vim.opt.wildignore = {
+  '*.o',
+  '*~',
+  '*.pyc',
+  '*/.git/*',
+  '*/.hg/*',
+  '*/.svn/*',
+  '*/.DS_store',
+  '**/node_modules',
+}
 vim.opt.shortmess:append('c')
 
 -- Define Autocmds
-vim.api.nvim_exec([[
+vim.api.nvim_exec(
+  [[
   augroup autocmds_core
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='GruvboxOrangeBold', timeout=150}
   augroup END
-]], false)
+]],
+  false
+)
 
 -- Define Maps
 local maps = {
@@ -184,44 +198,62 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmdf',
-    rhs = '<cmd>lua require("s.util").snaps.fd()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.fd()<CR>',
   },
   {
     mode = 'n',
     lhs = '\\cmdl',
-    rhs = '<cmd>lua require("s.util").snaps.rg()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.rg()<CR>',
   },
   {
     mode = 'n',
     lhs = '\\cmdy',
-    rhs = '<cmd>lua require("s.util").snaps.oldfiles()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.oldfiles()<CR>',
   },
   {
     mode = 'n',
     lhs = '<leader>gs',
-    rhs = '<cmd>lua require("s.util").snaps.git_status()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.git_status()<CR>',
   },
   {
     mode = 'n',
     lhs = '<leader>gc',
-    rhs = '<cmd>lua require("s.util").snaps.git_log()<CR>'
+    rhs = '<cmd>lua require("s.util").snaps.git_log()<CR>',
   },
   {
     mode = 'n',
     lhs = '<C-l>',
-    rhs = '<cmd>cnext<CR>'
+    rhs = '<cmd>cnext<CR>',
   },
   {
     mode = 'n',
     lhs = '<C-h>',
-    rhs = '<cmd>cprev<CR>'
+    rhs = '<cmd>cprev<CR>',
   },
   {
     mode = 'n',
     lhs = '\\optcmdb',
-    rhs = '<cmd>NvimTreeToggle<CR>'
+    rhs = '<cmd>NvimTreeToggle<CR>',
   },
   -- Insert Mode Mappings
+  {
+    mode = 'i',
+    lhs = '<C-f>',
+    rhs = 'compe#scroll({ "delta": +4 })',
+    opts = { silent = true, noremap = true, expr = true },
+  },
+  {
+    mode = 'i',
+    lhs = '<C-Space>',
+    rhs = 'compe#complete()',
+    opts = { silent = true, noremap = true, expr = true },
+  },
+  {
+    mode = 'i',
+    lhs = '<C-d>',
+    rhs = 'compe#scroll({ "delta": -4 })',
+    opts = { silent = true, noremap = true, expr = true },
+  },
   {
     mode = 'i',
     lhs = 'jj',
@@ -231,22 +263,24 @@ local maps = {
     mode = 'i',
     lhs = '<Tab>',
     rhs = [[pumvisible() ? "\<C-n>" : "\<Tab>"]],
-    opts = {silent = true, noremap = true, expr = true}
+    opts = { silent = true, noremap = true, expr = true },
   },
   {
     mode = 'i',
     lhs = '<S-Tab>',
     rhs = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]],
-    opts = {silent = true, noremap = true, expr = true}
+    opts = { silent = true, noremap = true, expr = true },
   },
   {
     mode = 'i',
     lhs = '<C-e>',
     rhs = 'compe#close("<C-e>")',
-    opts = {noremap = true, silent = true, expr = true}
+    opts = { noremap = true, silent = true, expr = true },
   },
 }
 
-util.config.maps(maps, {silent = true, noremap = true})
+util.config.maps(maps, { silent = true, noremap = true })
 
-vim.cmd('command! PackerSet :lua require("s.packer")')
+vim.defer_fn(function()
+  require('s.packer')
+end, 500)

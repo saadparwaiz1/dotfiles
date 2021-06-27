@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set_macos_preferences() {
-	# macOS Preferences
 	defaults write com.apple.screencapture type JPG
 	defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 	defaults write -g PMPrintingExpandedStateForPrint -bool TRUE
@@ -16,12 +15,10 @@ set_macos_preferences() {
 	defaults write com.apple.finder DisableAllAnimations -bool true
 	defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-	# Key Repeat
 	defaults write -g ApplePressAndHoldEnabled -bool false
 	defaults write -g InitialKeyRepeat -float 15
 	defaults write -g KeyRepeat -float 1
 
-	# Dock Delay
 	defaults write com.apple.dock autohide-delay -float 0
 	killall Dock
 
@@ -31,11 +28,9 @@ set_macos_preferences() {
 	defaults write com.apple.dock show-recents -bool FALSE
 	killall Dock
 
-	# Dock Size
 	defaults write com.apple.dock tilesize -int 24
 	killall Dock
 
-	# Dock Position
 	defaults write com.apple.dock autohide -int 1
 	defaults write com.apple.dock orientation -string left
 	killall Dock

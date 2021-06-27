@@ -23,4 +23,5 @@ glab-cli
 jupyter/migrated
 darwin/launch.sh
 packer_compiled.vim
+packer_compiled.lua
 gh

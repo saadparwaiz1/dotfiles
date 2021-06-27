@@ -34,7 +34,7 @@ cask "spotify"
 # Package Managers {{{
 # ============================================================================
 brew "luarocks"
-brew "saadparwaiz1/personal/zinit"
+brew "zinit"
 # }}}
 # ============================================================================
 # Terminal Emulators {{{
