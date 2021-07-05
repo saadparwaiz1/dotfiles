@@ -1,24 +1,15 @@
 local lspconfig = require('lspconfig')
 local util = require('s.util')
+local luadev = require('lua-dev')
 
-lspconfig.sumneko_lua.setup {
-  cmd = {"lua-langserver"},
-  on_attach = util.lsp.on_attach,
-  capabilities = util.lsp.capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-        path = vim.split(package.path, ';')
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-        }
-      },
-      diagnostics = {globals = {'vim', 'use'}},
-      telemetry = {enable = false}
-    }
+luadev = luadev.setup({
+  lspconfig = {
+    cmd = {"lua-langserver"},
+    on_attach = util.lsp.on_attach,
+    capabilities = util.lsp.capabilities
   }
-}
+})
+
+lspconfig.sumneko_lua.setup(luadev)
+
+vim.opt_local.formatprg = "lua-format --indent-width=2"

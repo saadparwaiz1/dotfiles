@@ -3,18 +3,7 @@ vim.cmd('packadd packer.nvim')
 local packer = require('packer')
 
 packer.startup({
-  function()
-    local lsp_fts = {
-      'python',
-      'bash',
-      'sh',
-      'zsh',
-      'c',
-      'cpp',
-      'lua',
-      'tex',
-      'rust',
-    }
+  function(use)
     -- plugin manager
     use({
       'wbthomason/packer.nvim',
@@ -22,8 +11,17 @@ packer.startup({
     -- fuzzy finders
     use({
       'camspiers/snap',
-      rocks = { 'fzy' },
       module = 'snap',
+    })
+    use({
+      'nvim-telescope/telescope.nvim',
+      cmd = 'Telescope',
+      requires = {{'nvim-lua/popup.nvim', module='popup'}},
+      config = function ()
+        require('telescope').setup({
+          set_env = {['COLORTERM']='truecolor'}
+        })
+      end
     })
     -- LSP Extensions
     use({
@@ -45,12 +43,20 @@ packer.startup({
           },
         })
       end,
+      after = 'LuaSnip',
       requires = {
         {
           'neovim/nvim-lspconfig',
-          requires = { 'ray-x/lsp_signature.nvim' },
           module = 'lspconfig',
+          requires = {
+            'ray-x/lsp_signature.nvim',
+            module = 'lsp_signature'
+          },
           config = function()
+            vim.defer_fn(function ()
+              require('lspconfig')._root._setup()
+              vim.cmd('LspStart')
+            end, 500)
             vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
               vim.lsp.diagnostic.on_publish_diagnostics,
               {
@@ -85,12 +91,10 @@ packer.startup({
             require('lspkind').init({})
           end,
         },
-
         {
           'onsails/lspkind-nvim',
           module = 'lspkind',
         },
-
         {
           'L3MON4D3/LuaSnip',
           event = 'InsertEnter *',
@@ -98,23 +102,20 @@ packer.startup({
             require('s.snippets')
           end,
         },
-
         {
           'kosayoda/nvim-lightbulb',
-          ft = lsp_fts,
+          module = 'nvim-lightbulb'
         },
-
         {
-          'simrat39/rust-tools.nvim',
-          module = 'rust-tools',
-        },
+          'folke/lua-dev.nvim',
+          module = 'lua-dev'
+        }
       },
     })
-
     -- Treesiter Extensions
     use({
       'nvim-treesitter/nvim-treesitter',
-      ft = { 'lua', 'bash', 'python', 'tex' },
+      ft = { 'c', 'cpp', 'lua', 'bash', 'python', 'tex' },
       requires = {
         {
           'nvim-treesitter/nvim-treesitter-textobjects',
@@ -123,6 +124,15 @@ packer.startup({
             local treesitter = require('nvim-treesitter.configs')
             treesitter.setup({
               highlight = { enable = true },
+              incremental_selection = {
+                enable = true,
+                keymaps = {
+                  init_selection = "gnn",
+                  node_incremental = 'grn',
+                  scope_incremental = 'grc',
+                  node_decremental = 'grm'
+                }
+              },
               textobjects = {
                 select = {
                   enable = true,
@@ -206,20 +216,25 @@ packer.startup({
     })
     use({
       'andymass/vim-matchup',
+      event = 'CursorMoved'
     })
     use({
-      'terrortylor/nvim-comment',
-      config = function()
-        require('nvim_comment').setup()
+      'b3nj5m1n/kommentary',
+      config = function ()
         vim.api.nvim_set_keymap(
           'n',
           'gc',
-          ':set operatorfunc=CommentOperator<CR>g@l',
-          { noremap = true, silent = true }
+          '<Plug>kommentary_line_default',
+          {silent=true}
         )
-        vim.api.nvim_del_keymap('n', 'gcc')
+        vim.api.nvim_set_keymap(
+          'v',
+          'gc',
+          '<Plug>kommentary_visual_default',
+          {silent=true}
+        )
       end,
-      keys = 'gc',
+      keys = 'gc'
     })
     use({
       'TimUntersberger/neogit',
@@ -243,8 +258,9 @@ packer.startup({
       'steelsojka/pears.nvim',
       config = function()
         require('pears').setup(function(conf)
+          conf.pair('$', {close = '$', filetypes = {'latex'}})
           conf.preset('tag_matching')
-          conf.remove_pair_on_outer_backspace(false)
+          conf.remove_pair_on_outer_backspace(true)
           conf.on_enter(function(pear_handle)
             if
               vim.fn.pumvisible() == 1
@@ -262,18 +278,8 @@ packer.startup({
       end,
     })
     use({
-      'kyazdani42/nvim-tree.lua',
-      cmd = 'NvimTreeToggle',
-    })
-    use({
       'mbbill/undotree',
       cmd = 'UndotreeToggle',
-    })
-    -- FileType Specific Plugins
-    use({
-      'iamcco/markdown-preview.nvim',
-      ft = 'markdown',
-      run = 'cd app && npm install',
     })
     -- UI Related Plugins
     use({
@@ -297,7 +303,6 @@ packer.startup({
         vim.g.indent_blankline_char = '│'
         vim.g.indent_blankline_filetype_exclude = {
           'help',
-          'defx',
           'markdown',
           'man',
           'packer',
@@ -318,7 +323,7 @@ packer.startup({
         }
         vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
       end,
-      event = 'BufReadPre',
+      event = 'BufReadPre'
     })
     use({
       'lewis6991/gitsigns.nvim',
@@ -335,12 +340,5 @@ packer.startup({
       end,
       run = [[:lua require("gruvbox").generate()]],
     })
-  end,
-  config = {
-    display = {
-      open_fn = function()
-        return require('packer.util').float({ border = 'rounded' })
-      end,
-    },
-  },
+  end
 })

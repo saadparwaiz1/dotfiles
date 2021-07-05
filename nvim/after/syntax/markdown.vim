@@ -20,6 +20,7 @@ syn region mkdLinkDefTarget start="<\?\zs\S" excludenl end="\ze[>[:space:]\n]"  
 syn region mkdLinkTitle matchgroup=mkdDelimiter start=+"+     end=+"+  contained
 syn region mkdLinkTitle matchgroup=mkdDelimiter start=+'+     end=+'+  contained
 syn region mkdLinkTitle matchgroup=mkdDelimiter start=+(+     end=+)+  contained
+syn region mkdBlockquote   start=/^\s*>/                   end=/$/ contains=mkdLink,mkdInlineURL,@Spell
 
 syn cluster mkdNonListItem contains=mkdInlineURL,mkdLink,mkdLinkDef,mkdLineBreak,mkdBlockquote,mkdMath,mkdStrike
 
@@ -31,6 +32,7 @@ hi def link mkdID            Identifier
 hi def link mkdLinkDef       mkdID
 hi def link mkdLinkDefTarget mkdURL
 hi def link mkdLinkTitle     GruvboxGreen
+hi def link mkdBlockquote    Comment
 hi mkdStrike term=strikethrough cterm=strikethrough gui=strikethrough
 
-let b:current_syntax = 'mkd'
+let b:current_syntax = 'markdown'

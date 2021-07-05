@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+nvim_setup(){
+  git clone --depth=1 https://github.com/wbthomason/packer.nvim /Users/saadparwaiz/Library/Share/nvim/site/pack/packer/start/packer.nvim
+}
+
 set_macos_preferences() {
 	defaults write com.apple.screencapture type JPG
 	defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
@@ -97,10 +101,14 @@ source)
 pref)
   set_macos_preferences
 ;;
+nvim)
+  nvim_setup
+;;
 *)
   set_macos_preferences
   generate_env_file
   package_management
   install_packages
   set_up_env_file
+  nvim_setup
 esac

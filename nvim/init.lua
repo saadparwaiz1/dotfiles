@@ -1,5 +1,6 @@
 -- Load Util Module
 local util = require('s.util')
+util.config.rocks()
 
 -- Define Global Variables
 local globals = {
@@ -31,37 +32,17 @@ local globals = {
   markdown_syntax_conceal = 1,
   loaded_netrwFileHandlers = 1,
   vim_markdown_strikethrough = 1,
+  kommentary_create_default_mappings = false,
   gruvbox_groups = {
-    'lua',
-    'lsp',
-    'rust',
-    'diff',
-    'java',
-    'snap',
-    'python',
-    'barbar',
-    'gitsigns',
-    'markdown',
-    'gitcommit',
-    'vimscript',
-    'indent_blankline',
+    'lua', 'lsp', 'rust', 'diff', 'java', 'snap', 'python', 'barbar',
+    'gitsigns', 'markdown', 'gitcommit', 'telescope', 'vimscript',
+    'indent_blankline'
   },
   markdown_fenced_languages = {
-    'sh',
-    'lua',
-    'vim',
-    'java',
-    'rust',
-    'json',
-    'python',
-    'bash=sh',
-    'shell=sh',
-    'javascript',
-    'console=sh',
-    'typescript',
-    'ts=typescript',
-    'js=javascript',
-  },
+    'sh', 'lua', 'man', 'vim', 'java', 'rust', 'json', 'python', 'bash=sh',
+    'shell=sh', 'javascript', 'console=sh', 'typescript', 'ts=typescript',
+    'js=javascript'
+  }
 }
 util.config.globals(globals)
 
@@ -92,35 +73,27 @@ local options = {
   relativenumber = true,
   inccommand = 'nosplit',
   clipboard = 'unnamedplus',
+  guifont = 'JetBrainsMono Nerd Font Mono'
 }
 -- Set options using vim.o
 util.config.options(options)
 
 -- Set some options using vim.opt
-vim.opt.listchars = { tab = '| ', trail = '~' }
-vim.opt.completeopt = { 'menuone', 'noselect' }
+vim.opt.listchars = {tab = '| ', trail = '~'}
+vim.opt.completeopt = {'menuone', 'noselect'}
 vim.opt.wildignore = {
-  '*.o',
-  '*~',
-  '*.pyc',
-  '*/.git/*',
-  '*/.hg/*',
-  '*/.svn/*',
-  '*/.DS_store',
-  '**/node_modules',
+  '*.o', '*~', '*.pyc', '*/.git/*', '*/.hg/*', '*/.svn/*', '*/.DS_store',
+  '**/node_modules'
 }
 vim.opt.shortmess:append('c')
 
 -- Define Autocmds
-vim.api.nvim_exec(
-  [[
+vim.api.nvim_exec([[
   augroup autocmds_core
     autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup='GruvboxOrangeBold', timeout=150}
+    autocmd TextYankPost * silent! lua require('s.util').vim.hyank()
   augroup END
-]],
-  false
-)
+  ]], false)
 
 -- Define Maps
 local maps = {
@@ -212,34 +185,30 @@ local maps = {
   },
   {
     mode = 'n',
-    lhs = '<leader>gs',
-    rhs = '<cmd>lua require("s.util").snaps.git_status()<CR>',
-  },
-  {
-    mode = 'n',
-    lhs = '<leader>gc',
-    rhs = '<cmd>lua require("s.util").snaps.git_log()<CR>',
-  },
-  {
-    mode = 'n',
-    lhs = '<C-l>',
+    lhs = ']q',
     rhs = '<cmd>cnext<CR>',
   },
   {
     mode = 'n',
-    lhs = '<C-h>',
+    lhs = '[q',
     rhs = '<cmd>cprev<CR>',
   },
   {
     mode = 'n',
     lhs = '\\optcmdb',
-    rhs = '<cmd>NvimTreeToggle<CR>',
+    rhs = '<cmd>Telescope file_browser<CR>',
   },
   -- Insert Mode Mappings
   {
     mode = 'i',
     lhs = '<C-f>',
     rhs = 'compe#scroll({ "delta": +4 })',
+    opts = { silent = true, noremap = true, expr = true },
+  },
+  {
+    mode = 'i',
+    lhs = '<CR>',
+    rhs = 'compe#confirm("<CR>")',
     opts = { silent = true, noremap = true, expr = true },
   },
   {
@@ -279,8 +248,6 @@ local maps = {
   },
 }
 
-util.config.maps(maps, { silent = true, noremap = true })
+util.config.maps(maps, {silent = true, noremap = true})
 
-vim.defer_fn(function()
-  require('s.packer')
-end, 500)
+vim.defer_fn(function() require('s.packer') end, 500)

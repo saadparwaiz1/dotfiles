@@ -2,7 +2,7 @@
 # ============================================================================
 # Set Env Variable {{{
 # ============================================================================
-export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/$XDG_DATA_HOME/cargo/bin"
+export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/$XDG_DATA_HOME/cargo/bin:$XDG_DATA_HOME/nvim/rocks/bin"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=4 nomod nolist noma' --cmd 'let g:indent_blankline_enabled=v:false' -\""
 # }}}
 # ============================================================================
@@ -123,9 +123,13 @@ alias mv="mv -iv"
 alias rm="rm -iv"
 alias less="less -R"
 alias sudo="nocorrect sudo "
+alias lrocks="luarocks --tree=/Users/saadparwaiz/Library/Share/nvim/rocks --lua-dir=/usr/local/opt/luajit-openresty/"
+alias tetris='autoload tetriscurses && tetriscurses'
+alias nv='nvim'
 
 if command -v exa &>/dev/null; then
     alias ls="exa --icons"
+    alias la='exa --icons -a'
     alias ll="exa --icons -alh"
 else
     alias ls="ls -GF"
@@ -158,11 +162,15 @@ del() {
 }
 
 dir() {
-    for i in */; do
-        cd "$i"
-        eval $1
-        cd ".."
-    done
+  for i in */; do
+      cd "$i"
+      eval $1
+      cd ".."
+  done
+}
+
+f() {
+  cd `fd --type=directory $1 ~ | fzf -1`
 }
 # }}}
 # ============================================================================

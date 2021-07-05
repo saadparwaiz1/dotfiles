@@ -1,7 +1,7 @@
 local lspconfig = require('lspconfig')
 local util = require('s.util')
 
-lspconfig.clangd.setup {
+lspconfig.clangd.setup({
   cmd = {
     "clangd",
     "--background-index",
@@ -17,4 +17,4 @@ lspconfig.clangd.setup {
       '-Wextra'
     }
   }
-}
+})
