@@ -39,14 +39,12 @@ vim.api.nvim_set_keymap(
   [[luaeval("require('s.util').config.s_tab_complete()")]],
   { expr = true }
 )
-
 vim.api.nvim_set_keymap(
   'i',
   '<C-k>',
   '<cmd>lua require"luasnip".change_choice(1)<Cr>',
   {noremap = true}
 )
-
 vim.api.nvim_set_keymap(
   's',
   '<C-k>',

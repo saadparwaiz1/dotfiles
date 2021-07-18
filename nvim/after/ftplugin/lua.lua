@@ -11,5 +11,3 @@ luadev = luadev.setup({
 })
 
 lspconfig.sumneko_lua.setup(luadev)
-
-vim.opt_local.formatprg = "lua-format --indent-width=2"

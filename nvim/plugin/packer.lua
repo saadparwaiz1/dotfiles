@@ -10,17 +10,33 @@ packer.startup({
     })
     -- fuzzy finders
     use({
-      'camspiers/snap',
-      module = 'snap',
-    })
-    use({
       'nvim-telescope/telescope.nvim',
       cmd = 'Telescope',
-      requires = {{'nvim-lua/popup.nvim', module='popup'}},
+      requires = {
+        {'nvim-lua/popup.nvim', module='popup'},
+        {'nvim-telescope/telescope-fzf-native.nvim', run='make'}
+      },
       config = function ()
         require('telescope').setup({
-          set_env = {['COLORTERM']='truecolor'}
+          defaults = {
+            prompt_prefix = '🔍 ',
+            set_env = {['COLORTERM']='truecolor'},
+            mappings = {
+              i = {
+                ['<Esc>'] = require('telescope.actions').close
+              }
+            }
+          },
+          extensions = {
+            fzf = {
+              fuzzy = true,
+              case_mode = "smart_case",
+              override_file_sorter = true,
+              override_generic_sorter = false,
+            }
+          }
         })
+        require('telescope').load_extension('fzf')
       end
     })
     -- LSP Extensions
@@ -35,11 +51,9 @@ packer.startup({
           },
           source = {
             path = true,
-            spell = false,
             buffer = true,
             luasnip = true,
             nvim_lsp = true,
-            nvim_lua = true,
           },
         })
       end,
@@ -57,6 +71,7 @@ packer.startup({
               require('lspconfig')._root._setup()
               vim.cmd('LspStart')
             end, 500)
+            require('s.util').lsp.completion_kind()
             vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
               vim.lsp.diagnostic.on_publish_diagnostics,
               {
@@ -87,13 +102,7 @@ packer.startup({
                 border = require('s.util').config.border,
               }
             )
-
-            require('lspkind').init({})
           end,
-        },
-        {
-          'onsails/lspkind-nvim',
-          module = 'lspkind',
         },
         {
           'L3MON4D3/LuaSnip',
@@ -111,6 +120,10 @@ packer.startup({
           module = 'lua-dev'
         }
       },
+    })
+    use({
+      'jose-elias-alvarez/null-ls.nvim',
+      module = 'null-ls'
     })
     -- Treesiter Extensions
     use({
@@ -323,7 +336,6 @@ packer.startup({
         }
         vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile' }
       end,
-      event = 'BufReadPre'
     })
     use({
       'lewis6991/gitsigns.nvim',
@@ -331,7 +343,6 @@ packer.startup({
       config = function()
         require('gitsigns').setup()
       end,
-      event = 'BufReadPre',
     })
     use({
       'saadparwaiz1/gruvbox-autogenerate',

@@ -34,9 +34,9 @@ local globals = {
   vim_markdown_strikethrough = 1,
   kommentary_create_default_mappings = false,
   gruvbox_groups = {
-    'lua', 'lsp', 'rust', 'diff', 'java', 'snap', 'python', 'barbar',
+    'lua', 'lsp', 'rust', 'diff', 'java', 'python', 'barbar',
     'gitsigns', 'markdown', 'gitcommit', 'telescope', 'vimscript',
-    'indent_blankline'
+    'indent_blankline', 'lsp_signature'
   },
   markdown_fenced_languages = {
     'sh', 'lua', 'man', 'vim', 'java', 'rust', 'json', 'python', 'bash=sh',
@@ -155,8 +155,8 @@ local maps = {
   },
   {
     mode = 'n',
-    lhs = '<Esc>',
-    rhs = '<cmd>noh<CR><Esc>',
+    lhs = '<C-l>',
+    rhs = '<cmd>noh<CR>',
   },
   {
     mode = 'n',
@@ -171,17 +171,17 @@ local maps = {
   {
     mode = 'n',
     lhs = '\\cmdf',
-    rhs = '<cmd>lua require("s.util").snaps.fd()<CR>',
+    rhs = '<cmd>Telescope find_files<CR>',
   },
   {
     mode = 'n',
     lhs = '\\cmdl',
-    rhs = '<cmd>lua require("s.util").snaps.rg()<CR>',
+    rhs = '<cmd>Telescope live_grep<CR>',
   },
   {
     mode = 'n',
     lhs = '\\cmdy',
-    rhs = '<cmd>lua require("s.util").snaps.oldfiles()<CR>',
+    rhs = '<cmd>Telescope oldfiles<CR>',
   },
   {
     mode = 'n',
@@ -249,5 +249,3 @@ local maps = {
 }
 
 util.config.maps(maps, {silent = true, noremap = true})
-
-vim.defer_fn(function() require('s.packer') end, 500)

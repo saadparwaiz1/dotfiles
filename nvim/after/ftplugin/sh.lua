@@ -1,4 +1,3 @@
-vim.opt_local.formatprg = 'shfmt'
 local lspconfig = require('lspconfig')
 local util = require('s.util')
 

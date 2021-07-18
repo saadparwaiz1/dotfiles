@@ -1,4 +1,3 @@
-vim.opt_local.formatprg='black --quiet -'
 local util = require('s.util')
 local lspconfig = require('lspconfig')
 

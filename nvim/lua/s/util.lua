@@ -20,6 +20,33 @@ local __pdiag =
     "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
 local __ndiag =
     "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('s.util').config.border}})<CR>"
+local __icons = {
+  Class = " ",
+  Color = " ",
+  Constant = " ",
+  Constructor = " ",
+  Enum = "了 ",
+  EnumMember = " ",
+  Field = " ",
+  File = " ",
+  Folder = " ",
+  Function = " ",
+  Interface = "ﰮ ",
+  Keyword = " ",
+  Method = "ƒ ",
+  Module = " ",
+  Property = " ",
+  Snippet = "﬌ ",
+  Struct = " ",
+  Text = " ",
+  Unit = " ",
+  Value = " ",
+  Event = "ﯓ ",
+  Variable = " ",
+  Reference = ' ',
+  Operator = ' ',
+  TypeParameter = ' ',
+}
 
 -- Public API Variables
 
@@ -38,10 +65,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Private API Functions
 
-local __dorename = function(text)
-  vim.cmd(string.format('silent! bdelete! %s', A.nvim_get_current_buf()))
-  vim.lsp.buf.rename(text)
-end
 
 local __t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
@@ -56,11 +79,66 @@ local __check_back_space = function()
   end
 end
 
+local __maxlen = function (array)
+  local len = 0
+  for _,str in pairs(array) do
+    len = math.max(len, #str)
+  end
+  return len
+end
+
 -- Public API Functions
 
 -- Pretty Print Tables
 --- @vararg table
 _G.dump = function(...) print(unpack(vim.tbl_map(vim.inspect, {...}))) end
+
+
+-- Notify Users Using a Popup
+--- @param msg string|table[string]
+local function notification(msg, opts)
+  if type(msg) == 'string' then
+    msg = {msg}
+  end
+  opts = opts or {}
+  local delay = opts.delay or 2000
+  local width = opts.width or __maxlen(msg)
+  local height = opts.height or #msg
+  local col = opts.col or A.nvim_get_option('columns') - 3
+  local row = opts.row or A.nvim_get_option('lines') - #msg - 3
+  local bor = opts.border or 'rounded'
+  local buf = A.nvim_create_buf(false, true)
+  A.nvim_buf_set_lines(buf, 0, -1, false, msg)
+  local win = A.nvim_open_win(buf, false, {
+    relative = 'editor',
+    row = row,
+    col = col,
+    width = width,
+    anchor = 'SE',
+    height = height,
+    style = 'minimal',
+    border = bor
+  })
+  local timer
+  local delete = function ()
+
+    if timer:is_active() then
+      timer:stop()
+    end
+
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, false)
+    end
+  end
+  timer = vim.defer_fn(delete, delay)
+  local basehl = opts.contenthl or 'GruvboxGreen'
+  local winhl = string.format(
+    'Normal:%s,FloatBorder:%s',
+    basehl,
+    opts.borderhl or basehl
+  )
+  A.nvim_win_set_option(win, 'winhl', winhl)
+end
 
 -- Set Up galaxyline
 --- @return nil
@@ -271,6 +349,14 @@ local function rocks()
                      ";/Users/saadparwaiz/Library/Share/nvim/rocks/share/lua/5.1/?.lua;/Users/saadparwaiz/Library/Share/nvim/rocks/share/lua/5.1/?/init.lua;/Users/saadparwaiz/Library/Share/nvim/rocks/lib/luarocks/rocks-5.1/?.lua;/Users/saadparwaiz/Library/Share/nvim/rocks/lib/luarocks/rocks-5.1/?/init.lua"
 end
 
+-- set up completion kinds
+local function completion_kind()
+  local kinds = vim.lsp.protocol.CompletionItemKind
+  for i, kind in ipairs(kinds) do
+    kinds[i] = __icons[kind] or kind
+  end
+end
+
 -- Get Current Script Path Exclusive Of Script Name
 --- @return string
 local script_path = function()
@@ -329,46 +415,6 @@ local function search_parents(path, stop)
     dir = dirname(dir)
   end
   return nil
-end
-
--- Grep Through Files Using ripgrep
-local function rg()
-  local snap = require('snap')
-  snap.run({
-    prompt = '🔍 ',
-    producer = snap.get('producer.ripgrep.vimgrep'),
-    select = snap.get('select.vimgrep').select,
-    multiselect = snap.get('select.vimgrep').multiselect,
-    views = {snap.get('preview.vimgrep')}
-  })
-end
-
--- Find Files Using fd
-local function fd()
-  local snap = require('snap')
-  local general = snap.get('producer.fd.general')
-  snap.run({
-    prompt = '🔍 ',
-    producer = snap.get('consumer.fzy')(function(request)
-      local cwd = vim.loop.cwd()
-      return general(request, {args = {'--type=file'}, cwd = cwd})
-    end),
-    select = snap.get('select.file').select,
-    multiselect = snap.get('select.file').multiselect,
-    views = {snap.get('preview.file')}
-  })
-end
-
--- Search Through Old Files
-local function oldfiles()
-  local snap = require('snap')
-  snap.run({
-    prompt = '🔍 ',
-    producer = snap.get('consumer.fzy')(snap.get('producer.vim.oldfile')),
-    select = snap.get('select.file').select,
-    multiselect = snap.get('select.file').multiselect,
-    views = {snap.get('preview.file')}
-  })
 end
 
 -- Exec a Script Using Your Default Shell
@@ -433,7 +479,8 @@ local on_attach = function(client, bufnr)
     bind = true,
     hint_prefix = ' ',
     handler_opts = {border = border},
-    floating_window = true
+    floating_window = true,
+    hi_parameter = 'LspSignatureHl'
   })
 
   if client.resolved_capabilities.document_highlight then
@@ -496,6 +543,8 @@ end
 -- Setup Rename Request Using Floating Windows
 --- @return nil
 local function rename()
+  local word = F.expand('<cword>')
+  local params = vim.lsp.util.make_position_params()
   local opts = {
     relative = 'cursor',
     row = 0,
@@ -505,12 +554,43 @@ local function rename()
     style = 'minimal',
     border = border
   }
+  local __dorename = function(text)
+    vim.cmd(string.format('silent! bdelete! %s', A.nvim_get_current_buf()))
+    if not text or #text == 0 or word == text then
+      notification('No Changes', {contenthl = 'GruvboxYellow'})
+      return
+    end
+    params.newName = text
+    vim.lsp.buf_request(0, 'textDocument/rename', params, function (err, _, results)
+      if err ~= nil then
+        notification(err, {contenthl = 'GruvboxRed'})
+        return
+      end
+
+      if not results then
+        notification('No Changes', {contenthl = 'GruvboxYellow'})
+        return
+      end
+
+      vim.lsp.util.apply_workspace_edit(results)
+      local total_files = vim.tbl_count(results.changes)
+      local msg = string.format(
+        "Changed %s file%s. To save them run ':wa'",
+        total_files,
+        total_files > 1 and "s" or ""
+      )
+      notification(msg)
+    end)
+  end
   local buf = A.nvim_create_buf(false, true)
   A.nvim_open_win(buf, true, opts)
   A.nvim_buf_set_option(buf, 'buftype', 'prompt')
   F.prompt_setcallback(buf, __dorename)
   F.prompt_setprompt(buf, ' ')
+  A.nvim_buf_set_keymap(buf, 'i', '<Esc>', '<cmd>q!<CR>', {noremap=true})
+  A.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>q!<CR>', {noremap=true})
   vim.cmd('startinsert')
+  A.nvim_feedkeys(word, 'n', false)
 end
 
 -- Wrapper over vim.g to set global variables using a table
@@ -623,7 +703,8 @@ local lsp = {
   rename = rename,
   term = float_term,
   on_attach = on_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
+  completion_kind = completion_kind
 }
 
 -- Utilies for vim
@@ -632,12 +713,9 @@ local vim = {
   hyank = hyank,
   sort_lines = sort_lines,
   exec_script = exec_script,
+  notification = notification,
   get_visual_selection_range = get_visual_selection_range
 }
-
--- Utilies for snap
----@class snaps
-local snaps = {fd = fd, rg = rg, oldfiles = oldfiles}
 
 -- Utilies for neovim
 ---@class util
@@ -646,6 +724,5 @@ return {
   vim = vim,
   lsp = lsp,
   path = path,
-  snaps = snaps,
   config = config
 }

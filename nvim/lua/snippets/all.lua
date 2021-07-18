@@ -46,6 +46,19 @@ local lfeatures = {
   }
 }
 
+setmetatable(lfeatures, {
+  __index = function (_, _)
+    return {
+      main = {
+        t('No Main Defined')
+      },
+      print = {
+        t('No Print Defined')
+      }
+    }
+  end
+})
+
 local function main_func(_, _, ft)
   return sn(nil, lfeatures[ft].main)
 end
