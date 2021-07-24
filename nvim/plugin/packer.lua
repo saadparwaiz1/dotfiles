@@ -41,35 +41,40 @@ packer.startup({
     })
     -- LSP Extensions
     use({
-      'hrsh7th/nvim-compe',
-      event = 'InsertEnter *',
-      config = function()
-        require('compe').setup({
-          enabled = true,
-          documentation = {
-            border = 'rounded',
-          },
-          source = {
-            path = true,
-            buffer = true,
-            luasnip = true,
-            nvim_lsp = true,
-          },
-        })
-      end,
-      after = 'LuaSnip',
+      'hrsh7th/nvim-cmp',
+      module = 'cmp',
       requires = {
+        {
+          'hrsh7th/cmp-nvim-lsp',
+          after = 'nvim-cmp',
+          config = function()
+            require('cmp_nvim_lsp').setup()
+          end
+        },
+        {
+          '~/Documents/projects/cmp_luasnip',
+          after = 'nvim-cmp'
+        },
         {
           'neovim/nvim-lspconfig',
           module = 'lspconfig',
           requires = {
-            'ray-x/lsp_signature.nvim',
-            module = 'lsp_signature'
+            {
+              'ray-x/lsp_signature.nvim',
+              module = 'lsp_signature'
+            },
+            {
+              'kosayoda/nvim-lightbulb',
+              module = 'nvim-lightbulb'
+            },
+            {
+              'folke/lua-dev.nvim',
+              module = 'lua-dev'
+            }
           },
           config = function()
             vim.defer_fn(function ()
               require('lspconfig')._root._setup()
-              vim.cmd('LspStart')
             end, 500)
             require('s.util').lsp.completion_kind()
             vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
@@ -82,13 +87,10 @@ packer.startup({
               }
             )
 
+            vim.fn.sign_define('LspDiagnosticsSignHint', { text = '' })
             vim.fn.sign_define('LspDiagnosticsSignError', { text = '✘' })
             vim.fn.sign_define('LspDiagnosticsSignWarning', { text = '' })
-            vim.fn.sign_define('LspDiagnosticsSignHint', { text = '' })
-            vim.fn.sign_define(
-              'LspDiagnosticsSignInformation',
-              { text = '' }
-            )
+            vim.fn.sign_define('LspDiagnosticsSignInformation', { text = '' })
             vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
               vim.lsp.handlers.hover,
               {
@@ -106,24 +108,63 @@ packer.startup({
         },
         {
           'L3MON4D3/LuaSnip',
-          event = 'InsertEnter *',
           config = function()
-            require('s.snippets')
+            local ls = require('luasnip')
+            ls.config.set_config({})
+
+            ls.snippets = {}
+
+            setmetatable(ls.snippets, {
+              __index = function (t,k)
+                local ok, mod = pcall(require, 'snippets.'..k)
+                if ok then
+                  t[k] = mod
+                  return mod
+                end
+                t[k] = {}
+                return {}
+              end
+            })
+
+            vim.api.nvim_set_keymap(
+              'i',
+              '<Tab>',
+              [[luaeval("require('s.util').config.tab_complete()")]],
+              { expr = true }
+            )
+            vim.api.nvim_set_keymap(
+              's',
+              '<Tab>',
+              [[luaeval("require('s.util').config.tab_complete()")]],
+              { expr = true }
+            )
+            vim.api.nvim_set_keymap(
+              'i',
+              '<S-Tab>',
+              [[luaeval("require('s.util').config.s_tab_complete()")]],
+              { expr = true }
+            )
+            vim.api.nvim_set_keymap(
+              's',
+              '<S-Tab>',
+              [[luaeval("require('s.util').config.s_tab_complete()")]],
+              { expr = true }
+            )
+            vim.api.nvim_set_keymap(
+              'i',
+              '<C-k>',
+              '<cmd>lua require"luasnip".change_choice(1)<Cr>',
+              {noremap = true}
+            )
+            vim.api.nvim_set_keymap(
+              's',
+              '<C-k>',
+              '<cmd>lua require"luasnip".change_choice(1)<Cr>',
+              {noremap = true}
+            )
           end,
         },
-        {
-          'kosayoda/nvim-lightbulb',
-          module = 'nvim-lightbulb'
-        },
-        {
-          'folke/lua-dev.nvim',
-          module = 'lua-dev'
-        }
       },
-    })
-    use({
-      'jose-elias-alvarez/null-ls.nvim',
-      module = 'null-ls'
     })
     -- Treesiter Extensions
     use({
@@ -274,19 +315,6 @@ packer.startup({
           conf.pair('$', {close = '$', filetypes = {'latex'}})
           conf.preset('tag_matching')
           conf.remove_pair_on_outer_backspace(true)
-          conf.on_enter(function(pear_handle)
-            if
-              vim.fn.pumvisible() == 1
-              and vim.fn.complete_info().selected ~= -1
-            then
-              if vim.g.loaded_compe then
-                return vim.fn['compe#confirm']('<CR>')
-              end
-              return vim.api.nvim_replace_termcodes('<C-y>', true, true, true)
-            else
-              pear_handle()
-            end
-          end)
         end)
       end,
     })
@@ -296,19 +324,10 @@ packer.startup({
     })
     -- UI Related Plugins
     use({
-      'glepnir/galaxyline.nvim',
-      config = function()
-        require('s.util').config.galaxyline()
-      end,
-      requires = {
-        {
-          'kyazdani42/nvim-web-devicons',
-          module = 'nvim-web-devicons',
-        },
-      },
-    })
-    use({
-      'romgrk/barbar.nvim',
+      'saadparwaiz1/nvimline',
+      config = function ()
+        require('nvimline').setup()
+      end
     })
     use({
       'lukas-reineke/indent-blankline.nvim',

@@ -59,12 +59,12 @@ setmetatable(lfeatures, {
   end
 })
 
-local function main_func(_, _, ft)
-  return sn(nil, lfeatures[ft].main)
+local function main_func(_, _)
+  return sn(nil, lfeatures[vim.bo.filetype].main)
 end
 
-local function print_func(_, _, ft)
-  return sn(nil, lfeatures[ft].print)
+local function print_func(_, _)
+  return sn(nil, lfeatures[vim.bo.filetype].print)
 end
 
 return {

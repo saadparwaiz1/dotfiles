@@ -121,11 +121,12 @@ zstyle ':vcs_info:*' enable git
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
+alias nv='nvim'
 alias less="less -R"
 alias sudo="nocorrect sudo "
-alias lrocks="luarocks --tree=/Users/saadparwaiz/Library/Share/nvim/rocks --lua-dir=/usr/local/opt/luajit-openresty/"
 alias tetris='autoload tetriscurses && tetriscurses'
-alias nv='nvim'
+alias lrocks="luarocks --tree=/Users/saadparwaiz/Library/Share/nvim/rocks --lua-dir=/usr/local/opt/luajit-openresty/"
+alias rmcache='rm -rf ~/Library/Caches/*'
 
 if command -v exa &>/dev/null; then
     alias ls="exa --icons"

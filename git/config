@@ -32,16 +32,26 @@
 [pull]
 	rebase = false
 [pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
 [interactive]
-    diffFilter = delta --color-only
+  diffFilter = delta --color-only
 [delta]
-    features = side-by-side line-numbers decorations
-    whitespace-error-style = 22 reverse
+  plus-style = "syntax #32361a"
+  minus-style = "syntax #3c1f1e"
+  features = side-by-side line-numbers decorations
+  syntax-theme = Gruvbox Material Dark
+  navigate = true
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
+  commit-decoration-style = bold yellow box ul
+  file-style = bold ul
+  file-decoration-style = none
+  hunk-header-decoration-style = "#5a524c" box ul
+[delta "line-numbers"]
+  line-numbers-plus-style = "#6c782e"
+  line-numbers-minus-style = "#c14a4a"
+  line-numbers-left-style = "#5a524c"
+  line-numbers-right-style = "#5a524c"
+  line-numbers-zero-style = "#5a524c"

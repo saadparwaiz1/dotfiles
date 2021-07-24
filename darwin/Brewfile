@@ -52,7 +52,7 @@ brew "black"
 brew "pandoc"
 brew "ripgrep"
 brew "pygments"
-brew "diff-so-fancy"
+brew "git-delta"
 # }}}
 # ============================================================================
 # Shells {{{

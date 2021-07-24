@@ -9,17 +9,15 @@ local __hover = '<cmd>lua vim.lsp.buf.hover()<CR>'
 local __fmt = '<cmd>lua vim.lsp.buf.formatting()<CR>'
 local __rnm = "<cmd>lua require('s.util').lsp.rename()<CR>"
 local __declr = '<cmd>lua vim.lsp.buf.declaration()<CR>'
-local __impli = '<jkcmd>lua vim.lsp.buf.implementation()<CR>'
+local __impli = '<cmd>lua vim.lsp.buf.implementation()<CR>'
 local __refe = '<cmd>Telescope lsp_references<CR>'
-local __defi = '<cmd>Telescope lsp_definition<CR>'
+local __defi = '<cmd>Telescope lsp_definitions<CR>'
 local __acn = '<cmd>Telescope lsp_code_actions<CR>'
 local __wrkspc = '<cmd>Telecope lsp_workspace_symbols<CR>'
 local __wrkdiag = '<cmd>Telescope lsp_workspace_diagnostics<CR>'
 local __docdiag = '<cmd>Telescope lsp_document_diagnostics<CR>'
-local __pdiag =
-    "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
-local __ndiag =
-    "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('s.util').config.border}})<CR>"
+local __pdiag = "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts={border=require('s.util').config.border}})<CR>"
+local __ndiag = "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts={border=require('s.util').config.border}})<CR>"
 local __icons = {
   Class = " ",
   Color = " ",
@@ -62,6 +60,20 @@ local node_modules = vim.fn.stdpath('data') .. '/bin/node_modules/.bin'
 -- Supported LSP Client Capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.documentationFormat = { 'markdown' }
+capabilities.textDocument.completion.completionItem.preselectSupport = true
+capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
 
 -- Private API Functions
 
@@ -96,11 +108,13 @@ _G.dump = function(...) print(unpack(vim.tbl_map(vim.inspect, {...}))) end
 
 -- Notify Users Using a Popup
 --- @param msg string|table[string]
-local function notification(msg, opts)
+--- @param opts table
+local function notification(msg, log_level, opts)
   if type(msg) == 'string' then
     msg = {msg}
   end
   opts = opts or {}
+  log_level = log_level or vim.log.levels.TRACE
   local delay = opts.delay or 2000
   local width = opts.width or __maxlen(msg)
   local height = opts.height or #msg
@@ -108,6 +122,7 @@ local function notification(msg, opts)
   local row = opts.row or A.nvim_get_option('lines') - #msg - 3
   local bor = opts.border or 'rounded'
   local buf = A.nvim_create_buf(false, true)
+  A.nvim_buf_set_option(buf, 'modifiable', true)
   A.nvim_buf_set_lines(buf, 0, -1, false, msg)
   local win = A.nvim_open_win(buf, false, {
     relative = 'editor',
@@ -132,215 +147,23 @@ local function notification(msg, opts)
   end
   timer = vim.defer_fn(delete, delay)
   local basehl = opts.contenthl or 'GruvboxGreen'
+  if log_level == vim.log.levels.ERROR then
+    basehl = 'GruvboxRed'
+  elseif log_level == vim.log.levels.WARN then
+    basehl = 'GruvboxYellow'
+  elseif log_level == vim.log.levels.INFO then
+    basehl = 'GruvboxBlue'
+  elseif log_level == vim.log.levels.DEBUG then
+    basehl = 'GruvboxOrange'
+  elseif log_level == vim.log.levels.TRACE then
+    basehl = 'GruvboxAqua'
+  end
   local winhl = string.format(
     'Normal:%s,FloatBorder:%s',
     basehl,
     opts.borderhl or basehl
   )
   A.nvim_win_set_option(win, 'winhl', winhl)
-end
-
--- Set Up galaxyline
---- @return nil
-local function galaxyline()
-  local gl = require('galaxyline')
-  local colors = require('galaxyline.theme').default
-  colors.bg = '#282828'
-  local condition = require('galaxyline.condition')
-  local gls = gl.section
-  gl.short_line_list = {'NvimTree', 'vista', 'dbui', 'packer'}
-  gls.left = {}
-  gls.right = {}
-  gls.left[#gls.left + 1] = {
-    ViMode = {
-      provider = function()
-        -- auto change color according the vim mode
-        local mode_color = {
-          ce = colors.red,
-          r = colors.cyan,
-          n = colors.red,
-          i = colors.green,
-          V = colors.blue,
-          c = colors.magenta,
-          no = colors.red,
-          s = colors.orange,
-          ['!'] = colors.red,
-          t = colors.red,
-          v = colors.blue,
-          [''] = colors.blue,
-          Rv = colors.violet,
-          cv = colors.red,
-          ic = colors.yellow,
-          R = colors.violet,
-          S = colors.orange,
-          [''] = colors.orange,
-          rm = colors.cyan,
-          ['r?'] = colors.cyan
-        }
-        vim.api.nvim_command('hi GalaxyViMode guifg=' ..
-                                 mode_color[vim.fn.mode()])
-        return '   '
-      end,
-      highlight = {colors.red, colors.bg, 'bold'}
-    }
-  }
-  gls.left[#gls.left + 1] = {
-    FileSize = {
-      provider = 'FileSize',
-      condition = condition.buffer_not_empty,
-      highlight = {colors.fg, colors.bg}
-    }
-  }
-  gls.left[#gls.left + 1] = {
-    FileIcon = {
-      provider = 'FileIcon',
-      condition = condition.buffer_not_empty,
-      highlight = {
-        require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg
-      }
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    FileName = {
-      provider = 'FileName',
-      condition = condition.buffer_not_empty,
-      highlight = {colors.magenta, colors.bg, 'bold'}
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    LineInfo = {
-      provider = 'LineColumn',
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.fg, colors.bg}
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    PerCent = {
-      provider = 'LinePercent',
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.fg, colors.bg, 'bold'}
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    DiagnosticError = {
-      provider = 'DiagnosticError',
-      icon = '  ',
-      highlight = {colors.red, colors.bg}
-    }
-  }
-  gls.left[#gls.left + 1] = {
-    DiagnosticWarn = {
-      provider = 'DiagnosticWarn',
-      icon = '  ',
-      highlight = {colors.yellow, colors.bg}
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    DiagnosticHint = {
-      provider = 'DiagnosticHint',
-      icon = '  ',
-      highlight = {colors.cyan, colors.bg}
-    }
-  }
-
-  gls.left[#gls.left + 1] = {
-    DiagnosticInfo = {
-      provider = 'DiagnosticInfo',
-      icon = '  ',
-      highlight = {colors.blue, colors.bg}
-    }
-  }
-
-  gls.right[#gls.right + 1] = {
-    FileEncode = {
-      provider = 'FileEncode',
-      condition = condition.hide_in_width,
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.green, colors.bg, 'bold'}
-    }
-  }
-
-  gls.right[#gls.right + 1] = {
-    FileFormat = {
-      provider = 'FileFormat',
-      condition = condition.hide_in_width,
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.green, colors.bg, 'bold'}
-    }
-  }
-
-  gls.right[#gls.right + 1] = {
-    GitIcon = {
-      provider = function() return '  ' end,
-      condition = condition.check_git_workspace,
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.violet, colors.bg, 'bold'}
-    }
-  }
-
-  gls.right[#gls.right + 1] = {
-    GitBranch = {
-      provider = 'GitBranch',
-      condition = condition.check_git_workspace,
-      highlight = {colors.violet, colors.bg, 'bold'}
-    }
-  }
-
-  gls.right[#gls.right + 1] = {
-    DiffAdd = {
-      provider = 'DiffAdd',
-      condition = condition.hide_in_width,
-      icon = '   ',
-      highlight = {colors.green, colors.bg}
-    }
-  }
-  gls.right[#gls.right + 1] = {
-    DiffModified = {
-      provider = 'DiffModified',
-      condition = condition.hide_in_width,
-      icon = '  柳',
-      highlight = {colors.orange, colors.bg}
-    }
-  }
-  gls.right[#gls.right + 1] = {
-    DiffRemove = {
-      provider = 'DiffRemove',
-      condition = condition.hide_in_width,
-      icon = '   ',
-      highlight = {colors.red, colors.bg}
-    }
-  }
-
-  gls.short_line_left[#gls.short_line_left + 1] = {
-    BufferType = {
-      provider = 'FileTypeName',
-      separator = ' ',
-      separator_highlight = {'NONE', colors.bg},
-      highlight = {colors.blue, colors.bg, 'bold'}
-    }
-  }
-
-  gls.short_line_left[#gls.short_line_left + 1] = {
-    SFileName = {
-      provider = 'SFileName',
-      condition = condition.buffer_not_empty,
-      highlight = {colors.fg, colors.bg, 'bold'}
-    }
-  }
-
-  gls.short_line_right[#gls.short_line_right + 1] = {
-    BufferIcon = {provider = 'BufferIcon', highlight = {colors.fg, colors.bg}}
-  }
 end
 
 -- Set up pack path
@@ -493,6 +316,33 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+  local cmp = require('cmp')
+  cmp.setup {
+    snippet = {
+      expand = function (args)
+        require('luasnip').lsp_expand(args.body)
+      end
+    },
+    documentation = {
+      border = border
+    },
+    mappings = {
+      ['<C-p>'] = cmp.mapping.item.prev(),
+      ['<C-n>'] = cmp.mapping.item.next(),
+      ['<C-d>'] = cmp.mapping.scroll.up(),
+      ['<C-f>'] = cmp.mapping.scroll.down(),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      })
+    },
+    sources = {
+      { name = 'luasnip' },
+      { name = 'nvim_lsp' },
+    }
+  }
 end
 
 -- Get Binary From `node_modules`
@@ -625,7 +475,7 @@ local function tab_complete()
   elseif __check_back_space() then
     return __t('<Tab>')
   else
-    return vim.fn['compe#complete']()
+    return ""
   end
 end
 
@@ -637,9 +487,9 @@ end
 
 local function sort_lines()
   local ls, _, le, _ = get_visual_selection_range()
-  local lines = F.getline(ls, le)
+  local lines = A.nvim_buf_get_lines(0, ls-1, le, true)
   table.sort(lines, function(a, b) return string.len(a) < string.len(b) end)
-  A.nvim_buf_set_lines(A.nvim_get_current_buf(), ls - 1, le, true, lines)
+  A.nvim_buf_set_lines(0, ls - 1, le, true, lines)
 end
 
 -- Use s-tab to:

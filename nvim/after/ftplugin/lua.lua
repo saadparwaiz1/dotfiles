@@ -3,6 +3,9 @@ local util = require('s.util')
 local luadev = require('lua-dev')
 
 luadev = luadev.setup({
+  library = {
+    plugins = false
+  },
   lspconfig = {
     cmd = {"lua-langserver"},
     on_attach = util.lsp.on_attach,

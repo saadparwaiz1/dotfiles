@@ -1,5 +1,8 @@
 -- Load Util Module
 local util = require('s.util')
+vim.notify = util.vim.notification
+
+-- Manuiplate Lua Package Path
 util.config.rocks()
 
 -- Define Global Variables
@@ -34,14 +37,14 @@ local globals = {
   vim_markdown_strikethrough = 1,
   kommentary_create_default_mappings = false,
   gruvbox_groups = {
-    'lua', 'lsp', 'rust', 'diff', 'java', 'python', 'barbar',
-    'gitsigns', 'markdown', 'gitcommit', 'telescope', 'vimscript',
-    'indent_blankline', 'lsp_signature'
+    'lsp','diff','barbar', 'gitsigns',
+    'markdown', 'gitcommit', 'telescope',
+    'vimscript', 'indent_blankline', 'lsp_signature'
   },
   markdown_fenced_languages = {
-    'sh', 'lua', 'man', 'vim', 'java', 'rust', 'json', 'python', 'bash=sh',
-    'shell=sh', 'javascript', 'console=sh', 'typescript', 'ts=typescript',
-    'js=javascript'
+    'sh', 'lua', 'man', 'vim', 'java', 'rust', 'json',
+    'python', 'bash=sh', 'shell=sh', 'javascript',
+    'console=sh', 'typescript', 'ts=typescript', 'js=javascript'
   }
 }
 util.config.globals(globals)
@@ -201,30 +204,6 @@ local maps = {
   -- Insert Mode Mappings
   {
     mode = 'i',
-    lhs = '<C-f>',
-    rhs = 'compe#scroll({ "delta": +4 })',
-    opts = { silent = true, noremap = true, expr = true },
-  },
-  {
-    mode = 'i',
-    lhs = '<CR>',
-    rhs = 'compe#confirm("<CR>")',
-    opts = { silent = true, noremap = true, expr = true },
-  },
-  {
-    mode = 'i',
-    lhs = '<C-Space>',
-    rhs = 'compe#complete()',
-    opts = { silent = true, noremap = true, expr = true },
-  },
-  {
-    mode = 'i',
-    lhs = '<C-d>',
-    rhs = 'compe#scroll({ "delta": -4 })',
-    opts = { silent = true, noremap = true, expr = true },
-  },
-  {
-    mode = 'i',
     lhs = 'jj',
     rhs = '<Esc><cmd>noh<CR>',
   },
@@ -239,12 +218,6 @@ local maps = {
     lhs = '<S-Tab>',
     rhs = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]],
     opts = { silent = true, noremap = true, expr = true },
-  },
-  {
-    mode = 'i',
-    lhs = '<C-e>',
-    rhs = 'compe#close("<C-e>")',
-    opts = { noremap = true, silent = true, expr = true },
   },
 }
 
