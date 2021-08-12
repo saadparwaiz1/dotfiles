@@ -1,6 +1,6 @@
-local lspconfig = require('lspconfig')
-local util = require('s.util')
+local util = require('personal.util')
 local luadev = require('lua-dev')
+local lspconfig = require('lspconfig')
 
 luadev = luadev.setup({
   library = {
@@ -14,3 +14,4 @@ luadev = luadev.setup({
 })
 
 lspconfig.sumneko_lua.setup(luadev)
+lspconfig.sumneko_lua.manager.try_add_wrapper()

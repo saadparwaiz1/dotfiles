@@ -1,11 +1,8 @@
 -- Load Util Module
-local util = require('s.util')
-vim.notify = util.vim.notification
+local util = require('personal.util')
+vim.keymap = vim.keymap or require('personal.keymap')
 
--- Manuiplate Lua Package Path
-util.config.rocks()
-
--- Define Global Variables
+-- Global Variables
 local globals = {
   loaded_zip = 1,
   loaded_tar = 1,
@@ -22,6 +19,7 @@ local globals = {
   vim_markdown_math = 1,
   loaded_matchparen = 1,
   tex_flavor = 'latex',
+  colors_name = 'gruvbox',
   loaded_netrwPlugin = 1,
   loaded_2html_plugin = 1,
   loaded_node_provider = 0,
@@ -34,8 +32,6 @@ local globals = {
   loaded_python3_provider = 0,
   markdown_syntax_conceal = 1,
   loaded_netrwFileHandlers = 1,
-  vim_markdown_strikethrough = 1,
-  kommentary_create_default_mappings = false,
   gruvbox_groups = {
     'lsp','diff','barbar', 'gitsigns',
     'markdown', 'gitcommit', 'telescope',
@@ -49,7 +45,7 @@ local globals = {
 }
 util.config.globals(globals)
 
--- Define Options
+-- Globals Options
 local options = {
   list = true,
   mouse = 'a',
@@ -76,149 +72,124 @@ local options = {
   relativenumber = true,
   inccommand = 'nosplit',
   clipboard = 'unnamedplus',
-  guifont = 'JetBrainsMono Nerd Font Mono'
-}
--- Set options using vim.o
-util.config.options(options)
-
--- Set some options using vim.opt
-vim.opt.listchars = {tab = '| ', trail = '~'}
-vim.opt.completeopt = {'menuone', 'noselect'}
-vim.opt.wildignore = {
-  '*.o', '*~', '*.pyc', '*/.git/*', '*/.hg/*', '*/.svn/*', '*/.DS_store',
-  '**/node_modules'
+  listchars = {tab = '| ', trail = '~'},
+  wildignore = { '*.o', '*~', '*.pyc', '*/.git/*', '*/.hg/*', '*/.svn/*', '*/.DS_store', '**/node_modules' },
+  completeopt = { 'menuone', 'noselect' }
 }
 vim.opt.shortmess:append('c')
+util.config.options(options)
 
--- Define Autocmds
-vim.api.nvim_exec([[
-  augroup autocmds_core
-    autocmd!
-    autocmd TextYankPost * silent! lua require('s.util').vim.hyank()
-  augroup END
-  ]], false)
-
--- Define Maps
+-- Global Mappings
 local maps = {
-  -- Normal Mode Mappings
   {
-    mode = 'n',
-    lhs = '\\cmdn',
-    rhs = '<cmd>bn<CR>',
+    '\\cmdn',
+    '<cmd>bn<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmdp',
-    rhs = '<cmd>bp<CR>',
+    '\\cmdp',
+    '<cmd>bp<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmdw',
-    rhs = '<cmd>bd<CR>',
+    '\\cmdw',
+    '<cmd>bd<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmds',
-    rhs = ':%s/\\<<C-R><C-w>\\>/',
+    '\\cmds',
+    ':%s/\\<<C-R><C-w>\\>/',
   },
   {
-    mode = 'n',
-    lhs = '<Left>',
-    rhs = '<C-w>h',
+    '<Left>',
+    '<C-w>h',
   },
   {
-    mode = 'n',
-    lhs = '<Down>',
-    rhs = '<C-w>j',
+    '<Down>',
+    '<C-w>j',
   },
   {
-    mode = 'n',
-    lhs = '<Up>',
-    rhs = '<C-w>k',
+    '<Up>',
+    '<C-w>k',
   },
   {
-    mode = 'n',
-    lhs = '<Right>',
-    rhs = '<C-w>l',
+    '<Right>',
+    '<C-w>l',
   },
   {
-    mode = 'n',
-    lhs = 'Q',
-    rhs = '<nop>',
+    'Q',
+    '<nop>',
   },
   {
-    mode = 'n',
-    lhs = 'vv',
-    rhs = '^v$',
+    'vv',
+    '^v$',
   },
   {
-    mode = 'n',
-    lhs = 'vv',
-    rhs = '^v$',
+    'vv',
+    '^v$',
   },
   {
-    mode = 'n',
-    lhs = '<C-l>',
-    rhs = '<cmd>noh<CR>',
+    '<C-l>',
+    '<cmd>noh<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmd;',
-    rhs = '<cmd>lua require("s.util").lsp.term()<CR>',
+    '\\cmd]',
+    '<cmd>Neogit<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmd]',
-    rhs = '<cmd>Neogit<CR>',
+    '\\cmdf',
+    '<cmd>Telescope find_files<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmdf',
-    rhs = '<cmd>Telescope find_files<CR>',
+    '\\cmdl',
+    '<cmd>Telescope live_grep<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmdl',
-    rhs = '<cmd>Telescope live_grep<CR>',
+    '\\cmdy',
+    '<cmd>Telescope oldfiles<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\cmdy',
-    rhs = '<cmd>Telescope oldfiles<CR>',
+    ']q',
+    '<cmd>cnext<CR>',
   },
   {
-    mode = 'n',
-    lhs = ']q',
-    rhs = '<cmd>cnext<CR>',
+    '[q',
+    '<cmd>cprev<CR>',
   },
   {
-    mode = 'n',
-    lhs = '[q',
-    rhs = '<cmd>cprev<CR>',
+    '\\optcmdb',
+    '<cmd>Telescope file_browser<CR>',
   },
   {
-    mode = 'n',
-    lhs = '\\optcmdb',
-    rhs = '<cmd>Telescope file_browser<CR>',
-  },
-  -- Insert Mode Mappings
-  {
-    mode = 'i',
-    lhs = 'jj',
-    rhs = '<Esc><cmd>noh<CR>',
+    'J',
+    'mzJ`z'
   },
   {
-    mode = 'i',
-    lhs = '<Tab>',
-    rhs = [[pumvisible() ? "\<C-n>" : "\<Tab>"]],
-    opts = { silent = true, noremap = true, expr = true },
+    '<Space>',
+    '<nop>'
   },
   {
-    mode = 'i',
-    lhs = '<S-Tab>',
-    rhs = [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]],
-    opts = { silent = true, noremap = true, expr = true },
+    'gc',
+    '<Plug>kommentary_line_default',
+    opts = {
+      opts = {
+        silent = true
+      }
+    }
+  },
+  {
+    'gc',
+    '<Plug>kommentary_visual_default<C-c>',
+    opts = {
+      mode = 'v',
+      opts = {
+        silent = true
+      }
+    }
+  },
+  {
+    'jj',
+    '<Esc>',
+    opts = {
+      mode = 'i'
+    }
   },
 }
-
-util.config.maps(maps, {silent = true, noremap = true})
+vim.keymap.maps(maps, {silent=true, noremap=true})

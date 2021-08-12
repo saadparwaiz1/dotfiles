@@ -1,26 +1,14 @@
-# vim: set foldmethod=marker foldlevel=0 nomodeline:
-# ============================================================================
-# Set Env Variable {{{
-# ============================================================================
+# Set Env Variable
 export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/$XDG_DATA_HOME/cargo/bin:$XDG_DATA_HOME/nvim/rocks/bin"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=4 nomod nolist noma' --cmd 'let g:indent_blankline_enabled=v:false' -\""
-# }}}
-# ============================================================================
-# Set Up ZINIT {{{
-# ============================================================================
 typeset -gA ZINIT
 export ZINIT[BIN_DIR]=$(brew --prefix)/opt/zinit
 export ZINIT[HOME_DIR]=$(brew --prefix)/opt/zinit
 export ZINIT[ZCOMPDUMP_PATH]=$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 export ZINIT[MUTE_WARNINGS]=1
-# }}}
-# ============================================================================
-# ZINIT BLOCK {{{
-# ============================================================================
 source $ZINIT[HOME_DIR]/zinit.zsh
-#-----------------------------------------------------------------------------
-# CommandLine Editing
-#-----------------------------------------------------------------------------
+
+# zinit setup
 zinit ice wait'!0'
 zinit light Aloxaf/fzf-tab
 
@@ -43,15 +31,10 @@ zinit light zsh-users/zsh-history-substring-search
 
 zinit ice wait'!2'
 zinit light hlissner/zsh-autopair
-#-----------------------------------------------------------------------------
-# KEYBINDINGS
-#-----------------------------------------------------------------------------
 zinit ice wait'!0'
 zinit light softmoth/zsh-vim-mode
-# }}}
-# ============================================================================
-# ZSH OPTIONS {{{
-# ============================================================================
+
+# ZSH OPTIONS
 setopt autocd
 setopt correct
 setopt BANG_HIST
@@ -66,17 +49,9 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_EXPIRE_DUPS_FIRST
-# }}}
-# ============================================================================
-# ZSH MODULES {{{
-# ============================================================================
-# ----------------------------------------------------------------------------
-# Colors Module
-# ----------------------------------------------------------------------------
+
+# ZSH MODULES
 autoload -U colors && colors
-# ----------------------------------------------------------------------------
-# Tab Completion Module
-# ----------------------------------------------------------------------------
 autoload -U compinit
 zmodload zsh/complist
 
@@ -95,29 +70,21 @@ zstyle ":completion:*" matcher-list 'm:{A-Zöäüa-zÖÄÜ}={a-zÖÄÜA-Zöäü}
 zstyle ':completion:*:(scp|rsync):*' tag-order ' hosts:-ipaddr:ip\ address hosts:-host:host files'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' loopback ip6-loopback localhost ip6-localhost broadcasthost
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
-
-# Generate Cache
 compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 _comp_options+=(globdots)
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
-# ----------------------------------------------------------------------------
+
 # Git Module For Prompt
-# ----------------------------------------------------------------------------
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 zstyle ':vcs_info:git:*' formats ' %F{240}(%b)%r%f'
 zstyle ':vcs_info:*' enable git
-# }}}
-# ============================================================================
-# ZSH HOOKS {{{
-# ============================================================================
-# }}}
-# ============================================================================
-# ZSH ALIASES {{{
-# ============================================================================
-# Better Options For System Commands
+
+# ZSH HOOKS
+
+# ZSH ALIASES
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -iv"
@@ -127,7 +94,6 @@ alias sudo="nocorrect sudo "
 alias tetris='autoload tetriscurses && tetriscurses'
 alias lrocks="luarocks --tree=/Users/saadparwaiz/Library/Share/nvim/rocks --lua-dir=/usr/local/opt/luajit-openresty/"
 alias rmcache='rm -rf ~/Library/Caches/*'
-
 if command -v exa &>/dev/null; then
     alias ls="exa --icons"
     alias la='exa --icons -a'
@@ -137,9 +103,6 @@ else
     alias la="ls -A"
     alias ll="ls -alh"
 fi
-
-
-# Aliases for custom commands
 alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
 alias purge="sudo --stdin purge"
 alias keys="pbcopy < ~/.ssh/id_rsa.pub"
@@ -149,11 +112,8 @@ alias bu="brew update && brew upgrade --greedy"
 alias rs="brew services restart yabai && brew services restart skhd"
 alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
 alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
-# }}}
-# ============================================================================
-# ZSH FUNCTIONS {{{
-# ============================================================================
-# Utils
+
+# ZSH FUNCTIONS
 github() {
   echo "$1" | sed s/github/raw\.githubusercontent/ | sed s/blob.//g | xargs curl -O
 }
@@ -173,16 +133,13 @@ dir() {
 f() {
   cd `fd --type=directory $1 ~ | fzf -1`
 }
-# }}}
-# ============================================================================
-# ZSH HISTORY {{{
-# ============================================================================
+
+# ZSH HISTORY
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE="$XDG_DATA_HOME/History/zsh-history"
-# }}}
-# ============================================================================
-# ZSH PROMPT {{{
+
+# ZSH PROMPT
 # ============================================================================
 prompts() {
     for COLOR in RED GREEN YELLOW BLUE MAGENTA CYAN BLACK WHITE; do
@@ -195,10 +152,8 @@ prompts() {
 }
 
 prompts
-# }}}
-# ============================================================================
-# ZSH KEYBINDINGS {{{
-# ============================================================================
+
+# ZSH KEYBINDINGS
 bindkey -v
 
 zle-keymap-select() {
@@ -229,17 +184,9 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 bindkey '^[[1;3C' forward-word
 bindkey jj vi-cmd-mode
-# }}}
-# ============================================================================
-# ZSH PLUGINS {{{
-# ============================================================================
-#-----------------------------------------------------------------------------
-# VIM MODE
-#-----------------------------------------------------------------------------
+
+# ZSH PLUGINS
 export MODE_INDICATOR=""
-#-----------------------------------------------------------------------------
-#FZF
-#-----------------------------------------------------------------------------
 [[ $- == *i* ]] && source "$(brew --prefix)/opt/fzf/shell/completion.zsh"
 
 source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
@@ -254,11 +201,6 @@ else
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
-#----------------------------------------------------------------------------
-# Auto Suggestions
-# ---------------------------------------------------------------------------
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSHZ_DATA="$XDG_DATA_HOME/History/z-history"
-# }}}
-# ============================================================================

@@ -1,5 +1,5 @@
+local util = require('personal.util')
 local lspconfig = require('lspconfig')
-local util = require('s.util')
 
 lspconfig.texlab.setup {
   on_attach = util.lsp.on_attach,
@@ -33,3 +33,4 @@ lspconfig.texlab.setup {
     }
   }
 }
+lspconfig.texlab.manager.try_add_wrapper()
