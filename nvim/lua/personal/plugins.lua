@@ -4,95 +4,100 @@ local packer = require('packer')
 
 packer.startup({
   function(use)
+    -- Performance
+    use{
+      'lewis6991/impatient.nvim',
+      rocks = 'mpack'
+    }
     -- Plugin  Manager
-    use {
-      'wbthomason/packer.nvim'
-    }
+    use({
+      'wbthomason/packer.nvim',
+    })
     -- ColorScheme
-    use {
+    use({
       'saadparwaiz1/gruvbox-autogenerate',
-      run = [[:lua require('gruvbox').generate()]]
-    }
+      run = [[:lua require('gruvbox').generate()]],
+    })
     -- Status/Buffer Line
-    use {
+    use({
       'saadparwaiz1/nvimline',
       config = function()
         require('nvimline').setup()
-      end
-    }
+      end,
+    })
     -- Indent Guides
-    use {
-      'lukas-reineke/indent-blankline.nvim'
-    }
+    use({
+      'lukas-reineke/indent-blankline.nvim',
+    })
     -- Git Signs
-    use {
+    use({
       'lewis6991/gitsigns.nvim',
       requires = { 'nvim-lua/plenary.nvim' },
       config = function()
         require('gitsigns').setup()
-      end
-    }
+      end,
+    })
     -- Enchanced Functionality
-    use {
+    use({
       'machakann/vim-sandwich',
-    }
-    use {
-      'andymass/vim-matchup'
-    }
-    use {
-      'b3nj5m1n/kommentary'
-    }
-    use {
-      'steelsojka/pears.nvim'
-    }
+    })
+    use({
+      'andymass/vim-matchup',
+    })
+    use({
+      'b3nj5m1n/kommentary',
+    })
+    use({
+      'steelsojka/pears.nvim',
+    })
     -- Git Client
-    use {
+    use({
       'TimUntersberger/neogit',
       config = function()
         require('neogit').setup()
       end,
       requires = {
-        { 'nvim-lua/plenary.nvim' }
-      }
-    }
+        { 'nvim-lua/plenary.nvim' },
+      },
+    })
     -- Fuzzy Finders
-    use {
+    use({
       'nvim-telescope/telescope.nvim',
       requires = {
-        {'nvim-lua/plenary.nvim'},
-        {'nvim-telescope/telescope-fzf-native.nvim', run='make'}
-      }
-    }
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      },
+    })
     -- Tree Sitter and It's Extensions
-    use {
+    use({
       'nvim-treesitter/nvim-treesitter-textobjects',
       requires = {
-        'nvim-treesitter/nvim-treesitter'
-      }
-    }
+        'nvim-treesitter/nvim-treesitter',
+      },
+    })
     -- LSP Config
-    use {
+    use({
       'neovim/nvim-lspconfig',
       requires = {
-        {'folke/lua-dev.nvim'},
-        {'ray-x/lsp_signature.nvim'},
-      }
-    }
+        { 'folke/lua-dev.nvim' },
+        { 'ray-x/lsp_signature.nvim' },
+      },
+    })
     -- Snippets
-    use {
-      'L3MON4D3/LuaSnip'
-    }
+    use({
+      'L3MON4D3/LuaSnip',
+    })
     -- Lsp Extensions
-    use {
-      'jose-elias-alvarez/null-ls.nvim'
-    }
+    use({
+      'jose-elias-alvarez/null-ls.nvim',
+    })
     -- Auto Completion
-    use {
+    use({
       'hrsh7th/nvim-cmp',
       requires = {
         'hrsh7th/cmp-nvim-lsp',
-        '~/Documents/projects/cmp_luasnip'
-      }
-    }
-  end
+        '~/Documents/projects/cmp_luasnip',
+      },
+    })
+  end,
 })

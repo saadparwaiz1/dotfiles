@@ -1,6 +1,6 @@
 -- Load Util Module
 local util = require('personal.util')
-vim.keymap = vim.keymap or require('personal.keymap')
+local keymap = require('personal.keymap')
 
 -- Global Variables
 local globals = {
@@ -33,15 +33,34 @@ local globals = {
   markdown_syntax_conceal = 1,
   loaded_netrwFileHandlers = 1,
   gruvbox_groups = {
-    'lsp','diff','barbar', 'gitsigns',
-    'markdown', 'gitcommit', 'telescope',
-    'vimscript', 'indent_blankline', 'lsp_signature'
+    'lsp',
+    'diff',
+    'barbar',
+    'gitsigns',
+    'markdown',
+    'gitcommit',
+    'telescope',
+    'vimscript',
+    'indent_blankline',
+    'lsp_signature',
   },
   markdown_fenced_languages = {
-    'sh', 'lua', 'man', 'vim', 'java', 'rust', 'json',
-    'python', 'bash=sh', 'shell=sh', 'javascript',
-    'console=sh', 'typescript', 'ts=typescript', 'js=javascript'
-  }
+    'sh',
+    'lua',
+    'man',
+    'vim',
+    'java',
+    'rust',
+    'json',
+    'python',
+    'bash=sh',
+    'shell=sh',
+    'javascript',
+    'console=sh',
+    'typescript',
+    'ts=typescript',
+    'js=javascript',
+  },
 }
 util.config.globals(globals)
 
@@ -72,10 +91,14 @@ local options = {
   relativenumber = true,
   inccommand = 'nosplit',
   clipboard = 'unnamedplus',
-  listchars = {tab = '| ', trail = '~'},
+  listchars = { tab = '| ', trail = '~' },
   wildignore = { '*.o', '*~', '*.pyc', '*/.git/*', '*/.hg/*', '*/.svn/*', '*/.DS_store', '**/node_modules' },
-  completeopt = { 'menuone', 'noselect' }
+  completeopt = { 'menuone', 'noselect' },
 }
+
+vim.opt.complete:remove('i')
+vim.opt.complete:remove('t')
+
 vim.opt.shortmess:append('c')
 util.config.options(options)
 
@@ -159,37 +182,38 @@ local maps = {
   },
   {
     'J',
-    'mzJ`z'
+    'mzJ`z',
   },
   {
     '<Space>',
-    '<nop>'
+    '<nop>',
   },
   {
     'gc',
     '<Plug>kommentary_line_default',
-    opts = {
-      opts = {
-        silent = true
-      }
-    }
+  },
+  {
+    '<',
+    '<gv',
+    mode = 'x'
+  },
+  {
+    '>',
+    '>gv',
+    mode = 'x'
   },
   {
     'gc',
     '<Plug>kommentary_visual_default<C-c>',
-    opts = {
-      mode = 'v',
-      opts = {
-        silent = true
-      }
-    }
+    mode = 'v',
   },
   {
     'jj',
     '<Esc>',
-    opts = {
-      mode = 'i'
-    }
+    mode = 'i',
   },
 }
-vim.keymap.maps(maps, {silent=true, noremap=true})
+keymap.maps(maps)
+
+-- Improve Performance
+require('impatient')

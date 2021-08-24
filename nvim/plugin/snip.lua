@@ -1,7 +1,6 @@
 local ls = require('luasnip')
 local types = require('luasnip.util.types')
 
-
 ls.config.set_config({
   history = false,
   ext_opts = {
@@ -9,39 +8,38 @@ ls.config.set_config({
       active = {
         virt_text = {
           {
-            "choiceNode",
-            "GruvboxOrange"
-          }
-        }
-      }
-    }
-  }
+            '',
+            'GruvboxOrange',
+          },
+        },
+      },
+    },
+  },
 })
 
 ls.snippets = {}
 
 setmetatable(ls.snippets, {
-  __index = function (t,k)
-    local ok, mod = pcall(require, 'snippets.'..k)
+  __index = function(t, k)
+    local ok, mod = pcall(require, 'snippets.' .. k)
     if ok then
       t[k] = mod
       return mod
     end
     t[k] = {}
     return {}
-  end
+  end,
 })
 
 local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-  end
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
 local function snip_choice_trigger()
   if ls.choice_active() then
-    return t '<Plug>luasnip-next-choice'
+    return t('<Plug>luasnip-next-choice')
   end
-  return  t '<C-k>'
+  return t('<C-k>')
 end
 
-
-vim.keymap.map('<C-k>', snip_choice_trigger, {mode = {'i', 's'}, opts = {expr=true, silent=true}})
+require('personal.keymap').map('<C-k>', snip_choice_trigger, { mode = { 'i', 's' }, expr = true, noremap = false })

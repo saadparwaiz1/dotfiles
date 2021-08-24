@@ -1,19 +1,14 @@
 local M = {}
 local F = vim.fn
-local sign_group = "LightBulbSign"
-local sign_name = "LightBulbSign"
+local sign_group = 'LightBulbSign'
+local sign_name = 'LightBulbSign'
 local current_line = nil
 
-F.sign_define(sign_name, { text = "💡", texthl = "LspDiagnosticsDefaultInformation" })
-
-
+F.sign_define(sign_name, { text = '💡', texthl = 'LspDiagnosticsDefaultInformation' })
 
 local function update_sign(priority, oline, nline)
   if oline then
-    F.sign_unplace(
-      sign_group,
-      {id = oline, buffer = '%'}
-    )
+    F.sign_unplace(sign_group, { id = oline, buffer = '%' })
     current_line = nil
   end
 
@@ -34,10 +29,9 @@ function M.code_actions()
     if result == nil or vim.tbl_isempty(result) then
       update_sign(10, current_line, nil)
     else
-      update_sign(10, current_line, params.range.start.line+1)
+      update_sign(10, current_line, params.range.start.line + 1)
     end
-  end
-  )
+  end)
 end
 
 return M

@@ -2,10 +2,12 @@ local A = vim.api
 
 -- Pretty Print Tables
 --- @vararg table
-_G.dump = function(...) print(unpack(vim.tbl_map(vim.inspect, {...}))) end
+_G.dump = function(...)
+  print(unpack(vim.tbl_map(vim.inspect, { ... })))
+end
 
 -- Schedule Packer Load On Event Loop
-vim.schedule(function ()
+vim.schedule(function()
   require('personal.plugins')
 end)
 
@@ -43,17 +45,13 @@ local function get_highlights(ll, opts)
   elseif ll == vim.log.levels.TRACE then
     basehl = 'GruvboxAqua'
   end
-  local winhl = string.format(
-    'Normal:%s,FloatBorder:%s',
-    basehl,
-    opts.borderhl or basehl
-  )
+  local winhl = string.format('Normal:%s,FloatBorder:%s', basehl, opts.borderhl or basehl)
   return winhl
 end
 
 -- Find the maximum value in table
 --- @param tbl list
----@param func function
+--- @param func function
 function vim.tbl_max(tbl, func)
   local item = tbl[1]
   local max = func(tbl[1])
@@ -72,11 +70,11 @@ end
 --- @param log_level number
 --- @param opts table
 vim.notify = function(msg, log_level, opts)
-  if type(msg) == "string" then
-    msg = {msg}
+  if type(msg) == 'string' then
+    msg = { msg }
   end
   opts = opts or {}
-  local _, max  = vim.tbl_max(msg, string.len)
+  local _, max = vim.tbl_max(msg, string.len)
   local popts = {
     width = max,
     anchor = 'SE',
@@ -89,7 +87,7 @@ vim.notify = function(msg, log_level, opts)
   A.nvim_buf_set_option(buf, 'modifiable', true)
   A.nvim_buf_set_lines(buf, 0, -1, false, msg)
   local timer
-  timer = vim.defer_fn(function ()
+  timer = vim.defer_fn(function()
     if timer:is_active() then
       timer:stop()
     end
@@ -103,7 +101,7 @@ end
 --- @param tbl table
 --- @param f any
 vim.tbl_contains = function(tbl, f)
-  for i,v in pairs(tbl) do
+  for i, v in pairs(tbl) do
     if v == f then
       return i
     end
@@ -115,11 +113,11 @@ end
 --- @param x any
 --- @return boolean
 function vim.is_callable(x)
-	if type(x) == 'function' then
-		return true
-	elseif type(x) == 'table' then
-		local mt = getmetatable(x)
-		return mt and mt.__call
-	end
+  if type(x) == 'function' then
+    return true
+  elseif type(x) == 'table' then
+    local mt = getmetatable(x)
+    return mt and mt.__call
+  end
   return false
 end

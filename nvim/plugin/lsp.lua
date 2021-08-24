@@ -12,18 +12,18 @@ handlers['textDocument/publishDiagnostics'] = with(vim.lsp.diagnostic.on_publish
   underline = true,
   virtual_text = {
     spacing = 5,
-    prefix = ' '
+    prefix = ' ',
   },
   signs = true,
-  update_in_insert = false
+  update_in_insert = false,
 })
 
 handlers['textDocument/hover'] = with(handlers.hover, {
-  border = 'rounded'
+  border = 'rounded',
 })
 
 handlers['textDocument/signatureHelp'] = with(handlers.signature_help, {
-  border = 'rounded'
+  border = 'rounded',
 })
 
 -- Setup Rename Request Using Floating Windows
@@ -40,7 +40,7 @@ local function rename()
       return
     end
     params.newName = text
-    vim.lsp.buf_request(0, 'textDocument/rename', params, function (err, _, results)
+    vim.lsp.buf_request(0, 'textDocument/rename', params, function(err, _, results)
       if err ~= nil then
         vim.notify(err)
         return
@@ -53,11 +53,7 @@ local function rename()
 
       vim.lsp.util.apply_workspace_edit(results)
       local total_files = vim.tbl_count(results.changes)
-      local msg = string.format(
-        "Changed %s file%s. To save them run ':wa'",
-        total_files,
-        total_files > 1 and "s" or ""
-      )
+      local msg = string.format("Changed %s file%s. To save them run ':wa'", total_files, total_files > 1 and 's' or '')
       vim.notify(msg)
     end)
   end
@@ -65,8 +61,8 @@ local function rename()
   A.nvim_buf_set_option(buf, 'buftype', 'prompt')
   F.prompt_setcallback(buf, __dorename)
   F.prompt_setprompt(buf, ' ')
-  A.nvim_buf_set_keymap(buf, 'i', '<Esc>', '<cmd>q!<CR>', {noremap=true})
-  A.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>q!<CR>', {noremap=true})
+  A.nvim_buf_set_keymap(buf, 'i', '<Esc>', '<cmd>q!<CR>', { noremap = true })
+  A.nvim_buf_set_keymap(buf, 'n', '<Esc>', '<cmd>q!<CR>', { noremap = true })
   vim.cmd('startinsert')
   A.nvim_feedkeys(word, 'n', false)
 end

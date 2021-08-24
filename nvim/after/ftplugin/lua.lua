@@ -4,13 +4,13 @@ local lspconfig = require('lspconfig')
 
 luadev = luadev.setup({
   library = {
-    plugins = false
+    plugins = false,
   },
   lspconfig = {
-    cmd = {"lua-langserver"},
+    cmd = { 'lua-langserver' },
     on_attach = util.lsp.on_attach,
-    capabilities = util.lsp.capabilities
-  }
+    capabilities = util.lsp.capabilities,
+  },
 })
 
 lspconfig.sumneko_lua.setup(luadev)
