@@ -75,13 +75,16 @@ packer.startup({
       'neovim/nvim-lspconfig',
       requires = {
         {'folke/lua-dev.nvim'},
-        {'kosayoda/nvim-lightbulb'},
         {'ray-x/lsp_signature.nvim'},
       }
     }
     -- Snippets
     use {
       'L3MON4D3/LuaSnip'
+    }
+    -- Lsp Extensions
+    use {
+      'jose-elias-alvarez/null-ls.nvim'
     }
     -- Auto Completion
     use {

@@ -99,7 +99,7 @@ local function on_attach(client, bufnr)
   A.nvim_exec([[
     augroup lsp_document_updates
       autocmd!
-      autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()
+      autocmd CursorHold,CursorHoldI * lua require'personal.actions'.code_actions()
     augroup END
   ]], false)
 end
