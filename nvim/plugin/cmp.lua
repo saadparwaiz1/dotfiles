@@ -78,4 +78,7 @@ cmp.setup({
       return item
     end,
   },
+  experimental = {
+    ghost_text = true
+  }
 })

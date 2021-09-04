@@ -87,5 +87,5 @@ return {
   }),
   s({ trig = 'pr', dscr = 'Add Print Method' }, {
     d(1, print_func, {}, vim.bo.filetype),
-  }),
+  })
 }

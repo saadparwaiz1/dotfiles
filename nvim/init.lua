@@ -1,4 +1,6 @@
--- Load Util Module
+-- Improve Performance
+require('impatient')
+
 local util = require('personal.util')
 local keymap = require('personal.keymap')
 
@@ -213,7 +215,5 @@ local maps = {
     mode = 'i',
   },
 }
-keymap.maps(maps)
 
--- Improve Performance
-require('impatient')
+keymap.maps(maps)

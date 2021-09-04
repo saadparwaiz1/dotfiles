@@ -50,7 +50,7 @@ end
 
 -- Map Lua Functions and Strings
 --- @param lhs string
---- @param rhs function
+--- @param rhs function|string
 --- @param opts table
 function keymap.map(lhs, rhs, opts)
   opts = opts or {}
@@ -82,7 +82,7 @@ end
 
 -- Buffer Map Lua Functions and Strings
 --- @param lhs string
---- @param rhs function
+--- @param rhs function|string
 --- @param opts table
 function keymap.map_local(lhs, rhs, opts)
   opts = opts or {}
@@ -119,7 +119,7 @@ end
 --- @return nil
 function keymap.maps(mps, defaults)
   for _, v in pairs(mps) do
-    v = vim.tbl_extend('force', v, defaults or {})
+    v = vim.tbl_extend('keep', v, defaults or {})
     keymap.map(v[1], v[2], v)
   end
 end

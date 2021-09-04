@@ -108,16 +108,3 @@ vim.tbl_contains = function(tbl, f)
   end
   return false
 end
-
--- test if a variable is callable
---- @param x any
---- @return boolean
-function vim.is_callable(x)
-  if type(x) == 'function' then
-    return true
-  elseif type(x) == 'table' then
-    local mt = getmetatable(x)
-    return mt and mt.__call
-  end
-  return false
-end
