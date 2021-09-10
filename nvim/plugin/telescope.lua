@@ -1,11 +1,13 @@
 local telescope = require('telescope')
+
 telescope.setup({
   defaults = {
     prompt_prefix = '🔍 ',
     set_env = { ['COLORTERM'] = 'truecolor' },
     mappings = {
       i = {
-        ['<Esc>'] = require('telescope.actions').close,
+        ['<Esc>'] = 'close',
+        ['<Tab>'] = 'toggle_selection'
       },
     },
   },

@@ -35,15 +35,15 @@ end
 local function get_highlights(ll, opts)
   local basehl = opts.contenthl or 'GruvboxGreen'
   if ll == vim.log.levels.ERROR then
-    basehl = 'GruvboxRed'
+    basehl = 'LspDiagnosticsDefaultError'
   elseif ll == vim.log.levels.WARN then
-    basehl = 'GruvboxYellow'
+    basehl = 'LspDiagnosticsDefaultWarning'
   elseif ll == vim.log.levels.INFO then
-    basehl = 'GruvboxBlue'
+    basehl = 'LspDiagnosticsDefaultInformation'
   elseif ll == vim.log.levels.DEBUG then
-    basehl = 'GruvboxOrange'
+    basehl = 'LspDiagnosticsDefaultInformation'
   elseif ll == vim.log.levels.TRACE then
-    basehl = 'GruvboxAqua'
+    basehl = 'LspDiagnosticsDefaultHint'
   end
   local winhl = string.format('Normal:%s,FloatBorder:%s', basehl, opts.borderhl or basehl)
   return winhl
@@ -107,4 +107,18 @@ vim.tbl_contains = function(tbl, f)
     end
   end
   return false
+end
+
+-- Open Vim Help in a Floating Window
+---@param query string
+vim.help = function (query)
+  local buf, _ = popup({
+    height = 30,
+    width = 80
+  }, true)
+  A.nvim_buf_set_option(buf, 'filetype', 'help')
+  A.nvim_buf_set_option(buf, 'buftype', 'help')
+  A.nvim_buf_call(buf, function ()
+    vim.cmd('help ' .. query)
+  end)
 end

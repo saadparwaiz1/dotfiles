@@ -4,12 +4,17 @@ require('impatient')
 local util = require('personal.util')
 local keymap = require('personal.keymap')
 
+vim.loop.os_setenv('MACOSX_DEPLOYMENT_TARGET', '10.15')
+
 -- Global Variables
 local globals = {
+  -- Leader Mapping
+  mapleader = ' ',
+
+  -- Disable Builtin Plugins
   loaded_zip = 1,
   loaded_tar = 1,
   loaded_gzip = 1,
-  mapleader = ' ',
   loaded_netrw = 1,
   loaded_logiPat = 1,
   loaded_vimball = 1,
@@ -18,10 +23,7 @@ local globals = {
   loaded_zipPlugin = 1,
   loaded_tarPlugin = 1,
   loaded_getscript = 1,
-  vim_markdown_math = 1,
   loaded_matchparen = 1,
-  tex_flavor = 'latex',
-  colors_name = 'gruvbox',
   loaded_netrwPlugin = 1,
   loaded_2html_plugin = 1,
   loaded_node_provider = 0,
@@ -32,20 +34,11 @@ local globals = {
   loaded_python_provider = 0,
   loaded_getscriptPlugin = 1,
   loaded_python3_provider = 0,
-  markdown_syntax_conceal = 1,
   loaded_netrwFileHandlers = 1,
-  gruvbox_groups = {
-    'lsp',
-    'diff',
-    'barbar',
-    'gitsigns',
-    'markdown',
-    'gitcommit',
-    'telescope',
-    'vimscript',
-    'indent_blankline',
-    'lsp_signature',
-  },
+
+  -- variables for vim plugins
+  tex_flavor = 'latex',
+  colors_name = 'gruvbox',
   markdown_fenced_languages = {
     'sh',
     'lua',

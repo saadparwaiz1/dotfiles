@@ -13,11 +13,6 @@ packer.startup({
     use({
       'wbthomason/packer.nvim',
     })
-    -- ColorScheme
-    use({
-      'saadparwaiz1/gruvbox-autogenerate',
-      run = [[:lua require('gruvbox').generate()]],
-    })
     -- Status/Buffer Line
     use({
       'saadparwaiz1/nvimline',

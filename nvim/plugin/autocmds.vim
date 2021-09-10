@@ -1,7 +1,7 @@
 augroup vim_autocmds
   autocmd!
   autocmd TextYankPost *
-    \ :lua vim.highlight.on_yank({higroup="GruvboxYellowBold"})
+    \ :lua vim.highlight.on_yank({higroup="HighlightYank", timeout=200})
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
     \ |   exe "normal! g`\""
