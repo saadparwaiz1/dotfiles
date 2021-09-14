@@ -3,9 +3,6 @@ local s = ls.snippet
 local sn = ls.snippet_node
 local t = ls.text_node
 local i = ls.insert_node
-local f = ls.function_node
-local d = ls.dynamic_node
--- local c = ls.choice_node
 
 local lfeatures = {
   c = {
@@ -67,25 +64,27 @@ local function print_func(_, _)
   return sn(nil, lfeatures[vim.bo.filetype].print)
 end
 
+local function shebang(_, _)
+  local cstring = vim.split(vim.bo.commentstring, '%s', true)[1]
+  if cstring == '/*' then
+    cstring = '//'
+  end
+  cstring = vim.trim(cstring)
+  return sn(nil, {
+    t(cstring),
+    t('!/usr/bin/env '),
+    i(1, vim.bo.filetype),
+  })
+end
+
 return {
   s({ trig = 'hd', dscr = 'Add SheBang' }, {
-    f(function()
-      local cstring = vim.bo.commentstring
-      cstring = vim.split(cstring, '%s', true)[1]
-      if cstring == '/*' then
-        cstring = '//'
-      end
-      cstring = vim.trim(cstring)
-      return { cstring }
-    end, {}),
-    t({ '!/usr/bin/env ' }),
-    i(1, { vim.bo.filetype }),
-    i(0),
+    d(1, shebang, {}),
   }),
   s({ trig = 'main', dscr = 'Add Main Method' }, {
-    d(1, main_func, {}, vim.bo.filetype),
+    d(1, main_func, {}),
   }),
   s({ trig = 'pr', dscr = 'Add Print Method' }, {
-    d(1, print_func, {}, vim.bo.filetype),
-  })
+    d(1, print_func, {}),
+  }),
 }

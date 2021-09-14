@@ -37,12 +37,15 @@ M.colors = {
     guifg = '#56b6c2',
   },
   OnedarkBlack = {
-    guifg = '#282c34'
+    guifg = '#282c34',
   },
   OnedarkCyan = {
-    guifg = '#56B6C2'
-  }
+    guifg = '#56B6C2',
+  },
 }
+
+local normal = '#ABB2BF'
+local vertsplit = '#3E4452'
 
 M.neovim = {
   Comment = {
@@ -52,11 +55,10 @@ M.neovim = {
   ColorColumn = {
     guibg = '#3B3735',
   },
-  Conceal = {
-  },
+  Conceal = {},
   Cursor = {
     guifg = M.colors.OnedarkBlack.guifg,
-    guibg = M.colors.OnedarkBlue.guifg
+    guibg = M.colors.OnedarkBlue.guifg,
   },
   lCursor = {
     link = 'Cursor',
@@ -65,10 +67,10 @@ M.neovim = {
     link = 'Cursor',
   },
   CursorColumn = {
-    link = 'OnedarkDarkGray'
+    link = 'OnedarkDarkGray',
   },
   CursorLine = {
-    gui = 'underline'
+    gui = 'underline',
   },
   Directory = {
     link = 'OnedarkBlue',
@@ -79,35 +81,33 @@ M.neovim = {
   },
   DiffChange = {
     guifg = M.colors.OnedarkLightYellow.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   DiffDelete = {
     guifg = M.colors.OnedarkBlack.guifg,
-    guibg = M.colors.OnedarkLightRed.guifg
+    guibg = M.colors.OnedarkLightRed.guifg,
   },
   DiffText = {
     guifg = M.colors.OnedarkLightYellow.guifg,
-    guibg = M.colors.OnedarkBlack.guifg
+    guibg = M.colors.OnedarkBlack.guifg,
   },
   EndOfBuffer = {
-    link = 'OnedarkBlack'
+    link = 'OnedarkBlack',
   },
   ErrorMsg = {
-    link = 'OnedarkLightRed'
+    link = 'OnedarkLightRed',
   },
   VertSplit = {
-    guifg = '#3E4452',
+    guifg = vertsplit
   },
   Folded = {
-    link = 'OnedarkDarkGray'
+    link = 'OnedarkDarkGray',
   },
-  FoldColumn = {
-  },
-  SignColumn = {
-  },
+  FoldColumn = {},
+  SignColumn = {},
   IncSearch = {
     guifg = M.colors.OnedarkLightYellow.guifg,
-    guibg = M.colors.OnedarkDarkGray.guifg
+    guibg = M.colors.OnedarkDarkGray.guifg,
   },
   LineNr = {
     guifg = M.colors.OnedarkLightGray.guifg,
@@ -115,14 +115,14 @@ M.neovim = {
   CursorLineNr = {},
   MatchParen = {
     guifg = M.colors.OnedarkBlue.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   ModeMsg = {},
   NonText = {
     guibg = '#3B4048',
   },
   Normal = {
-    guifg = '#ABB2BF',
+    guifg = normal,
   },
   NormalFloat = {
     link = 'Normal',
@@ -131,43 +131,43 @@ M.neovim = {
     link = 'Normal',
   },
   Pmenu = {
-    guifg = '#ABB2BF',
-    guibg = '#3E4452',
+    guifg = normal,
+    guibg = vertsplit,
   },
   PmenuSel = {
     guifg = M.colors.OnedarkDarkGray.guifg,
-    guibg = M.colors.OnedarkBlue.guifg
+    guibg = M.colors.OnedarkBlue.guifg,
   },
   PmenuSbar = {
-    link = 'OnedarkDarkGray'
+    link = 'OnedarkDarkGray',
   },
   PmenuThumb = {
-    guibg = '#ABB2BF'
+    link = 'Normal'
   },
   Question = {
-    link = 'OnedarkPurple'
+    link = 'OnedarkPurple',
   },
   QuickFixLine = {
     guifg = M.colors.OnedarkBlack.guifg,
-    guibg = M.colors.OnedarkLightYellow.guifg
+    guibg = M.colors.OnedarkLightYellow.guifg,
   },
   Search = {
     guifg = M.colors.OnedarkBlack.guifg,
-    guibg = M.colors.OnedarkLightYellow.guifg
+    guibg = M.colors.OnedarkLightYellow.guifg,
   },
   SpecialKey = {
-    guibg = '#3B4048'
+    link = 'NonText'
   },
   SpellRare = {
     link = 'OnedarkDarkYellow',
   },
   SpellBad = {
     guifg = M.colors.OnedarkLightRed.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   StatusLine = {
-    guifg = '#ABB2BF',
-    guibg = M.colors.OnedarkDarkGray.guifg
+    guifg = M.colors.OnedarkDarkGray.guifg,
+    guibg = M.colors.OnedarkDarkGray.guifg,
   },
   StatusLineNC = {
     guifg = M.colors.OnedarkDarkGray.guifg,
@@ -175,30 +175,29 @@ M.neovim = {
   TabLine = {
     guifg = M.colors.OnedarkDarkGray.guifg,
   },
-  TabLineFill = {
-  },
+  TabLineFill = {},
   TabLineSel = {
-    guifg = '#ABB2BF',
+    guifg = M.colors.OnedarkDarkGray.guifg,
   },
   Title = {
     link = 'OnedarkGreen',
   },
   Visual = {
-    guibg = '#3E4452',
+    guibg = vertsplit,
   },
   VisualNOS = {
     link = 'Visual',
   },
   WarningMsg = {
-    guifg = M.colors.OnedarkLightYellow.guifg
+    link = 'OnedarkLightYellow'
   },
   WildMenu = {
     guifg = M.colors.OnedarkBlack.guifg,
-    guibg = M.colors.OnedarkBlue.guifg
+    guibg = M.colors.OnedarkBlue.guifg,
   },
   HighlightYank = {
-    link = 'OnedarkDarkRed'
-  }
+    link = 'OnedarkDarkRed',
+  },
 }
 
 M.languages = {
@@ -331,19 +330,19 @@ M.lsp_groups = {
 
   LspDiagnosticsUnderlineHint = {
     guifg = M.colors.OnedarkCyan.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   LspDiagnosticsUnderlineError = {
     guifg = M.colors.OnedarkLightRed.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   LspDiagnosticsUnderlineWarning = {
     guifg = M.colors.OnedarkLightYellow.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
   LspDiagnosticsUnderlineInformation = {
     guifg = M.colors.OnedarkBlue.guifg,
-    gui = 'underline'
+    gui = 'underline',
   },
 
   LspDiagnosticsFloatingError = {
@@ -380,8 +379,8 @@ M.lsp_groups = {
     link = 'Comment',
   },
   LspSignatureHl = {
-    link = 'OnedarkDarkYellow'
-  }
+    link = 'OnedarkDarkYellow',
+  },
 }
 
 M.treesitter = {
@@ -589,8 +588,7 @@ M.gitsigns = {
 
 M.extras = {
   'let g:indent_blankline_char_highlight_list = ["OnedarkLightRed", "OnedarkBlue", "OnedarkLightYellow", "OnedarkPurple", "OnedarkDarkRed", "OnedarkGreen"]',
-'let g:indent_blankline_context_highlight_list = ["IndentBlanklineChar"]',
-
+  'let g:indent_blankline_context_highlight_list = ["IndentBlanklineChar"]',
 }
 
 return M

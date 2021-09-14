@@ -1,3 +1,4 @@
+local A = vim.api
 local ls = require('luasnip')
 local types = require('luasnip.util.types')
 
@@ -32,7 +33,7 @@ setmetatable(ls.snippets, {
 })
 
 local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
+  return A.nvim_replace_termcodes(str, true, true, true)
 end
 
 local function snip_choice_trigger()

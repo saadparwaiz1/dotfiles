@@ -33,7 +33,7 @@ function _G.popup(o, enter)
 end
 
 local function get_highlights(ll, opts)
-  local basehl = opts.contenthl or 'GruvboxGreen'
+  local basehl = opts.contenthl or 'LspDiagnosticsDefaultInformation'
   if ll == vim.log.levels.ERROR then
     basehl = 'LspDiagnosticsDefaultError'
   elseif ll == vim.log.levels.WARN then
@@ -74,13 +74,14 @@ vim.notify = function(msg, log_level, opts)
     msg = { msg }
   end
   opts = opts or {}
-  local _, max = vim.tbl_max(msg, string.len)
+  local w, h = vim.lsp.util._make_floating_popup_size(msg)
   local popts = {
-    width = max,
+    width = w,
     anchor = 'SE',
-    height = #msg,
-    row = vim.o.lines,
+    height = h,
+    row = 0,
     col = vim.o.columns,
+    relative = 'win'
   }
   popts = vim.tbl_extend('force', popts, opts.popts or {})
   local buf, win = popup(popts, false)

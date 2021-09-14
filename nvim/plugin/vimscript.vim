@@ -6,5 +6,8 @@ augroup vim_autocmds
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
     \ |   exe "normal! g`\""
     \ | endif
-  autocmd BufWritePost */lua/personal/plugins.lua PackerSync
+  autocmd BufWritePost */lua/personal/plugins.lua PackerCompile
 augroup end
+
+runtime macros/sandwich/keymap/surround.vim
+colorscheme gruvbox

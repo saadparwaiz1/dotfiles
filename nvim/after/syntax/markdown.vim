@@ -1,8 +1,8 @@
 unlet b:current_syntax
 
 syn include @tex syntax/tex.vim
-syn region mkdMath start="\\\@<!\$" end="\$" skip="\\\$" contains=@tex keepend
-syn region mkdMath start="\\\@<!\$\$" end="\$\$" skip="\\\$" contains=@tex keepend
+syn region mkdMath start="\\\@<!\$" end=/\v(\$|$)/ skip="\\\$" contains=@tex keepend
+syn region mkdMath start="\\\@<!\$\$" end="\v(\$\$|$)" skip="\\\$" contains=@tex keepend
 syn region mkdStrike matchgroup=htmlStrike start="\%(\~\~\)" end="\%(\~\~\)" concealends
 
 syn region mkdID matchgroup=mkdDelimiter    start="\["    end="\]" contained oneline conceal
@@ -33,6 +33,6 @@ hi def link mkdLinkDef       mkdID
 hi def link mkdLinkDefTarget mkdURL
 hi def link mkdLinkTitle     GruvboxGreen
 hi def link mkdBlockquote    Comment
-hi mkdStrike term=strikethrough cterm=strikethrough gui=strikethrough
+hi mkdStrike term=strikethrough gui=strikethrough
 
 let b:current_syntax = 'markdown'

@@ -48,6 +48,7 @@ cmp.setup({
   sources = {
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
+    { name = 'latex_symbols' },
   },
   formatting = {
     format = function(_, item)

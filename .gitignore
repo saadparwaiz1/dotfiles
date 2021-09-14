@@ -26,3 +26,4 @@ packer_compiled.vim
 packer_compiled.lua
 gh
 kitty.conf.bak
+nvim/spell/

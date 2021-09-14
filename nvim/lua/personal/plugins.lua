@@ -7,7 +7,6 @@ packer.startup({
     -- Performance
     use{
       'lewis6991/impatient.nvim',
-      rocks = 'mpack'
     }
     -- Plugin  Manager
     use({
@@ -91,6 +90,7 @@ packer.startup({
       'hrsh7th/nvim-cmp',
       requires = {
         'hrsh7th/cmp-nvim-lsp',
+        'kdheepak/cmp-latex-symbols',
         '~/Documents/projects/cmp_luasnip',
       },
     })
