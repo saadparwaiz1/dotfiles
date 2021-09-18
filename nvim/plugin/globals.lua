@@ -32,18 +32,29 @@ function _G.popup(o, enter)
   return buf, A.nvim_open_win(buf, enter, opts)
 end
 
+-- Reverse key-value pairs in a table
+---@param o table
+---@return table
+function vim.tbl_reverse(o)
+  local tbl = {}
+  for key, value in pairs(o) do
+    tbl[value] = key
+  end
+  return tbl
+end
+
 local function get_highlights(ll, opts)
-  local basehl = opts.contenthl or 'LspDiagnosticsDefaultInformation'
+  local basehl = opts.contenthl or 'DiagnosticInfo'
   if ll == vim.log.levels.ERROR then
-    basehl = 'LspDiagnosticsDefaultError'
+    basehl = 'DiagnosticError'
   elseif ll == vim.log.levels.WARN then
-    basehl = 'LspDiagnosticsDefaultWarning'
+    basehl = 'DiagnosticWarn'
   elseif ll == vim.log.levels.INFO then
-    basehl = 'LspDiagnosticsDefaultInformation'
+    basehl = 'DiagnosticInfo'
   elseif ll == vim.log.levels.DEBUG then
-    basehl = 'LspDiagnosticsDefaultInformation'
+    basehl = 'DiagnosticInfo'
   elseif ll == vim.log.levels.TRACE then
-    basehl = 'LspDiagnosticsDefaultHint'
+    basehl = 'DiagnosticHint'
   end
   local winhl = string.format('Normal:%s,FloatBorder:%s', basehl, opts.borderhl or basehl)
   return winhl
@@ -67,9 +78,9 @@ end
 
 -- Basic Popup Notification System
 --- @param msg table|string
---- @param log_level number
+--- @param level number
 --- @param opts table
-vim.notify = function(msg, log_level, opts)
+vim.notify = function(msg, level, opts)
   if type(msg) == 'string' then
     msg = { msg }
   end
@@ -94,7 +105,7 @@ vim.notify = function(msg, log_level, opts)
     end
     A.nvim_win_close(win, false)
   end, opts.delay or 1000)
-  local winhl = get_highlights(log_level, opts)
+  local winhl = get_highlights(level, opts)
   A.nvim_win_set_option(win, 'winhl', winhl)
 end
 

@@ -1,4 +1,30 @@
 local cmp = require('cmp')
+local icons = {
+  Text = '',
+  Method = '',
+  Function = '',
+  Constructor = '',
+  Field = 'ﰠ',
+  Variable = '',
+  Class = 'ﴯ',
+  Interface = '',
+  Module = '',
+  Property = 'ﰠ',
+  Unit = ' ',
+  Value = '',
+  Enum = '了 ',
+  Keyword = '',
+  Snippet = '',
+  Color = '',
+  File = '',
+  Reference = '',
+  Folder = '',
+  EnumMember = '',
+  Constant = '',
+  Struct = ' ',
+  Event = '',
+  Operator = '',
+}
 
 cmp.setup({
   snippet = {
@@ -51,35 +77,19 @@ cmp.setup({
     { name = 'latex_symbols' },
   },
   formatting = {
-    format = function(_, item)
-      local icons = {
-        Class = ' ',
-        Color = ' ',
-        Constant = ' ',
-        Constructor = ' ',
-        Enum = '了 ',
-        EnumMember = ' ',
-        Field = ' ',
-        File = ' ',
-        Folder = ' ',
-        Function = ' ',
-        Interface = 'ﰮ ',
-        Keyword = ' ',
-        Method = 'ƒ ',
-        Module = ' ',
-        Property = ' ',
-        Snippet = '﬌ ',
-        Struct = ' ',
-        Text = ' ',
-        Unit = ' ',
-        Value = ' ',
-        Variable = ' ',
-      }
-      item.kind = icons[item.kind]
+    format = function(entry, item)
+      item.kind = item.kind .. ' ' .. icons[item.kind]
+      item.menu = ({
+        buffer = '[Buffer]',
+        nvim_lsp = '[LSP]',
+        luasnip = '[LuaSnip]',
+        nvim_lua = '[Lua]',
+        latex_symbols = '[Latex]',
+      })[entry.source.name]
       return item
     end,
   },
   experimental = {
-    ghost_text = true
-  }
+    ghost_text = true,
+  },
 })

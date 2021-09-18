@@ -302,75 +302,6 @@ M.lsp_groups = {
     link = 'OnedarkDarkYellow',
   },
 
-  LspDiagnosticsDefaultError = {
-    link = 'OnedarkLightRed',
-  },
-  LspDiagnosticsDefaultWarning = {
-    link = 'OnedarkLightYellow',
-  },
-  LspDiagnosticsDefaultInformation = {
-    link = 'OnedarkBlue',
-  },
-  LspDiagnosticsDefaultHint = {
-    link = 'OnedarkCyan',
-  },
-
-  LspDiagnosticsVirtualTextError = {
-    link = 'OnedarkLightRed',
-  },
-  LspDiagnosticsVirtualTextWarning = {
-    link = 'OnedarkLightYellow',
-  },
-  LspDiagnosticsVirtualTextInformation = {
-    link = 'OnedarkBlue',
-  },
-  LspDiagnosticsVirtualTextHint = {
-    link = 'OnedarkCyan',
-  },
-
-  LspDiagnosticsUnderlineHint = {
-    guifg = M.colors.OnedarkCyan.guifg,
-    gui = 'underline',
-  },
-  LspDiagnosticsUnderlineError = {
-    guifg = M.colors.OnedarkLightRed.guifg,
-    gui = 'underline',
-  },
-  LspDiagnosticsUnderlineWarning = {
-    guifg = M.colors.OnedarkLightYellow.guifg,
-    gui = 'underline',
-  },
-  LspDiagnosticsUnderlineInformation = {
-    guifg = M.colors.OnedarkBlue.guifg,
-    gui = 'underline',
-  },
-
-  LspDiagnosticsFloatingError = {
-    link = 'OnedarkLightRed',
-  },
-  LspDiagnosticsFloatingWarning = {
-    link = 'OnedarkLightYellow',
-  },
-  LspDiagnosticsFloatingInformation = {
-    link = 'OnedarkBlue',
-  },
-  LspDiagnosticsFloatingHint = {
-    link = 'OnedarkCyan',
-  },
-
-  LspDiagnosticsSignError = {
-    link = 'OnedarkLightRed',
-  },
-  LspDiagnosticsSignWarning = {
-    link = 'OnedarkLightYellow',
-  },
-  LspDiagnosticsSignInformation = {
-    link = 'OnedarkBlue',
-  },
-  LspDiagnosticsSignHint = {
-    link = 'OnedarkCyan',
-  },
-
   LspFloatWinBorder = {
     link = 'NormalNC',
   },
@@ -378,8 +309,40 @@ M.lsp_groups = {
   LspCodeLens = {
     link = 'Comment',
   },
-  LspSignatureHl = {
+  LspSignatureActiveParameter = {
     link = 'OnedarkDarkYellow',
+  },
+}
+
+M.diagnostics = {
+  DiagnosticError = {
+    link = 'OnedarkLightRed',
+  },
+  DiagnosticWarn = {
+    link = 'OnedarkLightYellow',
+  },
+  DiagnosticInfo = {
+    link = 'OnedarkBlue',
+  },
+  DiagnosticHint = {
+    link = 'OnedarkCyan',
+  },
+
+  DiagnosticUnderlineHint = {
+    guifg = M.colors.OnedarkCyan.guifg,
+    gui = 'underline',
+  },
+  DiagnosticUnderlineError = {
+    guifg = M.colors.OnedarkLightRed.guifg,
+    gui = 'underline',
+  },
+  DiagnosticUnderlineWarn = {
+    guifg = M.colors.OnedarkLightYellow.guifg,
+    gui = 'underline',
+  },
+  DiagnosticUnderlineInfo = {
+    guifg = M.colors.OnedarkBlue.guifg,
+    gui = 'underline',
   },
 }
 

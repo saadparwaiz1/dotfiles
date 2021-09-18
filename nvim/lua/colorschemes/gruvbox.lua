@@ -259,7 +259,7 @@ M.neovim = {
   },
   Pmenu = {
     guifg = M.foreground.GruvboxFg1.guifg,
-    guibg = M.background.GruvboxBg1.guifg,
+    guibg = M.background.GruvboxBg2.guifg,
   },
   PmenuSel = {
     guifg = M.background.GruvboxBg1.guifg,
@@ -448,70 +448,6 @@ M.lsp_groups = {
     link = 'GruvboxYellowBold',
   },
 
-  LspDiagnosticsDefaultError = {
-    link = 'GruvboxRed',
-  },
-  LspDiagnosticsDefaultWarning = {
-    link = 'GruvboxYellow',
-  },
-  LspDiagnosticsDefaultInformation = {
-    link = 'GruvboxBlue',
-  },
-  LspDiagnosticsDefaultHint = {
-    link = 'GruvboxAqua',
-  },
-
-  LspDiagnosticsVirtualTextError = {
-    link = 'GruvboxRed',
-  },
-  LspDiagnosticsVirtualTextWarning = {
-    link = 'GruvboxYellow',
-  },
-  LspDiagnosticsVirtualTextInformation = {
-    link = 'GruvboxBlue',
-  },
-  LspDiagnosticsVirtualTextHint = {
-    link = 'GruvboxAqua',
-  },
-
-  LspDiagnosticsUnderlineHint = {
-    link = 'GruvboxAquaUnderline',
-  },
-  LspDiagnosticsUnderlineError = {
-    link = 'GruvboxRedUnderline',
-  },
-  LspDiagnosticsUnderlineWarning = {
-    link = 'GruvboxYellowUnderline',
-  },
-  LspDiagnosticsUnderlineInformation = {
-    link = 'GruvboxBlueUnderline',
-  },
-
-  LspDiagnosticsFloatingError = {
-    link = 'GruvboxRed',
-  },
-  LspDiagnosticsFloatingWarning = {
-    link = 'GruvboxOrange',
-  },
-  LspDiagnosticsFloatingInformation = {
-    link = 'GruvboxBlue',
-  },
-  LspDiagnosticsFloatingHint = {
-    link = 'GruvboxAqua',
-  },
-
-  LspDiagnosticsSignError = {
-    link = 'GruvboxRedSign',
-  },
-  LspDiagnosticsSignWarning = {
-    link = 'GruvboxYellowSign',
-  },
-  LspDiagnosticsSignInformation = {
-    link = 'GruvboxBlueSign',
-  },
-  LspDiagnosticsSignHint = {
-    link = 'GruvboxAquaSign',
-  },
 
   LspFloatWinBorder = {
     link = 'NormalNC',
@@ -520,8 +456,49 @@ M.lsp_groups = {
   LspCodeLens = {
     link = 'Comment',
   },
-  LspSignatureHl = {
+  LspSignatureActiveParameter = {
     link = 'GruvboxYellowBold',
+  },
+}
+
+M.diagnostics = {
+  DiagnosticError = {
+    link = 'GruvboxRed',
+  },
+  DiagnosticWarn = {
+    link = 'GruvboxYellow',
+  },
+  DiagnosticInfo = {
+    link = 'GruvboxBlue',
+  },
+  DiagnosticHint = {
+    link = 'GruvboxAqua',
+  },
+
+  DiagnosticUnderlineHint = {
+    link = 'GruvboxAquaUnderline',
+  },
+  DiagnosticUnderlineError = {
+    link = 'GruvboxRedUnderline',
+  },
+  DiagnosticUnderlineWarn = {
+    link = 'GruvboxYellowUnderline',
+  },
+  DiagnosticUnderlineInfo = {
+    link = 'GruvboxBlueUnderline',
+  },
+
+  DiagnosticSignError = {
+    link = 'GruvboxRedSign',
+  },
+  DiagnosticSignWarn = {
+    link = 'GruvboxYellowSign',
+  },
+  DiagnosticSignInfo = {
+    link = 'GruvboxBlueSign',
+  },
+  DiagnosticSignHint = {
+    link = 'GruvboxAquaSign',
   },
 }
 

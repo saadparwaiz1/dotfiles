@@ -72,7 +72,7 @@ local function on_attach(client, bufnr)
     hint_prefix = ' ',
     handler_opts = { border = 'rounded' },
     floating_window = true,
-    hi_parameter = 'LspSignatureHl',
+    hi_parameter = 'LspSignatureActiveParameter',
   })
   if client.resolved_capabilities.document_highlight then
     A.nvim_exec(
