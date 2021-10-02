@@ -1,5 +1,5 @@
 # Set Env Variable
-export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/$XDG_DATA_HOME/cargo/bin:$XDG_DATA_HOME/nvim/rocks/bin"
+export PATH="$PATH:/Users/saadparwaiz/Library/Python/3.8/bin:/Library/Developer/CommandLineTools/usr/bin:/Users/saadparwaiz/Library/Application Support/Coursier/bin"
 export MANPAGER="/bin/sh -c \"col -b | nvim -c 'set ft=man ts=4 nomod nolist noma' --cmd 'let g:indent_blankline_enabled=v:false' -\""
 typeset -gA ZINIT
 export ZINIT[BIN_DIR]=$(brew --prefix)/opt/zinit
@@ -92,7 +92,6 @@ alias nv='nvim'
 alias less="less -R"
 alias sudo="nocorrect sudo "
 alias tetris='autoload tetriscurses && tetriscurses'
-alias lrocks="luarocks --tree=/Users/saadparwaiz/Library/Share/nvim/rocks --lua-dir=/usr/local/opt/luajit-openresty/"
 alias rmcache='rm -rf ~/Library/Caches/*'
 if command -v exa &>/dev/null; then
     alias ls="exa --icons"

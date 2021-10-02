@@ -85,10 +85,9 @@ local options = {
   completeopt = { 'menuone', 'noselect' },
 }
 
-vim.opt.complete:remove('i')
-vim.opt.complete:remove('t')
-
+vim.opt.complete:remove('i'):remove('t')
 vim.opt.shortmess:append('c')
+
 util.config.options(options)
 
 -- Global Mappings

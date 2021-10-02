@@ -74,7 +74,6 @@ packer.startup({
       'neovim/nvim-lspconfig',
       requires = {
         { 'folke/lua-dev.nvim' },
-        { 'ray-x/lsp_signature.nvim' },
       },
     })
     -- Snippets
@@ -88,6 +87,7 @@ packer.startup({
     -- Auto Completion
     use({
       'hrsh7th/nvim-cmp',
+      branch = 'custom-menu',
       requires = {
         'hrsh7th/cmp-nvim-lsp',
         'kdheepak/cmp-latex-symbols',

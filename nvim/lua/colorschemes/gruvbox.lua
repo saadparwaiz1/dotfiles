@@ -705,6 +705,12 @@ M.gitsigns = {
   },
 }
 
+M.cmp = {
+  CmpItemMenu = {
+    link = 'Keyword'
+  }
+}
+
 M.extras = {
   'let g:indent_blankline_char_highlight_list = ["GruvboxRed", "GruvboxAqua", "GruvboxYellow", "GruvboxPurple", "GruvboxOrange", "GruvboxGreen"]',
   'let g:indent_blankline_context_highlight_list = ["IndentBlanklineChar"]',

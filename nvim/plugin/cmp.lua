@@ -47,8 +47,8 @@ cmp.setup({
       select = true,
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)
-      if vim.fn.pumvisible() == 1 then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+      if cmp.visible() then
+        cmp.select_next_item()
       elseif require('luasnip').expand_or_jumpable() then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
       else
@@ -80,10 +80,8 @@ cmp.setup({
     format = function(entry, item)
       item.kind = item.kind .. ' ' .. icons[item.kind]
       item.menu = ({
-        buffer = '[Buffer]',
         nvim_lsp = '[LSP]',
         luasnip = '[LuaSnip]',
-        nvim_lua = '[Lua]',
         latex_symbols = '[Latex]',
       })[entry.source.name]
       return item

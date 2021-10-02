@@ -4,6 +4,7 @@ local types = require('luasnip.util.types')
 
 ls.config.set_config({
   history = false,
+  delete_check_events = 'InsertLeave',
   ext_opts = {
     [types.choiceNode] = {
       active = {
