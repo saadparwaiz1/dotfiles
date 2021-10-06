@@ -1,13 +1,13 @@
 local A = vim.api
 
 local function goto_next_error()
-  vim.lsp.diagnostic.goto_next({
+  vim.diagnostic.goto_next({
     popup_opts = { border = 'rounded' },
   })
 end
 
 local function goto_prev_error()
-  vim.lsp.diagnostic.goto_prev({
+  vim.diagnostic.goto_prev({
     popup_opts = { border = 'rounded' },
   })
 end

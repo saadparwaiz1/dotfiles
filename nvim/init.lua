@@ -41,6 +41,7 @@ local globals = {
     'java',
     'rust',
     'json',
+    'scala',
     'python',
     'bash=sh',
     'shell=sh',
@@ -62,7 +63,6 @@ local options = {
   pumblend = 30,
   cmdheight = 1,
   history = 100,
-  hidden = true,
   backup = false,
   shiftwidth = 2,
   softtabstop = 2,
@@ -78,7 +78,6 @@ local options = {
   writebackup = true,
   termguicolors = true,
   relativenumber = true,
-  inccommand = 'nosplit',
   clipboard = 'unnamedplus',
   listchars = { tab = '| ', trail = '~' },
   wildignore = { '*.o', '*~', '*.pyc', '*/.git/*', '*/.hg/*', '*/.svn/*', '*/.DS_store', '**/node_modules' },
@@ -127,18 +126,6 @@ local maps = {
   {
     'Q',
     '<nop>',
-  },
-  {
-    'vv',
-    '^v$',
-  },
-  {
-    'vv',
-    '^v$',
-  },
-  {
-    '<C-l>',
-    '<cmd>noh<CR>',
   },
   {
     '\\cmd]',

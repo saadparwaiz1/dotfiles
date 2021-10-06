@@ -259,7 +259,7 @@ M.neovim = {
   },
   Pmenu = {
     guifg = M.foreground.GruvboxFg1.guifg,
-    guibg = M.background.GruvboxBg2.guifg,
+    guibg = M.background.GruvboxBg1.guifg,
   },
   PmenuSel = {
     guifg = M.background.GruvboxBg1.guifg,

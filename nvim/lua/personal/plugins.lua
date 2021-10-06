@@ -44,6 +44,9 @@ packer.startup({
     use({
       'steelsojka/pears.nvim',
     })
+    use({
+      'jbyuki/venn.nvim'
+    })
     -- Git Client
     use({
       'TimUntersberger/neogit',
@@ -87,8 +90,8 @@ packer.startup({
     -- Auto Completion
     use({
       'hrsh7th/nvim-cmp',
-      branch = 'custom-menu',
       requires = {
+        'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lsp',
         'kdheepak/cmp-latex-symbols',
         '~/Documents/projects/cmp_luasnip',

@@ -75,12 +75,14 @@ cmp.setup({
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
     { name = 'latex_symbols' },
+    { name = 'buffer'}
   },
   formatting = {
     format = function(entry, item)
       item.kind = item.kind .. ' ' .. icons[item.kind]
       item.menu = ({
         nvim_lsp = '[LSP]',
+        buffer = '[Buffer]',
         luasnip = '[LuaSnip]',
         latex_symbols = '[Latex]',
       })[entry.source.name]
