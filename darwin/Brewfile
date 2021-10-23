@@ -31,7 +31,6 @@ cask "kitty"
 # Shell Tools
 brew "fd"
 brew "gh"
-brew "fzf"
 brew "exa"
 brew "black"
 brew "pandoc"

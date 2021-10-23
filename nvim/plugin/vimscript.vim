@@ -6,7 +6,8 @@ augroup vim_autocmds
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
     \ |   exe "normal! g`\""
     \ | endif
-  autocmd BufWritePost */lua/personal/plugins.lua PackerCompile
+  autocmd BufWritePost */lua/personal/plugins.lua PackerCompile | PackerUpdate
+  autocmd FileType markdown setlocal spell
 augroup end
 
 runtime macros/sandwich/keymap/surround.vim

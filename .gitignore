@@ -2,6 +2,7 @@
 com.apple.*
 com.google.*
 org.*
+!org.lua
 !local.enviroment.plist
 spicetify_data
 spotifyd
@@ -27,3 +28,4 @@ packer_compiled.lua
 gh
 kitty.conf.bak
 nvim/spell/
+github-copilot

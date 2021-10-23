@@ -43,7 +43,7 @@ local function create_colors(name, scheme)
   pth = pth .. '/colors/'
   uv.fs_mkdir(pth, 511, function(err, _)
     if err and not uv.fs_stat(pth) then
-      vim.defer_fn(function ()
+      vim.defer_fn(function()
         vim.notify('Directory Cannot Be created', vim.log.levels.ERROR)
       end, 0)
       return
@@ -51,7 +51,7 @@ local function create_colors(name, scheme)
     pth = pth .. name .. '.vim'
     uv.fs_open(pth, 'w', 438, function(err2, fd)
       if err2 and not uv.fs_stat(pth) then
-        vim.defer_fn(function ()
+        vim.defer_fn(function()
           vim.notify('File Cannot Be Opened', vim.log.levels.ERROR)
         end, 0)
         return
@@ -59,7 +59,7 @@ local function create_colors(name, scheme)
       local contents = _schemify(scheme)
       contents = table.concat(contents, '\n')
       uv.fs_write(fd, contents, 0, function()
-        vim.defer_fn(function ()
+        vim.defer_fn(function()
           vim.notify('File Written', vim.log.levels.INFO)
         end, 0)
         uv.fs_close(fd)

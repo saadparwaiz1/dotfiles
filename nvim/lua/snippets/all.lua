@@ -19,7 +19,7 @@ local function shebang(_, _)
 end
 
 return {
-  s({ trig = 'hd', dscr = 'Add SheBang' }, {
+  s({ trig = '#!', dscr = 'Add SheBang' }, {
     d(1, shebang, {}),
   }),
 }

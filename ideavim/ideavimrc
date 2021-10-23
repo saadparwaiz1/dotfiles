@@ -1,0 +1,18 @@
+
+set number
+set relativenumber
+
+set surround
+set ideajoin
+
+nmap <Space>rn <Action>(RenameElement)
+nmap ]e <Action>(GotoNextError)
+nmap [e <Action>(GotoPreviousError)
+nmap gh <Action>(ShowErrorDescription)
+nmap K <Action>(QuickJavaDoc)
+nmap gd <Action>(GotoDeclaration)
+nmap gr <Action>(FindUsages)
+nmap gi <Action>(QuickImplementations)
+vmap > >gv
+vmap < <gv
+imap jj <Esc>

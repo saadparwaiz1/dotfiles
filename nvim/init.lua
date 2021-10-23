@@ -2,7 +2,7 @@
 require('impatient')
 
 local util = require('personal.util')
-local keymap = require('personal.keymap')
+local keymap = require('knvim.keymap')
 
 vim.loop.os_setenv('MACOSX_DEPLOYMENT_TARGET', '10.15')
 
@@ -51,6 +51,7 @@ local globals = {
     'ts=typescript',
     'js=javascript',
   },
+  copilot_no_tab_map = true,
 }
 util.config.globals(globals)
 
@@ -170,12 +171,12 @@ local maps = {
   {
     '<',
     '<gv',
-    mode = 'x'
+    mode = 'x',
   },
   {
     '>',
     '>gv',
-    mode = 'x'
+    mode = 'x',
   },
   {
     'gc',
@@ -186,6 +187,13 @@ local maps = {
     'jj',
     '<Esc>',
     mode = 'i',
+  },
+  {
+    '<C-j>',
+    'copilot#Accept()',
+    mode = 'i',
+    expr = true,
+    noremap = false,
   },
 }
 

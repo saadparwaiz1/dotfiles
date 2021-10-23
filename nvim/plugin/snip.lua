@@ -44,4 +44,4 @@ local function snip_choice_trigger()
   return t('<C-k>')
 end
 
-require('personal.keymap').map('<C-k>', snip_choice_trigger, { mode = { 'i', 's' }, expr = true, noremap = false })
+require('knvim.keymap').map('<C-k>', snip_choice_trigger, { mode = { 'i', 's' }, expr = true, noremap = false })

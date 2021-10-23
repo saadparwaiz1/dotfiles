@@ -5,9 +5,17 @@ local packer = require('packer')
 packer.startup({
   function(use)
     -- Performance
-    use{
+    use({
       'lewis6991/impatient.nvim',
-    }
+    })
+    use({
+      'nathom/filetype.nvim',
+    })
+    -- Note Taking
+    use({
+      'nvim-orgmode/orgmode',
+      'akinsho/org-bullets.nvim',
+    })
     -- Plugin  Manager
     use({
       'wbthomason/packer.nvim',
@@ -45,7 +53,7 @@ packer.startup({
       'steelsojka/pears.nvim',
     })
     use({
-      'jbyuki/venn.nvim'
+      'jbyuki/venn.nvim',
     })
     -- Git Client
     use({
@@ -62,7 +70,9 @@ packer.startup({
       'nvim-telescope/telescope.nvim',
       requires = {
         { 'nvim-lua/plenary.nvim' },
+        { 'nvim-telescope/telescope-ui-select.nvim' },
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        { 'kyazdani42/nvim-web-devicons' },
       },
     })
     -- Tree Sitter and It's Extensions
@@ -87,6 +97,10 @@ packer.startup({
     use({
       'jose-elias-alvarez/null-ls.nvim',
     })
+    -- custom
+    use({
+      'saadparwaiz1/keymap.nvim',
+    })
     -- Auto Completion
     use({
       'hrsh7th/nvim-cmp',
@@ -94,8 +108,11 @@ packer.startup({
         'hrsh7th/cmp-buffer',
         'hrsh7th/cmp-nvim-lsp',
         'kdheepak/cmp-latex-symbols',
-        '~/Documents/projects/cmp_luasnip',
+        '~/Documents/projects/cmp_luasnip/',
       },
+    })
+    use({
+      'github/copilot.vim',
     })
   end,
 })

@@ -46,10 +46,10 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 --- @param bufnr number
 --- @return nil
 local function on_attach(client, bufnr)
-  local keymap = require('personal.keymap')
+  local keymap = require('knvim.keymap')
   local opts = {
     bufnr = bufnr,
-    silent = true
+    silent = true,
   }
   if client.config.root_dir ~= nil and client.config.root_dir ~= vim.loop.cwd() then
     A.nvim_set_current_dir(client.config.root_dir)
@@ -68,7 +68,7 @@ local function on_attach(client, bufnr)
   keymap.map_local('gw', '<cmd>Telescope lsp_workspace_symbols', opts)
   keymap.map_local('<leader>dd', '<cmd>Telescope lsp_document_diagnostics', opts)
   keymap.map_local('<leader>wd', '<cmd>Telescope lsp_workspace_diagnostics', opts)
-  opts.mode = {'i', 'n'}
+  opts.mode = { 'i', 'n' }
   keymap.map_local('<C-s>', vim.lsp.buf.signature_help, opts)
   if client.resolved_capabilities.document_highlight then
     A.nvim_exec(

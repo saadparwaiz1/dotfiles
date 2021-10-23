@@ -98,7 +98,7 @@ M.neovim = {
     link = 'OnedarkLightRed',
   },
   VertSplit = {
-    guifg = vertsplit
+    guifg = vertsplit,
   },
   Folded = {
     link = 'OnedarkDarkGray',
@@ -142,7 +142,7 @@ M.neovim = {
     link = 'OnedarkDarkGray',
   },
   PmenuThumb = {
-    link = 'Normal'
+    link = 'Normal',
   },
   Question = {
     link = 'OnedarkPurple',
@@ -156,7 +156,7 @@ M.neovim = {
     guibg = M.colors.OnedarkLightYellow.guifg,
   },
   SpecialKey = {
-    link = 'NonText'
+    link = 'NonText',
   },
   SpellRare = {
     link = 'OnedarkDarkYellow',
@@ -189,7 +189,7 @@ M.neovim = {
     link = 'Visual',
   },
   WarningMsg = {
-    link = 'OnedarkLightYellow'
+    link = 'OnedarkLightYellow',
   },
   WildMenu = {
     guifg = M.colors.OnedarkBlack.guifg,

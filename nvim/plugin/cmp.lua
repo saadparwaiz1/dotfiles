@@ -74,8 +74,9 @@ cmp.setup({
   sources = {
     { name = 'luasnip' },
     { name = 'nvim_lsp' },
+    { name = 'orgmode' },
     { name = 'latex_symbols' },
-    { name = 'buffer'}
+    { name = 'buffer', Keyword_length = 4 },
   },
   formatting = {
     format = function(entry, item)
@@ -85,6 +86,7 @@ cmp.setup({
         buffer = '[Buffer]',
         luasnip = '[LuaSnip]',
         latex_symbols = '[Latex]',
+        orgmode = '[OrgMode]',
       })[entry.source.name]
       return item
     end,

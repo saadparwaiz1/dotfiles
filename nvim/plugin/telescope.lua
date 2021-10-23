@@ -7,7 +7,7 @@ telescope.setup({
     mappings = {
       i = {
         ['<Esc>'] = 'close',
-        ['<Tab>'] = 'toggle_selection'
+        ['<Tab>'] = 'toggle_selection',
       },
     },
   },

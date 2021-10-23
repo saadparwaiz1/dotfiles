@@ -378,7 +378,7 @@ M.languages = {
     link = 'GruvboxRed',
   },
   Operator = {
-    link = 'GruvboxFg1',
+    link = 'GruvboxOrange',
   },
   Keyword = {
     link = 'GruvboxRed',
@@ -447,7 +447,6 @@ M.lsp_groups = {
   LspReferenceWrite = {
     link = 'GruvboxYellowBold',
   },
-
 
   LspFloatWinBorder = {
     link = 'NormalNC',
@@ -706,9 +705,24 @@ M.gitsigns = {
 }
 
 M.cmp = {
+  CmpItemAbbr = {
+    link = 'GruvboxFg0',
+  },
+  CmpItemAbbrDeprecated = {
+    link = 'GruvboxFg0',
+  },
+  CmpItemAbbrMatch = {
+    link = 'GruvboxBlue',
+  },
+  CmpItemAbbrMatchFuzzy = {
+    link = 'GruvboxBlueUnderline',
+  },
+  CmpItemKind = {
+    link = 'GruvboxOrange',
+  },
   CmpItemMenu = {
-    link = 'Keyword'
-  }
+    link = 'GruvboxRed',
+  },
 }
 
 M.extras = {

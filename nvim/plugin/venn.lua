@@ -1,5 +1,5 @@
 local venn_enabled = nil
-local keymap = require "personal.keymap"
+local keymap = require('knvim.keymap')
 
 local function toggle_venn()
   if venn_enabled == nil then
@@ -10,7 +10,7 @@ local function toggle_venn()
     keymap.tmp('K', '<C-v>k:VBox<CR>', {})
     keymap.tmp('H', '<C-v>h:VBox<CR>', {})
     keymap.tmp('L', '<C-v>l:VBox<CR>', {})
-    keymap.tmp('f', ':VBox<CR>', {mode='v'})
+    keymap.tmp('f', ':VBox<CR>', { mode = 'v' })
   else
     vim.notify('Venn Mode Disabled')
     vim.opt.virtualedit = ''

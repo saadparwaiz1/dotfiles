@@ -92,7 +92,7 @@ vim.notify = function(msg, level, opts)
     height = h,
     row = 0,
     col = vim.o.columns,
-    relative = 'win'
+    relative = 'win',
   }
   popts = vim.tbl_extend('force', popts, opts.popts or {})
   local buf, win = popup(popts, false)
@@ -123,14 +123,14 @@ end
 
 -- Open Vim Help in a Floating Window
 ---@param query string
-vim.help = function (query)
+vim.help = function(query)
   local buf, _ = popup({
     height = 30,
-    width = 80
+    width = 80,
   }, true)
   A.nvim_buf_set_option(buf, 'filetype', 'help')
   A.nvim_buf_set_option(buf, 'buftype', 'help')
-  A.nvim_buf_call(buf, function ()
+  A.nvim_buf_call(buf, function()
     vim.cmd('help ' .. query)
   end)
 end
