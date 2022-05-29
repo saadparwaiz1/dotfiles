@@ -5,13 +5,11 @@ tap "homebrew/bundle"
 tap "homebrew/services"
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"
-tap "saadparwaiz1/personal"
 
 # Text Editors
 brew "neovim"
 
 # Productivity
-cask "skim"
 cask "alfred"
 cask "alt-tab"
 cask "smcfancontrol"
@@ -32,41 +30,23 @@ cask "kitty"
 brew "fd"
 brew "gh"
 brew "exa"
-brew "black"
 brew "pandoc"
 brew "ripgrep"
-brew "pygments"
 brew "git-delta"
 
 # Shells
-brew "bash"
+brew "fish"
 
 # Browsers
-cask "brave-browser"
+cask "firefox"
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"
 
 # Conferencing
-cask "zoom"
 cask "signal"
 cask "discord"
 
-# Tooling
-brew "cmake"
-brew "shfmt"
-
 # Language Servers
-# ============================================================================
 brew "texlab"
-brew "saadparwaiz1/personal/lua-language-server"
-
-# Compilers
-
-# Interpreters
-brew "node"
-brew "python@3.9"
-
-# Writing
-# ============================================================================
-cask "mactex-no-gui"
+brew "lua-language-server"

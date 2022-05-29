@@ -1,749 +1,470 @@
-local M = {}
+local GruvboxFg0 = { fg = "#FBF0C6" }
+local GruvboxFg1 = { fg = "#EBDBB2" }
+local GruvboxFg2 = { fg = "#D4C3A0" }
+local GruvboxFg3 = { fg = "#BDAF93" }
+local GruvboxFg4 = { fg = "#A89985" }
+local GruvboxBg0 = { fg = "#292929" }
+local GruvboxBg1 = { fg = "#3B3735" }
+local GruvboxBg2 = { fg = "#4F4945" }
+local GruvboxBg3 = { fg = "#655B53" }
+local GruvboxBg4 = { fg = "#7D6F64" }
+local GruvboxGray = { fg = "#918273" }
+local GruvboxBlue = { fg = "#83A598" }
+local GruvboxRed = { fg = "#FB4632" }
+local GruvboxYellow = { fg = "#FABD2E" }
+local GruvboxPurple = { fg = "#D4879C" }
+local GruvboxGreen = { fg = "#B8BA26" }
+local GruvboxAqua = { fg = "#8EC07C" }
+local GruvboxOrange = { fg = "#FE811B" }
+local GruvboxGreenUnderline = { sp = GruvboxGreen.fg, undercurl = true }
+local GruvboxYellowUnderline = { sp = GruvboxYellow.fg, undercurl = true }
+local GruvboxBlueUnderline = { sp = GruvboxBlue.fg, undercurl = true }
+local GruvboxPurpleUnderline = { sp = GruvboxPurple.fg, undercurl = true }
+local GruvboxAquaUnderline = { sp = GruvboxAqua.fg, undercurl = true }
+local GruvboxOrangeUnderline = { sp = GruvboxOrange.fg, undercurl = true }
+local GruvboxRedUnderline = { sp = GruvboxRed.fg, undercurl = true }
+local GruvboxRedBold = { fg = GruvboxRed.fg, bold = true }
+local GruvboxGreenBold = { fg = GruvboxGreen.fg, bold = true }
+local GruvboxYellowBold = { fg = GruvboxYellow.fg, bold = true }
+local GruvboxBlueBold = { fg = GruvboxBlue.fg, bold = true }
+local GruvboxPurpleBold = { fg = GruvboxPurple.fg, bold = true }
+local GruvboxAquaBold = { fg = GruvboxAqua.fg, bold = true }
+local GruvboxOrangeBold = { fg = GruvboxOrange.fg, bold = true }
+local GruvboxRedSign = { fg = GruvboxRed.fg, bg = GruvboxBg0.fg }
+local GruvboxGreenSign = { fg = GruvboxGreen.fg, bg = GruvboxBg0.fg }
+local GruvboxYellowSign = { fg = GruvboxYellow.fg, bg = GruvboxBg0.fg }
+local GruvboxBlueSign = { fg = GruvboxBlue.fg, bg = GruvboxBg0.fg }
+local GruvboxPurpleSign = { fg = GruvboxPurple.fg, bg = GruvboxBg0.fg }
+local GruvboxAquaSign = { fg = GruvboxAqua.fg, bg = GruvboxBg0.fg }
+local GruvboxOrangeSign = { fg = GruvboxOrange.fg, bg = GruvboxBg0.fg }
 
-M.__name = 'gruvbox'
-
-M.foreground = {
-  GruvboxFg0 = {
-    guifg = '#FBF0C6',
-  },
-  GruvboxFg1 = {
-    guifg = '#EBDBB2',
-  },
-  GruvboxFg2 = {
-    guifg = '#D4C3A0',
-  },
-  GruvboxFg3 = {
-    guifg = '#BDAF93',
-  },
-  GruvboxFg4 = {
-    guifg = '#A89985',
-  },
-}
-
-M.background = {
-  GruvboxBg0 = {
-    guifg = '#292929',
-  },
-  GruvboxBg1 = {
-    guifg = '#3B3735',
-  },
-  GruvboxBg2 = {
-    guifg = '#4F4945',
-  },
-  GruvboxBg3 = {
-    guifg = '#655B53',
-  },
-  GruvboxBg4 = {
-    guifg = '#7D6F64',
-  },
-}
-
-M.colors = {
-  GruvboxGray = {
-    guifg = '#918273',
-  },
-  GruvboxBlue = {
-    guifg = '#83A598',
-  },
-  GruvboxRed = {
-    guifg = '#FB4632',
-  },
-  GruvboxYellow = {
-    guifg = '#FABD2E',
-  },
-  GruvboxPurple = {
-    guifg = '#D4879C',
-  },
-  GruvboxGreen = {
-    guifg = '#B8BA26',
-  },
-  GruvboxAqua = {
-    guifg = '#8EC07C',
-  },
-  GruvboxOrange = {
-    guifg = '#FE811B',
-  },
-}
-
-M.underline = {
-  GruvboxGreenUnderline = {
-    guisp = M.colors.GruvboxGreen.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxYellowUnderline = {
-    guisp = M.colors.GruvboxYellow.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxBlueUnderline = {
-    guisp = M.colors.GruvboxBlue.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxPurpleUnderline = {
-    guisp = M.colors.GruvboxPurple.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxAquaUnderline = {
-    guisp = M.colors.GruvboxAqua.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxOrangeUnderline = {
-    guisp = M.colors.GruvboxOrange.guifg,
-    gui = 'undercurl',
-  },
-  GruvboxRedUnderline = {
-    guisp = M.colors.GruvboxRed.guifg,
-    gui = 'undercurl',
-  },
-}
-
-M.bolds = {
-  GruvboxRedBold = {
-    guifg = M.colors.GruvboxRed.guifg,
-    gui = 'bold',
-  },
-  GruvboxGreenBold = {
-    guifg = M.colors.GruvboxGreen.guifg,
-    gui = 'bold',
-  },
-  GruvboxYellowBold = {
-    guifg = M.colors.GruvboxYellow.guifg,
-    gui = 'bold',
-  },
-  GruvboxBlueBold = {
-    guifg = M.colors.GruvboxBlue.guifg,
-    gui = 'bold',
-  },
-  GruvboxPurpleBold = {
-    guifg = M.colors.GruvboxPurple.guifg,
-    gui = 'bold',
-  },
-  GruvboxAquaBold = {
-    guifg = M.colors.GruvboxAqua.guifg,
-    gui = 'bold',
-  },
-  GruvboxOrangeBold = {
-    guifg = M.colors.GruvboxOrange.guifg,
-    gui = 'bold',
-  },
-}
-
-M.signs = {
-  GruvboxRedSign = {
-    guifg = M.colors.GruvboxRed.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxGreenSign = {
-    guifg = M.colors.GruvboxGreen.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxYellowSign = {
-    guifg = M.colors.GruvboxYellow.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxBlueSign = {
-    guifg = M.colors.GruvboxBlue.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxPurpleSign = {
-    guifg = M.colors.GruvboxPurple.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxAquaSign = {
-    guifg = M.colors.GruvboxAqua.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  GruvboxOrangeSign = {
-    guifg = M.colors.GruvboxOrange.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-}
-
-M.neovim = {
+local colorscheme = {
   Comment = {
-    guifg = M.colors.GruvboxGray.guifg,
-    gui = 'italic',
+    fg = GruvboxGray.fg,
+    italic = true,
   },
   ColorColumn = {
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  Conceal = {
-    link = 'GruvboxOrange',
+    fg = GruvboxBg1.fg,
+    bg = GruvboxFg1.fg,
+    reverse = true,
   },
   Cursor = {
-    gui = 'inverse',
-  },
-  lCursor = {
-    link = 'Cursor',
-  },
-  CursorIM = {
-    link = 'Cursor',
-  },
-  CursorColumn = {
-    link = 'CursorLine',
+    reverse = true,
   },
   CursorLine = {
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  Directory = {
-    link = 'GruvboxGreenBold',
+    bg = GruvboxBg0.fg,
   },
   DiffAdd = {
-    guifg = M.colors.GruvboxGreen.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxGreen.fg,
+    bg = GruvboxBg0.fg,
   },
   DiffChange = {
-    guifg = M.colors.GruvboxAqua.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxAqua.fg,
+    bg = GruvboxBg0.fg,
   },
   DiffDelete = {
-    guifg = M.colors.GruvboxRed.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxRed.fg,
+    bg = GruvboxBg0.fg,
   },
   DiffText = {
-    guifg = M.colors.GruvboxYellow.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  EndOfBuffer = {
-    link = 'NonText',
+    fg = GruvboxYellow.fg,
+    bg = GruvboxBg0.fg,
   },
   ErrorMsg = {
-    guifg = M.background.GruvboxBg0.guifg,
-    guibg = M.colors.GruvboxRed.guifg,
-    gui = 'bold',
+    fg = GruvboxBg0.fg,
+    bg = GruvboxRed.fg,
+    bold = true,
   },
   VertSplit = {
-    guifg = M.background.GruvboxBg3.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxBg3.fg,
+    bg = GruvboxBg0.fg,
   },
   Folded = {
-    guifg = M.colors.GruvboxGray.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxGray.fg,
+    bg = GruvboxBg0.fg,
   },
   FoldColumn = {
-    guifg = M.colors.GruvboxGray.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxGray.fg,
+    bg = GruvboxBg0.fg,
   },
   SignColumn = {
-    guibg = M.background.GruvboxBg0.guifg,
+    bg = GruvboxBg0.fg,
   },
   IncSearch = {
-    guifg = M.colors.GruvboxOrange.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-    gui = 'inverse',
-  },
-  LineNr = {
-    link = 'GruvboxBg4',
+    fg = GruvboxOrange.fg,
+    bg = GruvboxBg0.fg,
+    reverse = true,
   },
   CursorLineNr = {
-    guifg = M.colors.GruvboxYellow.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  MatchParen = {
-    link = 'GruvboxYellowBold',
-  },
-  ModeMsg = {
-    link = 'GruvboxYellowBold',
-  },
-  NonText = {
-    link = 'GruvboxBg2',
+    fg = GruvboxYellow.fg,
+    bg = GruvboxBg0.fg,
   },
   Normal = {
-    guifg = M.foreground.GruvboxFg1.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  NormalFloat = {
-    link = 'Normal',
-  },
-  NormalNC = {
-    link = 'Normal',
+    fg = GruvboxFg1.fg,
+    bg = GruvboxBg0.fg,
   },
   Pmenu = {
-    guifg = M.foreground.GruvboxFg1.guifg,
-    guibg = M.background.GruvboxBg1.guifg,
+    fg = GruvboxFg1.fg,
+    bg = GruvboxBg1.fg,
   },
   PmenuSel = {
-    guifg = M.background.GruvboxBg1.guifg,
-    guibg = M.colors.GruvboxBlue.guifg,
-    gui = 'bold',
+    fg = GruvboxBg1.fg,
+    bg = GruvboxBlue.fg,
+    bold = true,
   },
   PmenuSbar = {
-    guibg = M.background.GruvboxBg1.guifg,
+    bg = GruvboxBg1.fg,
   },
   PmenuThumb = {
-    guibg = M.background.GruvboxBg4.guifg,
-  },
-  Question = {
-    link = 'GruvboxOrangeBold',
+    bg = GruvboxBg4.fg,
   },
   QuickFixLine = {
-    guifg = M.background.GruvboxBg0.guifg,
-    guibg = M.colors.GruvboxYellow.guifg,
-    gui = 'bold',
+    fg = GruvboxBg0.fg,
+    bg = GruvboxYellow.fg,
+    bold = true,
   },
   Search = {
-    guifg = M.colors.GruvboxYellow.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-    gui = 'inverse',
-  },
-  SpecialKey = {
-    link = 'GruvboxFg4',
-  },
-  SpellRare = {
-    link = 'GruvboxPurpleUnderline',
-  },
-  SpellBad = {
-    link = 'GruvboxRedUnderline',
+    fg = GruvboxYellow.fg,
+    bg = GruvboxBg0.fg,
+    reverse = true,
   },
   StatusLine = {
-    guifg = M.background.GruvboxBg1.guifg,
-    guibg = M.foreground.GruvboxFg1.guifg,
-    gui = 'inverse',
+    fg = GruvboxBg1.fg,
+    bg = GruvboxFg1.fg,
+    reverse = true,
   },
   StatusLineNC = {
-    guifg = M.background.GruvboxBg0.guifg,
-    guibg = M.foreground.GruvboxFg4.guifg,
-    gui = 'inverse',
+    fg = GruvboxBg0.fg,
+    bg = GruvboxFg4.fg,
+    reverse = true,
   },
   TabLine = {
-    guifg = M.background.GruvboxBg4.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxBg4.fg,
+    bg = GruvboxBg0.fg,
   },
   TabLineFill = {
-    guifg = M.background.GruvboxBg4.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
+    fg = GruvboxBg4.fg,
+    bg = GruvboxBg0.fg,
   },
   TabLineSel = {
-    guifg = M.colors.GruvboxGreen.guifg,
-    guibg = M.background.GruvboxBg0.guifg,
-  },
-  Title = {
-    link = 'GruvboxGreenBold',
-  },
-  Visual = {
-    guibg = M.background.GruvboxBg3.guifg,
-    gui = 'inverse',
-  },
-  VisualNOS = {
-    link = 'Visual',
-  },
-  WarningMsg = {
-    link = 'GruvboxRedBold',
+    fg = GruvboxGreen.fg,
+    bg = GruvboxBg0.fg,
   },
   WildMenu = {
-    guifg = M.colors.GruvboxBlue.guifg,
-    guibg = M.background.GruvboxBg1.guifg,
-    gui = 'bold',
+    fg = GruvboxBlue.fg,
+    bg = GruvboxBg1.fg,
+    bold = true,
   },
-  HighlightYank = {
-    link = 'GruvboxRedBold',
-  },
-}
-
-M.languages = {
-  Constant = {
-    link = 'GruvboxPurple',
+  Visual = {
+    bg = GruvboxBg3.fg,
+    reverse = true,
   },
   String = {
-    guifg = M.colors.GruvboxGreen.guifg,
-    gui = 'italic',
-  },
-  Character = {
-    link = 'GruvboxPurple',
-  },
-  Number = {
-    link = 'GruvboxPurple',
-  },
-  Boolean = {
-    link = 'GruvboxPurple',
-  },
-  Float = {
-    link = 'GruvboxPurple',
-  },
-  Identifier = {
-    link = 'GruvboxBlue',
-  },
-  Function = {
-    link = 'GruvboxAqua',
-  },
-  Statement = {
-    link = 'GruvboxRed',
-  },
-  Conditional = {
-    link = 'GruvboxRed',
-  },
-  Repeat = {
-    link = 'GruvboxRed',
-  },
-  Label = {
-    link = 'GruvboxRed',
-  },
-  Operator = {
-    link = 'GruvboxOrange',
-  },
-  Keyword = {
-    link = 'GruvboxRed',
-  },
-  Exception = {
-    link = 'GruvboxRed',
-  },
-  PreProc = {
-    link = 'GruvboxAqua',
-  },
-  Type = {
-    link = 'GruvboxYellow',
-  },
-  StorageClass = {
-    link = 'GruvboxOrange',
-  },
-  Structure = {
-    link = 'GruvboxAqua',
-  },
-  Typedef = {
-    link = 'GruvboxYellow',
-  },
-  Special = {
-    link = 'GruvboxOrange',
-  },
-  SpecialChar = {
-    link = 'GruvboxRed',
-  },
-  Tag = {
-    link = 'GruvboxAquaBold',
-  },
-  Delimiter = {
-    link = 'Special',
-  },
-  Debug = {
-    link = 'GruvboxRed',
+    fg = GruvboxGreen.fg,
+    italic = true,
   },
   Underlined = {
-    guifg = M.colors.GruvboxBlue.guifg,
-    gui = 'underline',
+    fg = GruvboxBlue.fg,
+    underline = true,
   },
   Bold = {
-    gui = 'bold',
+    bold = true,
   },
   Italic = {
-    gui = 'italic',
+    italic = true,
   },
   Ignore = {},
   Error = {
-    guifg = M.colors.GruvboxRed.guifg,
-    gui = { 'bold', 'underline' },
+    fg = GruvboxRed.fg,
+    bold = true,
+    underline = true,
   },
   Todo = {
-    guifg = M.foreground.GruvboxFg0.guifg,
-    gui = { 'bold', 'italic' },
+    fg = GruvboxFg0.fg,
+    bold = true,
+    underline = true,
   },
-}
-
-M.lsp_groups = {
-  LspReferenceRead = {
-    link = 'GruvboxYellowBold',
+  Conceal = GruvboxOrange,
+  Directory = GruvboxGreenBold,
+  LineNr = GruvboxBg4,
+  MatchParen = GruvboxYellowBold,
+  ModeMsg = GruvboxYellowBold,
+  NonText = GruvboxBg2,
+  Question = GruvboxOrangeBold,
+  SpecialKey = GruvboxFg4,
+  SpellRare = GruvboxPurpleUnderline,
+  SpellBad = GruvboxRedUnderline,
+  Title = GruvboxGreenBold,
+  WarningMsg = GruvboxRedBold,
+  HighlightYank = GruvboxRedBold,
+  Constant = GruvboxPurple,
+  Character = GruvboxPurple,
+  Number = GruvboxPurple,
+  Boolean = GruvboxPurple,
+  Float = GruvboxPurple,
+  Identifier = GruvboxBlue,
+  Function = GruvboxAqua,
+  Statement = GruvboxRed,
+  Conditional = GruvboxRed,
+  Repeat = GruvboxRed,
+  Label = GruvboxRed,
+  Operator = GruvboxOrange,
+  Keyword = GruvboxRed,
+  Exception = GruvboxRed,
+  PreProc = GruvboxAqua,
+  Type = GruvboxYellow,
+  StorageClass = GruvboxOrange,
+  Structure = GruvboxAqua,
+  Typedef = GruvboxYellow,
+  Special = GruvboxOrange,
+  SpecialChar = GruvboxRed,
+  Tag = GruvboxAquaBold,
+  Debug = GruvboxRed,
+  LspReferenceRead = GruvboxYellowBold,
+  LspReferenceText = GruvboxYellowBold,
+  LspReferenceWrite = GruvboxYellowBold,
+  LspSignatureActiveParameter = GruvboxYellowBold,
+  DiagnosticError = GruvboxRed,
+  DiagnosticWarn = GruvboxYellow,
+  DiagnosticInfo = GruvboxBlue,
+  DiagnosticHint = GruvboxAqua,
+  DiagnosticUnderlineHint = GruvboxAquaUnderline,
+  DiagnosticUnderlineError = GruvboxRedUnderline,
+  DiagnosticUnderlineWarn = GruvboxYellowUnderline,
+  DiagnosticUnderlineInfo = GruvboxBlueUnderline,
+  DiagnosticSignError = GruvboxRedSign,
+  DiagnosticSignWarn = GruvboxYellowSign,
+  DiagnosticSignInfo = GruvboxBlueSign,
+  DiagnosticSignHint = GruvboxAquaSign,
+  TSTagDelimiter = GruvboxGreen,
+  TSTag = GruvboxOrange,
+  TSStructure = GruvboxOrange,
+  TelescopePromptPrefix = GruvboxRed,
+  TelescopeMatching = GruvboxBlue,
+  TelescopeNormal = GruvboxFg1,
+  TelescopeMultiSelection = GruvboxGray,
+  TelescopeSlectionCaret = GruvboxRed,
+  TelescopeSelection = GruvboxOrangeBold,
+  GitSignsAdd = GruvboxGreenSign,
+  GitSignsChange = GruvboxAquaSign,
+  GitSignsDelete = GruvboxRedSign,
+  CmpItemAbbr = GruvboxFg0,
+  CmpItemAbbrDeprecated = GruvboxFg0,
+  CmpItemAbbrMatch = GruvboxBlue,
+  CmpItemAbbrMatchFuzzy = GruvboxBlueUnderline,
+  CmpItemKind = GruvboxOrange,
+  CmpItemMenu = GruvboxRed,
+  lCursor = {
+    link = "Cursor",
   },
-  LspReferenceText = {
-    link = 'GruvboxYellowBold',
+  CursorIM = {
+    link = "Cursor",
   },
-  LspReferenceWrite = {
-    link = 'GruvboxYellowBold',
+  CursorColumn = {
+    link = "CursorLine",
   },
-
+  EndOfBuffer = {
+    link = "NonText",
+  },
+  NormalFloat = {
+    link = "Normal",
+  },
+  NormalNC = {
+    link = "Normal",
+  },
+  VisualNOS = {
+    link = "Visual",
+  },
+  Delimiter = {
+    link = "Special",
+  },
   LspFloatWinBorder = {
-    link = 'NormalNC',
+    link = "NormalNC",
   },
 
   LspCodeLens = {
-    link = 'Comment',
+    link = "Comment",
   },
-  LspSignatureActiveParameter = {
-    link = 'GruvboxYellowBold',
-  },
-}
-
-M.diagnostics = {
-  DiagnosticError = {
-    link = 'GruvboxRed',
-  },
-  DiagnosticWarn = {
-    link = 'GruvboxYellow',
-  },
-  DiagnosticInfo = {
-    link = 'GruvboxBlue',
-  },
-  DiagnosticHint = {
-    link = 'GruvboxAqua',
-  },
-
-  DiagnosticUnderlineHint = {
-    link = 'GruvboxAquaUnderline',
-  },
-  DiagnosticUnderlineError = {
-    link = 'GruvboxRedUnderline',
-  },
-  DiagnosticUnderlineWarn = {
-    link = 'GruvboxYellowUnderline',
-  },
-  DiagnosticUnderlineInfo = {
-    link = 'GruvboxBlueUnderline',
-  },
-
-  DiagnosticSignError = {
-    link = 'GruvboxRedSign',
-  },
-  DiagnosticSignWarn = {
-    link = 'GruvboxYellowSign',
-  },
-  DiagnosticSignInfo = {
-    link = 'GruvboxBlueSign',
-  },
-  DiagnosticSignHint = {
-    link = 'GruvboxAquaSign',
-  },
-}
-
-M.treesitter = {
   TSNone = {},
+  TSDefinitionUsage = {
+    link = "LspReferenceRead",
+  },
   TSEmphasis = {},
   TSUnderline = {
-    link = 'Underlined',
+    link = "Underlined",
   },
   TSStrong = {
-    link = 'Bold',
+    link = "Bold",
   },
   TSVariableBuiltin = {
-    link = 'Special',
-  },
-  TSTagDelimiter = {
-    link = 'GruvboxGreen',
-  },
-  TSTag = {
-    link = 'GruvboxOrange',
-  },
-  TSStructure = {
-    link = 'GruvboxOrange',
+    link = "Special",
   },
   TSComment = {
-    link = 'Comment',
+    link = "Comment",
   },
   TSText = {
-    link = 'TSNone',
+    link = "TSNone",
   },
   TSInclude = {
-    link = 'Include',
+    link = "Include",
   },
   TSTypeBuiltin = {
-    link = 'Type',
+    link = "Type",
   },
   TSType = {
-    link = 'Type',
+    link = "Type",
   },
   TSException = {
-    link = 'Exception',
+    link = "Exception",
   },
   TSKeywordOperator = {
-    link = 'TSOperator',
+    link = "TSOperator",
   },
   TSKeywordFunction = {
-    link = 'Keyword',
+    link = "Keyword",
   },
   TSKeyword = {
-    link = 'Keyword',
+    link = "Keyword",
   },
   TSOperator = {
-    link = 'Operator',
+    link = "Operator",
   },
   TSLabel = {
-    link = 'Label',
+    link = "Label",
   },
   TSRepeat = {
-    link = 'Repeat',
+    link = "Repeat",
   },
   TSConditional = {
-    link = 'Conditional',
+    link = "Conditional",
   },
   TSNamespace = {
-    link = 'Include',
+    link = "Include",
   },
   TSAttribute = {
-    link = 'PreProc',
+    link = "PreProc",
   },
   TSAnnotation = {
-    link = 'PreProc',
+    link = "PreProc",
   },
   TSConstructor = {
-    link = 'Special',
+    link = "Special",
   },
   TSProperty = {
-    link = 'Identifier',
+    link = "Identifier",
   },
   TSField = {
-    link = 'Identifier',
+    link = "Identifier",
   },
   TSMethod = {
-    link = 'Function',
+    link = "Function",
   },
   TSParameterReference = {
-    link = 'TSParameter',
+    link = "TSParameter",
   },
   TSParameter = {
-    link = 'Identifier',
+    link = "Identifier",
   },
   TSFuncMacro = {
-    link = 'Macro',
+    link = "Macro",
   },
   TSFuncBuiltin = {
-    link = 'Special',
+    link = "Special",
   },
   TSFunction = {
-    link = 'Function',
+    link = "Function",
   },
   TSFloat = {
-    link = 'Float',
+    link = "Float",
   },
   TSBoolean = {
-    link = 'Boolean',
+    link = "Boolean",
   },
   TSNumber = {
-    link = 'Number',
+    link = "Number",
   },
   TSCharacter = {
-    link = 'Character',
+    link = "Character",
   },
   TSStringEscape = {
-    link = 'SpecialChar',
+    link = "SpecialChar",
   },
   TSStringRegex = {
-    link = 'String',
+    link = "String",
   },
   TSString = {
-    link = 'String',
+    link = "String",
   },
   TSConstMacro = {
-    link = 'Define',
+    link = "Define",
   },
   TSConstBuiltin = {
-    link = 'Special',
+    link = "Special",
   },
   TSConstant = {
-    link = 'Constant',
+    link = "Constant",
   },
   TSPunctSpecial = {
-    link = 'Delimiter',
+    link = "Delimiter",
   },
   TSPunctBracket = {
-    link = 'Delimiter',
+    link = "Delimiter",
   },
   TSPunctDelimiter = {
-    link = 'Delimiter',
+    link = "Delimiter",
   },
   TSVariable = {
-    link = 'GruvboxFg1',
+    link = "GruvboxFg1",
   },
   TSURI = {
-    link = 'Underlined',
+    link = "Underlined",
   },
   TSLiteral = {
-    link = 'String',
+    link = "String",
   },
   TSTitle = {
-    link = 'Title',
+    link = "Title",
   },
   TSError = {
-    link = 'Error',
+    link = "Error",
   },
-}
-
-M.telescope = {
   TelescopeBorder = {
-    link = 'TelescopeNormal',
+    link = "TelescopeNormal",
   },
   TelescopePrompt = {
-    link = 'TelescopeNormal',
-  },
-  TelescopePromptPrefix = {
-    link = 'GruvboxRed',
-  },
-  TelescopeMatching = {
-    link = 'GruvboxBlue',
+    link = "TelescopeNormal",
   },
   TelescopePreviewBorder = {
-    link = 'TelescopeNormal',
+    link = "TelescopeNormal",
   },
   TelescopeResultsBorder = {
-    link = 'TelescopeNormal',
+    link = "TelescopeNormal",
   },
   TelescopePromptBorder = {
-    link = 'TelescopeNormal',
-  },
-  TelescopeNormal = {
-    link = 'GruvboxFg1',
-  },
-  TelescopeMultiSelection = {
-    link = 'GruvboxGray',
-  },
-  TelescopeSlectionCaret = {
-    link = 'GruvboxRed',
-  },
-  TelescopeSelection = {
-    link = 'GruvboxOrangeBold',
-  },
-}
-
-M.gitsigns = {
-  GitSignsAdd = {
-    link = 'GruvboxGreenSign',
-  },
-  GitSignsChange = {
-    link = 'GruvboxAquaSign',
-  },
-  GitSignsDelete = {
-    link = 'GruvboxRedSign',
+    link = "TelescopeNormal",
   },
   GitSignsCurrentLineBlame = {
-    link = 'NonText',
+    link = "NonText",
   },
 }
 
-M.cmp = {
-  CmpItemAbbr = {
-    link = 'GruvboxFg0',
-  },
-  CmpItemAbbrDeprecated = {
-    link = 'GruvboxFg0',
-  },
-  CmpItemAbbrMatch = {
-    link = 'GruvboxBlue',
-  },
-  CmpItemAbbrMatchFuzzy = {
-    link = 'GruvboxBlueUnderline',
-  },
-  CmpItemKind = {
-    link = 'GruvboxOrange',
-  },
-  CmpItemMenu = {
-    link = 'GruvboxRed',
-  },
-}
+local extras = [[
+vim.g.terminal_color_0 = '#282828'
+vim.g.terminal_color_1 = '#cc241d'
+vim.g.terminal_color_2 = '#98971a'
+vim.g.terminal_color_3 = '#d79921'
+vim.g.terminal_color_4 = '#458588'
+vim.g.terminal_color_5 = '#b16286'
+vim.g.terminal_color_6 = '#689d6a'
+vim.g.terminal_color_7 = '#a89984'
+vim.g.terminal_color_8 = '#928374'
+vim.g.terminal_color_9 = '#fb4934'
+vim.g.terminal_color_10 = '#b8bb26'
+vim.g.terminal_color_11 = '#fabd2f'
+vim.g.terminal_color_12 = '#83a598'
+vim.g.terminal_color_13 = '#d3869b'
+vim.g.terminal_color_14 = '#8ec07c'
+vim.g.terminal_color_15 = '#ebdbb2'
+]]
 
-M.extras = {
-  'let g:indent_blankline_char_highlight_list = ["GruvboxRed", "GruvboxAqua", "GruvboxYellow", "GruvboxPurple", "GruvboxOrange", "GruvboxGreen"]',
-  'let g:indent_blankline_context_highlight_list = ["IndentBlanklineChar"]',
-  "let g:terminal_color_0 = '#282828'",
-  "let g:terminal_color_1 = '#cc241d'",
-  "let g:terminal_color_2 = '#98971a'",
-  "let g:terminal_color_3 = '#d79921'",
-  "let g:terminal_color_4 = '#458588'",
-  "let g:terminal_color_5 = '#b16286'",
-  "let g:terminal_color_6 = '#689d6a'",
-  "let g:terminal_color_7 = '#a89984'",
-  "let g:terminal_color_8 = '#928374'",
-  "let g:terminal_color_9 = '#fb4934'",
-  "let g:terminal_color_10 = '#b8bb26'",
-  "let g:terminal_color_11 = '#fabd2f'",
-  "let g:terminal_color_12 = '#83a598'",
-  "let g:terminal_color_13 = '#d3869b'",
-  "let g:terminal_color_14 = '#8ec07c'",
-  "let g:terminal_color_15 = '#ebdbb2'",
-}
-
-return M
+return { colorscheme = colorscheme, extras = extras, __name = "gruvbox" }

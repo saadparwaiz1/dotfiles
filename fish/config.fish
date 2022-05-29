@@ -4,8 +4,7 @@ if status is-interactive
   alias rm="rm -iv"
   alias nv='nvim'
   alias less="less -R"
-  alias sudo="nocorrect sudo "
-  alias tetris='autoload tetriscurses && tetriscurses'
+  alias tetris='zsh -c "autoload tetriscurses && tetriscurses"'
   alias rmcache='rm -rf ~/Library/Caches/*'
   alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
   alias purge="sudo --stdin purge"
@@ -79,4 +78,5 @@ if status is-interactive
 end
 
 set -g fish_greeting
-
+set -gx MANPAGER 'nvim +Man!'
+set -U fish_user_paths /usr/local/bin $fish_user_paths

@@ -40,4 +40,5 @@ yabai -m rule --add label="About This Mac" app="^System Information$" title="^Ab
 yabai -m rule --add label="Alfred Preferences" app="^Alfred Preferences$" manage=off
 yabai -m rule --add label="Google Chrome" app="^Google Chrome$" title="^Picture in Picture$" manage=off
 yabai -m rule --add label="DeSmuME" app="^DeSmuME$" manage=off
+yabai -m rule --add label="melonDS" app="^melonDS" manage=off
 echo "yabai configuration loaded.."
