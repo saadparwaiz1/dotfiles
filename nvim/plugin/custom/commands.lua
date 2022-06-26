@@ -9,24 +9,22 @@ end, {
     local Path = require("plenary.path")
     local f = require("std.functional")
     local fs = require("std.fs")
-    local scan = Path:new(
-      vim.loop.os_getenv("XDG_CONFIG_HOME"),
-      "nvim",
-      "lua",
-      "colorschemes"
-    )
+    local scan = Path:new(vim.loop.os_getenv("XDG_CONFIG_HOME"), "nvim", "lua", "colorschemes")
+
     local items = require("plenary.scandir").scan_dir(scan.filename, {
       hidden = false,
       depth = 1,
     })
+
     local composite = f.composite(fs.basename, fs.prefix)
+
     return f.filter(function(item)
       return item ~= "schemify"
     end, f.map(composite, items))
   end,
 })
 
-vim.api.nvim_create_user_command("NvimFormat", function(ctx)
+vim.api.nvim_create_user_command("NvimFormat", function(_)
   local uv = vim.loop
   local fs = require("std.fs")
 
@@ -38,7 +36,7 @@ vim.api.nvim_create_user_command("NvimFormat", function(ctx)
       "--indent-width",
       2,
       "--column-width",
-      80,
+      120,
       "nvim",
     },
     stdout = function(...)

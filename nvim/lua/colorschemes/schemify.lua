@@ -18,7 +18,7 @@ local function _schemify(scheme)
     scheme.extras = nil
   end
 
-  for block, highlights in pairs(scheme) do
+  for _, highlights in pairs(scheme) do
     for name, value in pairs(highlights) do
       local hl
       if value.link then

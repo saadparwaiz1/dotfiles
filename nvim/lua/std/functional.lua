@@ -1,8 +1,8 @@
 local f = require("plenary.functional")
 
-function f.foreach(f, t)
+function f.foreach(func, t)
   for k, v in pairs(t) do
-    f(k, v)
+    func(k, v)
   end
 end
 
@@ -12,7 +12,7 @@ function f.map(fun, t)
   end
   local nt = {}
   for k, v in pairs(t) do
-    nk, nv = unpack(fun(k, v))
+    local nk, nv = unpack(fun(k, v))
     nt[nk] = nv
   end
   return nt

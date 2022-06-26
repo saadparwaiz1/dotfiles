@@ -25,7 +25,7 @@ local option = {
   showtabline = 2,
   updatetime = 100,
   mouse = "a",
-  colorcolumn = "80",
+  colorcolumn = "120",
   clipboard = "unnamedplus",
   listchars = { tab = "| ", trail = "~" },
   wildignore = {

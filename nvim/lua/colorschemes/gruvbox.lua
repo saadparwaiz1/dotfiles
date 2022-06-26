@@ -1,7 +1,5 @@
 local GruvboxFg0 = { fg = "#FBF0C6" }
 local GruvboxFg1 = { fg = "#EBDBB2" }
-local GruvboxFg2 = { fg = "#D4C3A0" }
-local GruvboxFg3 = { fg = "#BDAF93" }
 local GruvboxFg4 = { fg = "#A89985" }
 local GruvboxBg0 = { fg = "#292929" }
 local GruvboxBg1 = { fg = "#3B3735" }
@@ -16,27 +14,23 @@ local GruvboxPurple = { fg = "#D4879C" }
 local GruvboxGreen = { fg = "#B8BA26" }
 local GruvboxAqua = { fg = "#8EC07C" }
 local GruvboxOrange = { fg = "#FE811B" }
-local GruvboxGreenUnderline = { sp = GruvboxGreen.fg, undercurl = true }
+local GruvboxPink = { fg = "#D4879C" }
+
 local GruvboxYellowUnderline = { sp = GruvboxYellow.fg, undercurl = true }
 local GruvboxBlueUnderline = { sp = GruvboxBlue.fg, undercurl = true }
 local GruvboxPurpleUnderline = { sp = GruvboxPurple.fg, undercurl = true }
 local GruvboxAquaUnderline = { sp = GruvboxAqua.fg, undercurl = true }
-local GruvboxOrangeUnderline = { sp = GruvboxOrange.fg, undercurl = true }
 local GruvboxRedUnderline = { sp = GruvboxRed.fg, undercurl = true }
 local GruvboxRedBold = { fg = GruvboxRed.fg, bold = true }
 local GruvboxGreenBold = { fg = GruvboxGreen.fg, bold = true }
 local GruvboxYellowBold = { fg = GruvboxYellow.fg, bold = true }
-local GruvboxBlueBold = { fg = GruvboxBlue.fg, bold = true }
-local GruvboxPurpleBold = { fg = GruvboxPurple.fg, bold = true }
 local GruvboxAquaBold = { fg = GruvboxAqua.fg, bold = true }
 local GruvboxOrangeBold = { fg = GruvboxOrange.fg, bold = true }
 local GruvboxRedSign = { fg = GruvboxRed.fg, bg = GruvboxBg0.fg }
 local GruvboxGreenSign = { fg = GruvboxGreen.fg, bg = GruvboxBg0.fg }
 local GruvboxYellowSign = { fg = GruvboxYellow.fg, bg = GruvboxBg0.fg }
 local GruvboxBlueSign = { fg = GruvboxBlue.fg, bg = GruvboxBg0.fg }
-local GruvboxPurpleSign = { fg = GruvboxPurple.fg, bg = GruvboxBg0.fg }
 local GruvboxAquaSign = { fg = GruvboxAqua.fg, bg = GruvboxBg0.fg }
-local GruvboxOrangeSign = { fg = GruvboxOrange.fg, bg = GruvboxBg0.fg }
 
 local colorscheme = {
   Comment = {
@@ -92,8 +86,7 @@ local colorscheme = {
   },
   IncSearch = {
     fg = GruvboxOrange.fg,
-    bg = GruvboxBg0.fg,
-    reverse = true,
+    bold = true,
   },
   CursorLineNr = {
     fg = GruvboxYellow.fg,
@@ -125,8 +118,7 @@ local colorscheme = {
   },
   Search = {
     fg = GruvboxYellow.fg,
-    bg = GruvboxBg0.fg,
-    reverse = true,
+    bold = true,
   },
   StatusLine = {
     fg = GruvboxBg1.fg,
@@ -156,8 +148,8 @@ local colorscheme = {
     bold = true,
   },
   Visual = {
-    bg = GruvboxBg3.fg,
-    reverse = true,
+    fg = GruvboxOrangeBold.fg,
+    bold = true,
   },
   String = {
     fg = GruvboxGreen.fg,
@@ -248,12 +240,35 @@ local colorscheme = {
   GitSignsAdd = GruvboxGreenSign,
   GitSignsChange = GruvboxAquaSign,
   GitSignsDelete = GruvboxRedSign,
-  CmpItemAbbr = GruvboxFg0,
-  CmpItemAbbrDeprecated = GruvboxFg0,
-  CmpItemAbbrMatch = GruvboxBlue,
-  CmpItemAbbrMatchFuzzy = GruvboxBlueUnderline,
-  CmpItemKind = GruvboxOrange,
-  CmpItemMenu = GruvboxRed,
+  CmpDocumentation = { fg = GruvboxFg0.fg, bg = GruvboxBg0.fg },
+  CmpDocumentationBorder = { fg = GruvboxGray.fg, bg = GruvboxBg0.fg },
+  CmpItemAbbr = { fg = GruvboxFg0.fg },
+  CmpItemAbbrDeprecated = { fg = GruvboxFg0.fg, strikethrough = true },
+  CmpItemAbbrMatch = { fg = GruvboxBlue.fg },
+  CmpItemAbbrMatchFuzzy = { fg = GruvboxBlue.fg },
+  CmpItemKindDefault = { fg = GruvboxGray.fg },
+  CmpItemMenu = { fg = GruvboxGray.fg },
+  CmpItemKindKeyword = { fg = GruvboxBlue.fg },
+  CmpItemKindVariable = { fg = GruvboxPurple.fg },
+  CmpItemKindConstant = { fg = GruvboxPurple.fg },
+  CmpItemKindReference = { fg = GruvboxPurple.fg },
+  CmpItemKindValue = { fg = GruvboxPurple.fg },
+  CmpItemKindFunction = { fg = GruvboxOrange.fg },
+  CmpItemKindMethod = { fg = GruvboxOrange.fg },
+  CmpItemKindConstructor = { fg = GruvboxOrange.fg },
+  CmpItemKindClass = { fg = GruvboxPink.fg },
+  CmpItemKindInterface = { fg = GruvboxPink.fg },
+  CmpItemKindStruct = { fg = GruvboxPink.fg },
+  CmpItemKindEvent = { fg = GruvboxPink.fg },
+  CmpItemKindEnum = { fg = GruvboxPink.fg },
+  CmpItemKindUnit = { fg = GruvboxPink.fg },
+  CmpItemKindModule = { fg = GruvboxYellow.fg },
+  CmpItemKindProperty = { fg = GruvboxAqua.fg },
+  CmpItemKindField = { fg = GruvboxAqua.fg },
+  CmpItemKindTypeParameter = { fg = GruvboxAqua.fg },
+  CmpItemKindEnumMember = { fg = GruvboxAqua.fg },
+  CmpItemKindOperator = { fg = GruvboxAqua.fg },
+  CmpItemKindSnippet = { fg = GruvboxGray.fg },
   lCursor = {
     link = "Cursor",
   },
