@@ -23,8 +23,8 @@ vim.lsp.start({
       hint = { enable = true },
       workspace = {
         library = {
-          "/Users/saadparwaiz/Library/State/nvim/types"
-        }
+          "/Users/saadparwaiz/Library/State/nvim/types",
+        },
       },
     },
   },

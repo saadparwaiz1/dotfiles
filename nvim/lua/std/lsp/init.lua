@@ -6,7 +6,7 @@ local lsp = {}
 ---@return table
 lsp.capabilities = function(ctx)
   ctx = ctx or vim.lsp.protocol.make_client_capabilities()
-  require("cmp_nvim_lsp").update_capabilities(ctx)
+  return require("cmp_nvim_lsp").update_capabilities(ctx)
 end
 
 -- Generates Custom Lsp handlers
@@ -19,10 +19,10 @@ lsp.handlers = function(ctx)
   local border = ctx.border or "rounded"
   local handles = {
     ["textDocument/hover"] = with(handlers.hover, {
-      border = border
+      border = border,
     }),
     ["textDocument/signatureHelp"] = with(handlers.signature_help, {
-      border = border
+      border = border,
     }),
   }
   return vim.tbl_extend("force", handles, ctx.handlers or {})

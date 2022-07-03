@@ -26,7 +26,7 @@ if status is-interactive
   function fish_prompt
     set_color --bold red
     echo -n '['
-    set_color yellow 
+    set_color yellow
     echo -n 'sp'
     set_color cyan
     echo -n '@'

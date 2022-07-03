@@ -5,10 +5,10 @@ local function at(s, i)
   return sub(s, i, i)
 end
 
-fs.config = fs:new(vim.loop.os_getenv("XDG_CONFIG_HOME") or "~/.config")
-fs.state = fs:new(vim.loop.os_getenv("XDG_STATE_HOME") or "~/.local/state")
-fs.cache = fs:new(vim.loop.os_getenv("XDG_CACHE_HOME") or "~/.cache")
-fs.data = fs:new(vim.loop.os_getenv("XDG_DATA_HOME") or "~/.local/share")
+fs.config = fs:new(vim.fn.stdpath('config'))
+fs.state = fs:new(vim.fn.stdpath('state'))
+fs.cache = fs:new(vim.fn.stdpath('cache'))
+fs.data = fs:new(vim.fn.stdpath('data'))
 
 -- split path into directory and base
 ---@param P string
@@ -29,8 +29,11 @@ end
 
 -- extract directory name from the path
 ---@param P any
----@return string
+---@return string|nil
 function fs.dirname(P)
+  if P == nil then
+    return nil
+  end
   local p1 = fs.splitpath(P.selfname or P)
   return type(P) ~= "string" and fs:new(p1) or p1
 end
@@ -51,7 +54,7 @@ function fs.prefix(P)
 end
 
 -- get directory of current file
----@return string
+---@return string|nil
 function fs.file_dir()
   return fs.dirname(vim.api.nvim_buf_get_name(0))
 end

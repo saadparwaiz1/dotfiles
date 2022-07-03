@@ -25,7 +25,7 @@ local icons = {
   Struct = "",
   Event = "",
   Operator = "",
-  TypeParameter = ""
+  TypeParameter = "",
 }
 
 local has_words_before = function()
@@ -73,15 +73,15 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   formatting = {
-    format = function (entry, item)
-      item.kind = string.format('%s %s', icons[item.kind], item.kind)
+    format = function(entry, item)
+      item.kind = string.format("%s %s", icons[item.kind], item.kind)
       item.menu = ({
         buffer = "[Buffer]",
         nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]"
+        luasnip = "[LuaSnip]",
       })[entry.source.name]
       return item
-    end
+    end,
   },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
