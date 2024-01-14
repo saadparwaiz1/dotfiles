@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-nvim_setup(){
-  git clone --depth=1 https://github.com/wbthomason/packer.nvim /Users/saadparwaiz/Library/Share/nvim/site/pack/packer/start/packer.nvim
-}
 
 set_macos_preferences() {
 	defaults write com.apple.screencapture type JPG
@@ -41,7 +38,7 @@ set_macos_preferences() {
 }
 
 generate_env_file() {
-	XDG_CONFIG_HOME="/Users/saadparwaiz/Library/Preferences"
+	XDG_CONFIG_HOME="/Users/saadparwaiz/Library/Config"
 	XDG_CACHE_HOME="/Users/saadparwaiz/Library/Caches"
 	XDG_DATA_HOME="/Users/saadparwaiz/Library/Share"
 	XDG_STATE_HOME="/Users/saadparwaiz/Library/State"
@@ -110,5 +107,4 @@ nvim)
   package_management
   install_packages
   set_up_env_file
-  nvim_setup
 esac

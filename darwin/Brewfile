@@ -1,52 +1,26 @@
 # Tap Repsitories
-tap "homebrew/core"
-tap "homebrew/cask"
 tap "homebrew/bundle"
-tap "homebrew/services"
 tap "homebrew/cask-fonts"
-tap "koekeishiya/formulae"
-
-# Text Editors
-brew "neovim"
 
 # Productivity
-cask "alfred"
-cask "alt-tab"
-cask "smcfancontrol"
-brew "koekeishiya/formulae/yabai"
-brew "koekeishiya/formulae/skhd", args: ["with-logging"]
+cask "rectangle"
+
+# Fonts
+cask "font-jetbrains-mono-nerd-font"
 
 # Entertainment
 cask "spotify"
-
-# Package Managers
-brew "luarocks"
-brew "zinit"
 
 # Terminal Emulators
 cask "kitty"
 
 # Shell Tools
-brew "fd"
 brew "gh"
 brew "exa"
-brew "pandoc"
-brew "ripgrep"
 brew "git-delta"
 
 # Shells
 brew "fish"
 
 # Browsers
-cask "firefox"
-
-# Fonts
-cask "font-jetbrains-mono-nerd-font"
-
-# Conferencing
-cask "signal"
-cask "discord"
-
-# Language Servers
-brew "texlab"
-brew "lua-language-server"
+cask "google-chrome"

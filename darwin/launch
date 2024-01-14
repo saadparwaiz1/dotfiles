@@ -4,8 +4,8 @@ launchctl setenv XDG_CONFIG_HOME "$XDG_CONFIG_HOME"
 launchctl setenv XDG_CACHE_HOME "$XDG_CACHE_HOME"
 launchctl setenv XDG_DATA_HOME "$XDG_DATA_HOME"
 launchctl setenv XDG_STATE_HOME "$XDG_STATE_HOME"
-launchctl setenv EDITOR nvim
-launchctl setenv VISUAL nvim
+launchctl setenv EDITOR lt
+launchctl setenv VISUAL lt
 launchctl setenv HOMEBREW_NO_ANALYTICS 1
 launchctl setenv ZDOTDIR "$XDG_CONFIG_HOME/zsh"
 launchctl setenv NPM_CONFIG_USERCONFIG "$XDG_CONFIG_HOME/npm/npmrc"

@@ -5,14 +5,9 @@ if status is-interactive
   alias nv='nvim'
   alias less="less -R"
   alias tetris='zsh -c "autoload tetriscurses && tetriscurses"'
-  alias rmcache='rm -rf ~/Library/Caches/*'
-  alias jpdf="/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Resources/join.py"
   alias purge="sudo --stdin purge"
   alias keys="pbcopy < ~/.ssh/id_rsa.pub"
   alias bu="brew update && brew upgrade --greedy"
-  alias rs="brew services restart yabai && brew services restart skhd"
-  alias ds='fd --hidden --no-ignore ".DS_Store" -x rm'
-  alias del-history='/bin/rm "$XDG_DATA_HOME/HISTORY/zsh-history"'
   if type -q exa
     alias ls="exa --icons"
     alias la='exa --icons -a'
@@ -78,5 +73,4 @@ if status is-interactive
 end
 
 set -g fish_greeting
-set -gx MANPAGER 'nvim +Man!'
-set -U fish_user_paths /usr/local/bin $fish_user_paths
+set -U fish_user_paths /usr/local/bin /opt/homebrew/bin $XDG_DATA_HOME/Bin $fish_user_paths
