@@ -12,7 +12,7 @@
   autocorrect = 3
 [core]
   excludesfile = /Users/saadparwaiz/Library/Config/git/gitignore
-  editor = lt
+  editor = nvim
 [color "diff-highlight"]
   oldNormal = red bold
   oldHighlight = red bold 52

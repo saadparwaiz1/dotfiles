@@ -1,4 +1,5 @@
 if status is-interactive
+  zoxide init fish | source
   alias cp="cp -iv"
   alias mv="mv -iv"
   alias rm="rm -iv"
@@ -73,4 +74,4 @@ if status is-interactive
 end
 
 set -g fish_greeting
-set -U fish_user_paths /usr/local/bin /opt/homebrew/bin $XDG_DATA_HOME/Bin $fish_user_paths
+set -U fish_user_paths /usr/local/bin /opt/homebrew/bin $HOME/Library/Python/3.9/bin $XDG_DATA_HOME/Bin $fish_user_paths
